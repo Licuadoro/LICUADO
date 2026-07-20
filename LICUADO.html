@@ -1,0 +1,543 @@
+<div class="lq-wrap" id="lq-top">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Fredoka:wght@300;400;600&display=swap');
+    html,body{scrollbar-width:none;-ms-overflow-style:none;overflow-x:hidden}html::-webkit-scrollbar,body::-webkit-scrollbar,.lq-wrap::-webkit-scrollbar{display:none;width:0;height:0}.lq-wrap{scrollbar-width:none;-ms-overflow-style:none}
+    .lq-wrap,.lq-wrap *{box-sizing:border-box}.lq-wrap{--verde:#00ff44;--oro:#d7aa3d;--negro:#060606;font-family:'Fredoka',sans-serif;background:#060606;color:#f5f5f0;position:relative;overflow:hidden}.lq-wrap *{margin:0;padding:0}.lq-wrap a{text-decoration:none}.lq-global-particles{position:fixed;top:0;left:0;right:0;height:100vh;z-index:20;pointer-events:none;overflow:hidden}.lq-wrap>section,.lq-wrap>footer,.lq-wave{position:relative;z-index:1}.lq-wrap.lq-switching:before{content:'';position:fixed;inset:0;z-index:1100;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(0,255,68,.2),rgba(215,170,61,.1) 28%,rgba(0,0,0,.88) 78%);animation:lq-screen-flash .85s ease forwards}@keyframes lq-screen-flash{0%{opacity:0;transform:scale(1.08)}38%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.08)}}
+    .lq-spark{position:absolute;width:2px;height:14px;border-radius:999px;background:linear-gradient(to top,transparent,rgba(0,255,68,.95),rgba(255,218,122,.92));opacity:0;filter:drop-shadow(0 0 6px rgba(0,255,68,.7));transform-origin:bottom center;animation:lq-spark-rise var(--dur) ease-out var(--delay) infinite}.lq-p{position:absolute;border-radius:50%;background:#00ff44;opacity:0;box-shadow:0 0 10px rgba(0,255,68,.75);animation:lq-dot-rise var(--dur) ease-in-out var(--delay) infinite}.lq-bubble{position:absolute;border-radius:50%;border:1.5px solid rgba(210,255,233,.72);background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.85),rgba(142,255,218,.22) 34%,rgba(215,170,61,.1) 62%,rgba(0,255,68,.04) 76%);box-shadow:inset 0 0 12px rgba(255,255,255,.32),0 0 18px rgba(0,255,68,.2),0 0 14px rgba(215,170,61,.09);opacity:0;z-index:21;animation:lq-bubble-rise var(--dur) ease-in var(--delay) infinite}.lq-surface-bubble{position:fixed;border-radius:50%;border:1px solid rgba(210,255,233,.8);background:rgba(210,255,233,.16);box-shadow:0 0 18px rgba(0,255,68,.22);opacity:0;z-index:21;animation:lq-surface-pop var(--dur) ease-out var(--delay) infinite}@keyframes lq-spark-rise{0%{opacity:0;transform:rotate(var(--ang)) translateY(0) translateX(0) scaleY(.55)}12%{opacity:var(--op)}72%{opacity:calc(var(--op)*.75)}100%{opacity:0;transform:rotate(var(--ang)) translateY(var(--rise)) translateX(var(--drift)) scaleY(.15)}}@keyframes lq-dot-rise{0%{opacity:0;transform:translateY(0) translateX(0) scale(1)}18%{opacity:var(--op)}80%{opacity:calc(var(--op)*.7)}100%{opacity:0;transform:translateY(var(--rise)) translateX(var(--drift)) scale(.4)}}@keyframes lq-bubble-rise{0%{opacity:0;transform:translateY(24px) translateX(0) scale(.62)}12%{opacity:var(--op)}82%{opacity:calc(var(--op)*.9)}100%{opacity:0;transform:translateY(var(--rise)) translateX(var(--drift)) scale(1.16)}}@keyframes lq-surface-pop{0%,62%{opacity:0;transform:translateY(10px) scale(.55)}72%{opacity:.68;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-18px) scale(1.8)}}
+    .lq-banner{min-height:100vh;background:#060606;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 7rem;overflow:hidden}.lq-glow{position:absolute;width:min(620px,90vw);height:320px;background:radial-gradient(ellipse,rgba(0,255,68,.11),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:lq-breathe 6s ease-in-out infinite}.lq-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,68,.28),transparent);animation:lq-scan 8s linear infinite}@keyframes lq-breathe{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}}@keyframes lq-scan{0%{top:-2px;opacity:0}5%,95%{opacity:1}100%{top:100%;opacity:0}}@keyframes lq-fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .lq-logo{position:relative;z-index:2;max-width:min(520px,85vw);width:100%;opacity:0;animation:lq-fade-up 1s ease .25s forwards;filter:drop-shadow(0 0 28px rgba(0,255,68,.4))}.lq-tagline{position:relative;z-index:2;margin-top:2.2rem;font-size:clamp(1rem,2.2vw,1.3rem);font-weight:300;color:rgba(220,255,230,.55);letter-spacing:.08em;line-height:1.7;opacity:0;animation:lq-fade-up 1s ease .65s forwards}.lq-tagline em{font-style:normal;color:rgba(0,255,68,.75);font-weight:600}.lq-divider{position:relative;z-index:2;margin-top:2.5rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:lq-fade-up 1s ease .95s forwards}.lq-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,68,.45))}.lq-line.r{background:linear-gradient(90deg,rgba(0,255,68,.45),transparent)}.lq-dot{width:5px;height:5px;background:#00ff44;border-radius:50%;animation:lq-blink 2s ease infinite}@keyframes lq-blink{0%,100%{opacity:1;box-shadow:0 0 6px #00ff44}50%{opacity:.3;box-shadow:none}}.lq-sub{position:relative;z-index:2;margin-top:1.5rem;font-family:'Lilita One',cursive;font-size:clamp(.7rem,1.2vw,.85rem);color:rgba(0,255,68,.35);letter-spacing:.25em;text-transform:uppercase;opacity:0;animation:lq-fade-up 1s ease 1.15s forwards}
+    .lq-actions{position:relative;z-index:2;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2.8rem;opacity:0;animation:lq-fade-up 1s ease 1.35s forwards}.lq-btn{display:inline-flex;align-items:center;gap:.6rem;background:transparent;border:1.5px solid rgba(0,255,68,.4);color:rgba(0,255,68,.86);font-size:1rem;font-weight:600;padding:.75rem 2rem;border-radius:999px;cursor:pointer;letter-spacing:.05em;transition:.25s}.lq-btn:hover{background:rgba(0,255,68,.1);border-color:rgba(0,255,68,.8);color:#00ff44;transform:translateY(-2px)}.lq-btn span{animation:lq-bounce 1.6s ease infinite}@keyframes lq-bounce{50%{transform:translateY(4px)}}
+    .lq-wave{width:100%;line-height:0}.lq-wave svg{display:block;width:100%;height:70px}.lq-proyectos,.lq-sobre{background:#0a0a0a}.lq-publicados{background:#060606}.lq-section{padding:6rem 2rem 7rem;overflow:visible}.lq-proy-header{text-align:center;margin-bottom:4rem}.lq-proy-label{font-size:.8rem;font-weight:600;color:rgba(0,255,68,.5);letter-spacing:.25em;text-transform:uppercase;display:block;margin-bottom:.8rem}.lq-proy-title,.lq-sobre-titulo{font-family:'Lilita One',cursive;font-size:clamp(2rem,5vw,3.2rem);color:#f5f5f0;line-height:1.08}.lq-sobre-titulo span{color:#00ff44}
+    .lq-row-wrap{max-width:1200px;margin:0 auto;position:relative;overflow:visible}.lq-row{display:flex;justify-content:center;gap:1.2rem;overflow-x:auto;overflow-y:visible;padding:1.5rem 0 3rem;scroll-snap-type:x mandatory;scrollbar-width:none}.lq-row::-webkit-scrollbar{display:none}.lq-poster{flex:0 0 200px;scroll-snap-align:center;cursor:pointer;position:relative;overflow:visible}.lq-poster-img{width:200px;height:267px;border-radius:14px;background:linear-gradient(160deg,#061a0a,#0d2d14 35%,#040f06 70%,#061408);border:1px solid rgba(0,255,68,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;position:relative;transition:.3s;overflow:hidden}.lq-poster-img:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 29px,rgba(0,255,68,.03) 29px,rgba(0,255,68,.03) 30px),repeating-linear-gradient(90deg,transparent,transparent 29px,rgba(0,255,68,.03) 29px,rgba(0,255,68,.03) 30px)}.lq-cover-art-frame{background:#040c06}.lq-cover-art-frame:before{z-index:2;background:linear-gradient(to top,rgba(0,0,0,.22),transparent 35%,rgba(0,255,68,.04))}.lq-cover-art{width:100%;height:100%;object-fit:cover;object-position:center top;position:relative;z-index:1;border-radius:14px;filter:saturate(1.08) contrast(1.05) drop-shadow(0 0 12px rgba(0,255,68,.18))}.lq-poster:hover .lq-poster-img{transform:scale(1.06) translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 40px rgba(0,255,68,.12);border-color:rgba(0,255,68,.35)}.lq-orb{width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 32%,#d4ffe4,#00ff44 38%,#005c1a 75%,#001a08);box-shadow:0 0 30px rgba(0,255,68,.7),0 0 80px rgba(0,255,68,.25);animation:lq-orb-pulse 3s ease-in-out infinite}@keyframes lq-orb-pulse{50%{box-shadow:0 0 50px rgba(0,255,68,.95),0 0 110px rgba(0,255,68,.4)}}.lq-poster-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),transparent 60%);border-radius:14px;opacity:0;transition:.3s;display:flex;align-items:flex-end;justify-content:center;padding-bottom:1rem;z-index:3}.lq-poster:hover .lq-poster-overlay{opacity:1}.lq-poster-overlay-text{font-size:.78rem;font-weight:600;color:rgba(0,255,68,.9);letter-spacing:.08em}.lq-poster-label{margin-top:.75rem;font-family:'Lilita One',cursive;font-size:.9rem;color:#f5f5f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}.lq-poster-sublabel{font-size:.75rem;font-weight:300;color:rgba(0,255,68,.45);margin-top:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+    .lq-poster-ghost{cursor:default}.lq-poster-ghost .lq-poster-img{background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.08)}.lq-poster-ghost:hover .lq-poster-img{transform:none;box-shadow:none;border-color:rgba(255,255,255,.08)}.lq-ghost-inner{position:relative;z-index:1;text-align:center}.lq-ghost-emoji{font-size:1.9rem;margin-bottom:.6rem}.lq-ghost-text{font-size:.8rem;color:rgba(245,245,240,.22);line-height:1.45}.lq-arrow{position:absolute;top:128px;z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(10,10,10,.85);border:1px solid rgba(0,255,68,.2);color:rgba(0,255,68,.8);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;opacity:0;pointer-events:none;backdrop-filter:blur(4px)}.lq-row-wrap:hover .lq-arrow{opacity:1;pointer-events:auto}.lq-arrow:hover{background:rgba(0,255,68,.15);border-color:rgba(0,255,68,.5)}.lq-arrow-left{left:-22px}.lq-arrow-right{right:-22px}
+    .lq-sobre{padding:7rem 2rem}.lq-sobre-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:center}.lq-sobre-visual{display:flex;align-items:center;justify-content:center;position:relative}.lq-sobre-blob{width:280px;height:280px;background:radial-gradient(circle at 40% 38%,rgba(0,255,68,.12),rgba(0,255,68,.03) 60%,transparent);border:1px solid rgba(0,255,68,.08);border-radius:60% 40% 55% 45%/50% 60% 40% 50%;animation:lq-morph 9s ease-in-out infinite;display:flex;align-items:center;justify-content:center}@keyframes lq-morph{25%{border-radius:40% 60% 45% 55%/60% 40% 60% 40%}50%{border-radius:50% 50% 60% 40%/40% 55% 45% 60%}75%{border-radius:55% 45% 40% 60%/55% 45% 55% 45%}}.lq-ring{position:absolute;border-radius:50%;border:1px solid rgba(0,255,68,.07)}.lq-ring-1{width:320px;height:320px}.lq-ring-2{width:380px;height:380px;border-style:dashed;animation:lq-ring-spin 20s linear infinite}@keyframes lq-ring-spin{to{transform:rotate(360deg)}}.lq-sobre-parrafo{font-size:1rem;line-height:1.85;color:rgba(245,245,240,.55);margin-bottom:1.2rem}.lq-sobre-parrafo em{font-style:normal;color:rgba(0,255,68,.75);font-weight:600}.lq-link{display:inline-flex;color:rgba(0,255,68,.76);border-bottom:1px solid rgba(0,255,68,.25);padding-bottom:.15rem;margin-top:.5rem;font-weight:600}.lq-link:hover{color:#00ff44;border-color:rgba(0,255,68,.6)}.lq-divider-soft{height:1px;background:rgba(0,255,68,.1);margin:2rem 0}.lq-sobre-facts{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.06)}.lq-fact{display:flex;flex-direction:column;gap:.2rem}.lq-fact-num{font-family:'Lilita One',cursive;font-size:2.4rem;color:#00ff44;line-height:1}.lq-fact-label{font-size:.82rem;font-weight:600;color:rgba(245,245,240,.3)}
+    .lq-footer{background:#030303;padding:4rem 3rem 2.5rem;position:relative;z-index:1;overflow:visible}.lq-footer-home{background-color:#030303;background-image:linear-gradient(135deg,rgba(255,255,255,.035) 25%,transparent 25%),linear-gradient(225deg,rgba(255,255,255,.025) 25%,transparent 25%),linear-gradient(45deg,rgba(0,255,68,.035) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.018) 1px,transparent 1px),radial-gradient(circle at 30% 0%,rgba(0,255,68,.06),transparent 38%);background-size:82px 52px,82px 52px,42px 42px,100% 34px,100% 100%;background-position:0 0,41px 26px,0 0,0 0,0 0}.lq-footer-home .lq-footer-inner,.lq-footer-home .lq-footer-bottom{position:relative;z-index:2}.lq-footer:before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:radial-gradient(ellipse at center,rgba(0,255,68,.9),rgba(0,255,68,.5) 20%,rgba(0,255,68,.15) 45%,transparent 70%)}.lq-footer:after{content:'';position:absolute;top:-20px;left:10%;right:10%;height:50px;background:radial-gradient(ellipse at center,rgba(0,255,68,.15),rgba(0,255,68,.06) 35%,transparent 70%);filter:blur(6px);pointer-events:none}.lq-footer-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:4rem;align-items:start;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.05)}.lq-footer-brand img{max-width:180px;opacity:.75;filter:drop-shadow(0 0 12px rgba(0,255,68,.2));margin-bottom:1rem}.lq-footer-tagline{font-size:.88rem;font-weight:300;color:rgba(245,245,240,.25);line-height:1.6;max-width:260px}.lq-footer-nav-title{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,255,68,.4);margin-bottom:1.2rem}.lq-footer-nav{list-style:none;display:flex;flex-direction:column;gap:.75rem}.lq-footer-nav a{font-size:.95rem;color:rgba(245,245,240,.4);transition:.2s}.lq-footer-nav a:hover{color:rgba(0,255,68,.85)}.lq-btn-scriptorium{display:inline-flex!important;align-items:center;gap:.55rem;font-size:.9rem!important;font-weight:600!important;color:rgba(210,255,235,.9)!important;background:radial-gradient(circle at 28% 20%,rgba(255,255,255,.16),transparent 28%),linear-gradient(135deg,rgba(0,255,68,.12),rgba(16,102,92,.22) 48%,rgba(215,170,61,.13));border:1px solid rgba(118,255,218,.34);padding:.52rem 1.18rem;border-radius:999px;box-shadow:inset 0 0 16px rgba(118,255,218,.06),0 0 16px rgba(0,255,68,.07);position:relative;overflow:hidden}.lq-btn-scriptorium:before{content:'';position:absolute;inset:-60% -20%;background:linear-gradient(100deg,transparent 35%,rgba(210,255,233,.18),transparent 65%);transform:translateX(-55%);animation:lq-liquid-shine 4s ease-in-out infinite}.lq-btn-scriptorium:hover{border-color:rgba(215,170,61,.55);box-shadow:0 0 24px rgba(0,255,68,.12),0 0 20px rgba(215,170,61,.08)}@keyframes lq-liquid-shine{50%{transform:translateX(55%)}}.lq-footer-bottom{max-width:1000px;margin:0 auto;padding-top:1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}.lq-footer-copy,.lq-footer-made{font-size:.8rem;color:rgba(245,245,240,.15)}
+    .lq-fire-wrap{position:absolute;top:-55px;width:140px;height:60px;pointer-events:none;z-index:5}.lq-flame{position:absolute;bottom:0;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;filter:blur(3px);transform-origin:bottom center}.lq-flame-1{left:50%;transform:translateX(-50%);width:34px;height:48px;background:radial-gradient(ellipse at 50% 80%,rgba(0,255,68,.7),rgba(0,255,68,.3) 40%,transparent 70%);animation:lq-flame1 .8s ease-in-out infinite alternate}.lq-flame-2{left:calc(50% - 16px);transform:translateX(-50%);width:24px;height:36px;background:radial-gradient(ellipse at 50% 80%,rgba(0,255,68,.5),rgba(0,255,68,.15) 50%,transparent 75%);animation:lq-flame2 .6s ease-in-out .15s infinite alternate}.lq-flame-3{left:calc(50% + 16px);transform:translateX(-50%);width:22px;height:34px;background:radial-gradient(ellipse at 50% 80%,rgba(0,255,68,.45),rgba(0,255,68,.12) 50%,transparent 75%);animation:lq-flame3 .7s ease-in-out .3s infinite alternate}.lq-flame-core{left:50%;transform:translateX(-50%);width:16px;height:26px;background:radial-gradient(ellipse at 50% 85%,rgba(200,255,220,.8),rgba(0,255,68,.6) 30%,transparent 70%);animation:lq-flame1 .5s ease-in-out .1s infinite alternate;filter:blur(2px)}.lq-fire-sm{width:100px;height:45px;top:-45px}.lq-fire-sm .lq-flame-1{width:24px;height:34px}.lq-fire-sm .lq-flame-2{width:16px;height:24px;left:calc(50% - 12px)}.lq-fire-sm .lq-flame-3{width:14px;height:22px;left:calc(50% + 12px)}.lq-fire-sm .lq-flame-core{width:10px;height:18px}@keyframes lq-flame1{to{height:54px;opacity:1;transform:translateX(-50%) scaleX(.9) rotate(2deg)}}@keyframes lq-flame2{to{height:40px;opacity:.85;transform:translateX(-50%) scaleX(.85) rotate(-2deg)}}@keyframes lq-flame3{to{height:38px;opacity:.8;transform:translateX(-50%) scaleX(1.05) rotate(1deg)}}.lq-fire-spark{position:absolute;width:2px;height:2px;background:#00ff44;border-radius:50%;opacity:0;animation:lq-fire-spark 2s ease-out var(--delay) infinite}@keyframes lq-fire-spark{10%{opacity:.8}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
+    .lq-modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem}.lq-modal-overlay.open{display:flex}.lq-modal{background:#0d0d0d;border:1px solid rgba(0,255,68,.2);border-radius:28px;max-width:620px;width:100%;padding:3rem;position:relative;max-height:90vh;overflow-y:auto;animation:lq-modal-in .35s cubic-bezier(.34,1.56,.64,1)}@keyframes lq-modal-in{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1)}}.lq-modal-close{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,245,240,.5);border-radius:50%;width:36px;height:36px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer}.lq-modal-close:hover{background:rgba(255,255,255,.12);color:#f5f5f0}.lq-modal-orb-row{display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem}.lq-modal-orb{width:60px;height:60px;border-radius:50%;flex-shrink:0;background:radial-gradient(circle at 35% 32%,#d4ffe4,#00ff44 38%,#005c1a 75%,#001a08);box-shadow:0 0 25px rgba(0,255,68,.6);animation:lq-orb-pulse 3s ease-in-out infinite}.lq-modal-title{font-family:'Lilita One',cursive;font-size:1.6rem;color:#f5f5f0;line-height:1.1}.lq-modal-lore-label{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,255,68,.4);margin-bottom:.8rem;display:block}.lq-modal-lore{font-size:1rem;line-height:1.8;color:rgba(245,245,240,.65)}.lq-modal-lore em{font-style:normal;color:rgba(0,255,68,.75);font-weight:600}.lq-modal-lore p+p{margin-top:1rem}.lq-modal-tags,.lq-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem}.lq-tag{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(245,245,240,.42);font-size:.78rem;font-weight:600;padding:.28rem .85rem;border-radius:999px}
+
+    /* ── SCRIPTORIUM ── */
+    .lq-wrap.lq-show-scriptorium .lq-banner,.lq-wrap.lq-show-scriptorium .lq-wave,.lq-wrap.lq-show-scriptorium .lq-proyectos,.lq-wrap.lq-show-scriptorium .lq-publicados,.lq-wrap.lq-show-scriptorium .lq-sobre,.lq-wrap.lq-show-scriptorium .lq-footer-home{display:none}
+    .lq-scriptorium{display:none;min-height:100vh;width:100vw;max-width:100vw;margin-left:0;margin-right:0;background:linear-gradient(180deg,rgba(7,42,39,.76),rgba(4,12,13,.92) 42%,#060606),radial-gradient(circle at 50% 18%,rgba(215,170,61,.13),transparent 32%),radial-gradient(circle at 50% 45%,rgba(0,255,68,.1),transparent 42%),#060606;padding:7rem max(4rem,8vw) 4.5rem;position:relative;overflow:hidden;box-sizing:border-box}
+    .lq-scriptorium:before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 28%,rgba(114,255,206,.06),transparent 35%),radial-gradient(ellipse at 82% 35%,rgba(215,170,61,.055),transparent 34%);pointer-events:none}.lq-scriptorium .lq-scan{display:none}
+    .lq-waterline{position:absolute;top:4.9rem;left:0;right:0;z-index:2;width:100%;height:56px;pointer-events:none;overflow:hidden}.lq-waterline:before{content:'';position:absolute;left:-4%;right:-4%;top:20px;height:18px;background:linear-gradient(180deg,rgba(210,255,233,.38),rgba(118,255,218,.16) 35%,rgba(215,170,61,.11) 58%,transparent 100%);clip-path:polygon(0 52%,5% 42%,11% 58%,18% 38%,26% 54%,35% 40%,43% 56%,52% 36%,61% 55%,70% 42%,79% 58%,88% 39%,100% 52%,100% 100%,0 100%);filter:drop-shadow(0 0 14px rgba(0,255,68,.2));animation:lq-waterline-wave 5.5s ease-in-out infinite}.lq-waterline:after{content:'';position:absolute;left:0;right:0;top:26px;height:2px;background:linear-gradient(90deg,rgba(118,255,218,.08),rgba(210,255,233,.7),rgba(215,170,61,.38),rgba(210,255,233,.66),rgba(118,255,218,.08));box-shadow:0 0 18px rgba(0,255,68,.24),0 0 20px rgba(215,170,61,.12);animation:lq-waterline-shimmer 3.8s ease-in-out infinite}@keyframes lq-waterline-wave{50%{transform:translateX(-22px) translateY(3px)}}@keyframes lq-waterline-shimmer{50%{opacity:.55;transform:translateY(3px)}}
+    .lq-wrap.lq-show-scriptorium .lq-scriptorium{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;animation:lq-screen-in .72s cubic-bezier(.16,1,.3,1) both}@keyframes lq-screen-in{0%{opacity:0;transform:translateY(36px) scale(.98);filter:blur(8px)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+    .lq-scriptorium-logo{position:relative;z-index:1;width:min(780px,90vw);filter:drop-shadow(0 0 28px rgba(0,255,68,.38)) drop-shadow(0 0 18px rgba(215,170,61,.22));margin-bottom:1.6rem}
+    .lq-scriptorium-cta{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:clamp(2.2rem,8vh,5rem);width:100%;max-width:680px}
+    .lq-discord-btn{display:inline-flex;align-items:center;gap:.75rem;margin:0;padding:.9rem 1.8rem;border-radius:999px;color:rgba(220,255,230,.92);font-size:1rem;font-weight:600;letter-spacing:.04em;border:1.5px solid rgba(0,255,68,.35);background:rgba(0,255,68,.07);box-shadow:0 0 18px rgba(0,255,68,.08),inset 0 0 12px rgba(0,255,68,.04);transition:transform .25s,box-shadow .25s,border-color .25s,background .25s;text-decoration:none}.lq-discord-btn:hover{transform:translateY(-2px);border-color:rgba(0,255,68,.7);background:rgba(0,255,68,.13);box-shadow:0 0 28px rgba(0,255,68,.18)}
+    .lq-discord-icon{width:28px;height:28px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(0,255,68,.34))}
+    .lq-discord-note{max-width:560px;color:rgba(225,255,235,.54);font-size:1rem;line-height:1.65}
+    .lq-scriptorium-back{position:absolute;top:2rem;left:max(2rem,6vw);z-index:3}
+    .lq-scriptorium-footer{display:none;background:#030303}.lq-wrap.lq-show-scriptorium .lq-scriptorium-footer{display:block;animation:lq-screen-in .72s cubic-bezier(.16,1,.3,1) .08s both}.lq-scriptorium-footer:before{background:radial-gradient(ellipse at center,rgba(0,255,68,.75),rgba(215,170,61,.38) 28%,rgba(0,255,68,.12) 52%,transparent 76%)}.lq-scriptorium-footer .lq-footer-nav-title{color:rgba(215,170,61,.55)}
+
+    @media(max-width:780px){.lq-sobre-inner{grid-template-columns:1fr;gap:2.5rem}.lq-sobre-visual{display:none}.lq-footer-inner{grid-template-columns:1fr;gap:2.5rem}.lq-footer{padding:3rem 1.5rem 2rem}.lq-arrow{display:none}}
+    @media(max-width:600px){.lq-section,.lq-sobre{padding-left:1.25rem;padding-right:1.25rem}.lq-modal{padding:2rem}.lq-actions{gap:.75rem}.lq-btn{width:100%;justify-content:center}.lq-poster{flex-basis:180px}.lq-poster-img{width:180px;height:240px}.lq-poster-label,.lq-poster-sublabel{max-width:200px}.lq-scriptorium-back{position:relative;top:auto;left:auto;margin-bottom:2rem}.lq-scriptorium{padding:5rem 1.5rem 3rem}.lq-scriptorium{padding:5rem 1.5rem 4rem}}
+  </style>
+
+  <div class="lq-global-particles" id="lq-global-particles"></div>
+
+  <section class="lq-banner">
+    <div class="lq-glow"></div><div class="lq-scan"></div>
+    <img class="lq-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXP-6qctGhLz4Rh8QGRiqXE4yQcN94o48f8EQcei5yVWjaEn58I3GY6MXqyNDDmjaKtFhqeV2-6x6mKc6CsxGsq0Kom_SRC5v8yE_lsm9xdKO1bilb0_-8WK3eeVLujlXa1MdD3zf4z4Hir2UqlIAkx3J6_KsTMmFsg1ItgEAm_h2PVZvP9PvHN7yG_fRH/s16000/Licuado%20Logotipo.png" alt="LICUADO" id="lq-logo-img">
+    <p class="lq-tagline">Un estudio de videojuegos con más ambición que personal
+    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
+    <p class="lq-sub">Estudio de videojuegos independiente</p>
+    <div class="lq-actions">
+      <a class="lq-btn" href="#lq-proyectos" data-lq-scroll="lq-proyectos">Ver proyectos <span>&#8595;</span></a>
+      <a class="lq-btn" href="#lq-sobre" data-lq-scroll="lq-sobre">Sobre LICUADO <span>&#8595;</span></a>
+    </div>
+    <div class="lq-dropdown-wrapper" style="margin-top:2rem;opacity:0;animation:lq-fade-up 1s ease 1.55s forwards;position:relative;z-index:2;">
+      <style>
+        .lq-dropdown-wrapper * { box-sizing: border-box; }
+        .lq-dropdown { position: relative; z-index: 10; }
+        .lq-dropdown-toggle {
+          position: relative;
+          background: rgba(34, 255, 119, 0.08);
+          border: 1px solid rgba(34, 255, 119, 0.45);
+          color: #22ff77;
+          font-family: 'Fredoka', sans-serif;
+          font-size: 14px;
+          font-weight: bold;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          padding: 14px 26px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          border-radius: 999px;
+          backdrop-filter: blur(14px) saturate(180%);
+          -webkit-backdrop-filter: blur(14px) saturate(180%);
+          box-shadow:
+            0 8px 32px rgba(34, 255, 119, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          text-shadow: 0 0 8px rgba(34, 255, 119, 0.7);
+          min-width: 320px;
+          justify-content: space-between;
+          overflow: hidden;
+        }
+        .lq-dropdown-toggle::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0.04) 40%,
+            rgba(255, 255, 255, 0) 60%,
+            rgba(34, 255, 119, 0.08) 100%
+          );
+          pointer-events: none;
+        }
+        .lq-dropdown-toggle:hover {
+          background: rgba(34, 255, 119, 0.14);
+          border-color: rgba(34, 255, 119, 0.7);
+          box-shadow:
+            0 10px 40px rgba(34, 255, 119, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.35),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+          color: #d4ffe0;
+          text-shadow: 0 0 12px rgba(34, 255, 119, 1);
+          transform: translateY(-1px);
+        }
+        .lq-arrow-icon {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-right: 2px solid currentColor;
+          border-bottom: 2px solid currentColor;
+          transform: rotate(45deg) translate(-2px, -2px);
+          transition: transform 0.3s ease;
+        }
+        .lq-dropdown.open .lq-arrow-icon {
+          transform: rotate(-135deg) translate(-2px, -2px);
+        }
+        .lq-dropdown-menu {
+          position: absolute;
+          top: calc(100% + 12px);
+          left: 0;
+          right: 0;
+          background: rgba(34, 255, 119, 0.06);
+          border: 1px solid rgba(34, 255, 119, 0.4);
+          border-radius: 28px;
+          box-shadow:
+            0 12px 40px rgba(34, 255, 119, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.22),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+          padding: 10px;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-8px);
+          transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+          backdrop-filter: blur(16px) saturate(180%);
+          -webkit-backdrop-filter: blur(16px) saturate(180%);
+        }
+        .lq-dropdown.open .lq-dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+        .lq-dropdown-item {
+          position: relative;
+          display: block;
+          text-align: center;
+          padding: 14px 20px;
+          color: #22ff77;
+          text-decoration: none;
+          font-family: 'Fredoka', sans-serif;
+          font-size: 13px;
+          font-weight: bold;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          border: 1px solid rgba(34, 255, 119, 0.25);
+          border-radius: 999px;
+          background: rgba(34, 255, 119, 0.05);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          text-shadow: 0 0 6px rgba(34, 255, 119, 0.6);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+          overflow: hidden;
+        }
+        .lq-dropdown-item::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(34, 255, 119, 0.06) 100%
+          );
+          pointer-events: none;
+        }
+        .lq-dropdown-item:hover {
+          background: rgba(34, 255, 119, 0.18);
+          border-color: rgba(34, 255, 119, 0.7);
+          color: #ffffff;
+          text-shadow: 0 0 12px rgba(34, 255, 119, 1);
+          box-shadow:
+            0 6px 20px rgba(34, 255, 119, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+          transform: translateY(-1px);
+        }
+      </style>
+      <div class="lq-dropdown" id="lq-tools-dropdown">
+        <button class="lq-dropdown-toggle" id="lq-toggle" aria-expanded="false" aria-haspopup="true">
+          <span>Descubre mis propias herramientas</span>
+          <span class="lq-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="lq-dropdown-menu" role="menu">
+          <a class="lq-dropdown-item" href="https://kronostl.netlify.app/" target="_blank" rel="noopener" role="menuitem">Kronos</a>
+        </div>
+      </div>
+      <script>
+        (function() {
+          const dropdown = document.getElementById('lq-tools-dropdown');
+          const toggle = document.getElementById('lq-toggle');
+          if (!dropdown || !toggle) return;
+          
+          toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdown.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', isOpen);
+          });
+          
+          document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+              dropdown.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+          
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+              dropdown.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          });
+        })();
+      </script>
+    </div>
+
+  </section>
+
+  <div class="lq-wave"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,35 C300,70 600,0 900,40 C1100,65 1300,20 1440,30 L1440,70 L0,70 Z" fill="#0a0a0a"/></svg></div>
+
+  <section class="lq-section lq-proyectos" id="lq-proyectos">
+    <div class="lq-proy-header"><span class="lq-proy-label">En desarrollo</span><h2 class="lq-proy-title">Proyectos</h2></div>
+    <div class="lq-row-wrap">
+      <button class="lq-arrow lq-arrow-left" type="button" data-lq-row="lq-dev-row" data-lq-dir="-1">&#8592;</button>
+      <button class="lq-arrow lq-arrow-right" type="button" data-lq-row="lq-dev-row" data-lq-dir="1">&#8594;</button>
+      <div class="lq-row" id="lq-dev-row">
+        <div class="lq-poster" data-lq-open-modal>
+          <div class="lq-poster-img lq-cover-art-frame">
+            <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3I7qjXeBTziyGW7c_4YjHbvlTQvt6_DqST71l3LTYImjxfi7LkKb_f9bTI0DJ_T7aRC2ld39X5L2GL-oIcGj9d7eLvsEgOequ5mqlfpfLCSpBxls9VfnViwBxByWHLF-rxu0wdJM81rO_d4dbpEsgdtMLSpZQ_5f8Vvgbr41taFywwZrLLFZ2-915FjA/s16000/L%C3%BAmen%20Ecos%20bajo%20la%20corteza%20+%20logotipo%20de%20LICUADO.png" alt="Portada de Lúmen: Ecos bajo la corteza">
+            <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver más</span></div>
+          </div>
+          <div class="lq-poster-label">Lúmen</div>
+          <div class="lq-poster-sublabel">Metroidvania · En desarrollo</div>
+        </div>
+        <div class="lq-poster lq-poster-ghost">
+          <div class="lq-poster-img"><div class="lq-ghost-inner"><div class="lq-ghost-emoji">._.</div><p class="lq-ghost-text">¡No hay nada más aquí!</p></div></div>
+          <div class="lq-poster-label" style="color:rgba(245,245,240,.15)">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lq-wave" style="background:#0a0a0a"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,40 C360,10 720,65 1080,30 C1260,12 1380,50 1440,45 L1440,70 L0,70 Z" fill="#060606"/></svg></div>
+
+  <section class="lq-section lq-publicados" id="lq-publicados">
+    <div class="lq-proy-header"><span class="lq-proy-label">Publicados</span><h2 class="lq-proy-title">Proyectos publicados</h2></div>
+    <div class="lq-row-wrap"><div class="lq-row"><div class="lq-poster lq-poster-ghost">
+      <div class="lq-poster-img"><div class="lq-ghost-inner"><div class="lq-ghost-emoji" style="font-size:2.2rem">._.</div><p class="lq-ghost-text" style="font-size:.82rem">¡Aún no hay nada aquí!<br>Pero estoy trabajando<br>en algo muy grande.</p></div></div>
+      <div class="lq-poster-label" style="color:rgba(245,245,240,.15)">—</div>
+    </div></div></div>
+  </section>
+
+  <div class="lq-wave" style="background:#060606"><svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0,20 C240,65 580,5 900,45 C1100,68 1300,25 1440,40 L1440,70 L0,70 Z" fill="#0a0a0a"/></svg></div>
+
+  <section class="lq-sobre" id="lq-sobre">
+    <div class="lq-sobre-inner">
+      <div class="lq-sobre-visual"><div class="lq-ring lq-ring-1"></div><div class="lq-ring lq-ring-2"></div>
+        <div class="lq-sobre-blob">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="filter:drop-shadow(0 0 10px #00ff44) drop-shadow(0 0 24px rgba(0,255,68,.5))">
+            <path d="M44 8L56 20L20 56L8 56L8 44L44 8Z" stroke="#00ff44" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M36 16L48 28" stroke="#00ff44" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M8 44L12 48" stroke="#00ff44" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+            <circle cx="52" cy="12" r="2" fill="#00ff44" opacity=".7"/>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <span class="lq-proy-label">El estudio</span>
+        <h2 class="lq-sobre-titulo">Qué es <span>LICUADO</span></h2>
+        <p class="lq-sobre-parrafo">Licuado no es un equipo, son solo los esfuerzos de un estudiante de instituto que un día quedó fascinado con Hollow Knight de Team Cherry. Los frutos de estar aburrido. Es el resultado de una obsesión por entregar algo que se quede en tu memoria y te cambie para bien, e incluso que te inspire a crear. </p>
+        <p class="lq-sobre-parrafo">LICUADO existe porque los videojuegos pueden ser algo más que un producto. Los videojuegos están hechos para entregar una experiéncia y un mensaje, no solo para hacer dinero. No se puede desperdiciar así el máximo exponente del arte, porque si, los devs somos artistas, y los videojuegos no son un tipo de arte, son todas las artes.  </p>
+        <div class="lq-divider-soft"></div>
+        <span class="lq-proy-label">Caribe Studios</span>
+        <p class="lq-sobre-parrafo">Caribe Studios es un estudio independiente con el que tengo contacto, y están trabajando en un metroidvania. Me sorprende que un chico a penas mayor que yo ya consiguió reunir a tanta gente, ya que, si, Caribe Studios también está liderado por un estudiante.</p>
+        <a class="lq-link" href="https://caribe-studios-portal-883042bb.base44.app/" target="_blank" rel="noopener">Ir a Caribe Studios &#8599;</a>
+        <div class="lq-sobre-facts">
+          <div class="lq-fact"><span class="lq-fact-num">1</span><span class="lq-fact-label">Artista tras todo lo que ves</span></div>
+          <div class="lq-fact"><span class="lq-fact-num">&#8734;</span><span class="lq-fact-label">Horas de volcar mis ideas en un computador</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lq-footer lq-footer-home">
+    <div class="lq-fire-wrap" style="left:50%;transform:translateX(-50%)"><div class="lq-flame lq-flame-2"></div><div class="lq-flame lq-flame-3"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div><div class="lq-fire-spark" style="left:50%;bottom:30px;--delay:0s;--dx:-18px;--dy:-60px"></div><div class="lq-fire-spark" style="left:55%;bottom:28px;--delay:.4s;--dx:12px;--dy:-70px"></div></div>
+    <div class="lq-fire-wrap lq-fire-sm" style="left:15%;transform:translateX(-50%)"><div class="lq-flame lq-flame-2"></div><div class="lq-flame lq-flame-3"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div></div>
+    <div class="lq-fire-wrap lq-fire-sm" style="left:30%;transform:translateX(-50%)"><div class="lq-flame lq-flame-2"></div><div class="lq-flame lq-flame-3"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div></div>
+    <div class="lq-fire-wrap lq-fire-sm" style="left:70%;transform:translateX(-50%)"><div class="lq-flame lq-flame-2"></div><div class="lq-flame lq-flame-3"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div></div>
+    <div class="lq-fire-wrap lq-fire-sm" style="left:85%;transform:translateX(-50%)"><div class="lq-flame lq-flame-2"></div><div class="lq-flame lq-flame-3"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div></div>
+    <div class="lq-fire-wrap lq-fire-sm" style="left:5%;transform:translateX(-50%);opacity:.6"><div class="lq-flame lq-flame-2"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div></div>
+    <div class="lq-fire-wrap lq-fire-sm" style="left:95%;transform:translateX(-50%);opacity:.6"><div class="lq-flame lq-flame-3"></div><div class="lq-flame lq-flame-1"></div><div class="lq-flame lq-flame-core"></div></div>
+    <div class="lq-footer-inner">
+      <div class="lq-footer-brand">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXP-6qctGhLz4Rh8QGRiqXE4yQcN94o48f8EQcei5yVWjaEn58I3GY6MXqyNDDmjaKtFhqeV2-6x6mKc6CsxGsq0Kom_SRC5v8yE_lsm9xdKO1bilb0_-8WK3eeVLujlXa1MdD3zf4z4Hir2UqlIAkx3J6_KsTMmFsg1ItgEAm_h2PVZvP9PvHN7yG_fRH/s16000/Licuado%20Logotipo.png" alt="LICUADO">
+        <p class="lq-footer-tagline">Pensando obsesionado,
+        porque la ventana me ha inspirado...</p>
+      </div>
+      <div>
+        <p class="lq-footer-nav-title">Navegar</p>
+        <ul class="lq-footer-nav">
+          <li><a href="#lq-top" data-lq-scroll="lq-top">Inicio</a></li>
+          <li><a href="#lq-proyectos" data-lq-lumen>Lúmen</a></li>
+          <li><a href="https://caribe-studios-portal-883042bb.base44.app/" target="_blank" rel="noopener">Caribe Studios &#8599;</a></li>
+          <li style="margin-top:.6rem"><a href="#" class="lq-btn-scriptorium" data-lq-screen="scriptorium">LICUADO Scriptorium</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lq-footer-bottom">
+      <span class="lq-footer-copy">&copy; 2026 LICUADO. Todos los derechos reservados.</span>
+      <span class="lq-footer-made">Hecho a mano, pixel a pixel.</span>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTORIUM ── -->
+  <section class="lq-scriptorium" id="lq-scriptorium">
+    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <div class="lq-glow"></div>
+    <div class="lq-scan"></div>
+    <div class="lq-waterline"></div>
+    <img class="lq-scriptorium-logo" src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
+    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
+    <div class="lq-scriptorium-cta">
+      <a class="lq-discord-btn" href="https://discord.gg/qSA3gyVCW" target="_blank" rel="noopener">
+        <img class="lq-discord-icon" src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-white-icon.png" alt="">
+        Entrar al Discord
+      </a>
+      <a class="lq-discord-btn" href="https://youtube.com/@licuado_scriptorium?si=8GNDObIl_y5xVzyq" target="_blank" rel="noopener">Visita el canal de YouTube</a>
+      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
+      <a class="lq-discord-btn" href="https://kronostl.netlify.app/" target="_blank" rel="noopener">Si quieres crear una historia, visita Kronos</a>
+      
+      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+      <p class="lq-discord-note">Si quieres comunicarte conmigo, si quieres participar en el proyecto, contáctame...</p>
+    </div>
+  </section>
+
+  <footer class="lq-footer lq-scriptorium-footer">
+    <div class="lq-footer-inner">
+      <div class="lq-footer-brand">
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
+        <p class="lq-footer-tagline">Un espacio interno para guardar textos, ideas y fragmentos de LICUADO.</p>
+      </div>
+      <div>
+        <p class="lq-footer-nav-title">Navegar</p>
+        <ul class="lq-footer-nav">
+          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li><a href="#lq-scriptorium" data-lq-scroll-scriptorium>Inicio de Scriptorium</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lq-footer-bottom">
+      <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
+      <span class="lq-footer-made">Verde vivo, tinta dorada.</span>
+    </div>
+  </footer>
+
+  <!-- ── MODAL ── -->
+  <div class="lq-modal-overlay" id="lq-modal">
+    <div class="lq-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-modal aria-label="Cerrar">&#10005;</button>
+      <div class="lq-modal-orb-row"><div class="lq-modal-orb"></div><div><div class="lq-modal-title">Lúmen</div></div></div>
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq8xIVIeLa27j0NOcCwHdrSuB4m-Exed2ZdKwvyxWfndYiOPk5L_0_4wnPERG69GNvXfPTomYeUExKsO4ENHIywdjdxw-4GbMPwlssVLzdjvWDISJLc4p_F3GmTo-o9CQGJQ5rQD4UoYoBF4tQQhC-qkwhssg1PwrxDKoZElB_2Ux6188txkWphUe45VA/w1684-h1069-p-k-no-nu/EPSON002.JPG" alt="Lúmen: Ecos bajo la corteza" style="width:100%;border-radius:14px;margin-bottom:1.5rem;display:block;object-fit:cover;max-height:240px;object-position:center center;">
+      <div class="lq-divider-soft"></div>
+      <span class="lq-modal-lore-label">Descripción</span>
+      <div class="lq-modal-lore">
+        <p>Durante esta aventura, tomas el papel de <em>el Errante</em>: un pequeño ser hecho de <em>savia</em>, que tenía una vida tranquila y pacífica en su aldea  <em>Crocus Sativus</em>. Pero el ser un ingenuo e inocente infante cambia al presenciar la tortura y ejecución de un ser querido, un guerrero de la aldea bastante cercano a él.</p>
+        <p>Explora el árbol madre, revela secretos, busca venganza, intenta ser un mesías, corta tus raíces, descubre civilizaciónes aisladas de todo lo demás, y tal vez... <em>Enfrénta a un dios que desexiste recuerdos por misericordia...</em></p>
+        <p>No pienses que te encuentras ante algo sencillo, esta aventura será <em>difícil</em>: sus pasillos esconden  cientas de criaturas diferentes que no perdonan, y en sus floemas aguardan <em>jefes imponentes</em> con patrones de ataque que pondrán a prueba cada reflejo que tengas. El combate es intenso, preciso, y brutalmente satisfactorio cuando por fin lo dominas.</p>
+        <p> Está en desarrollo, pero prometo una gran obra, porque pongo pasión en cada hora de trabajo, para que disfrutes cada minuto de juego.</p>
+        <p>Las grandes obras nacen del aburrimiento, y la que da inicio a todo el proyecto LICUADO surgió de mirar la ventana por 18 horas en un bus.</p>
+        
+      </div>
+      <div class="lq-divider-soft"></div>
+      <div class="lq-modal-tags">
+        <span class="lq-tag">Metroidvania</span><span class="lq-tag">Exploración</span><span class="lq-tag">Gran lore</span><span class="lq-tag">Plataformas</span><span class="lq-tag">Difícil</span><span class="lq-tag">Combate intenso</span><span class="lq-tag">En desarrollo</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var wrap=document.querySelector('.lq-wrap'); if(!wrap) return;
+    var logo=document.getElementById('lq-logo-img'); if(logo) logo.onerror=function(){logo.style.display='none'};
+
+    function animateScrollTo(target,duration){
+      var start=window.scrollY||document.documentElement.scrollTop||0;
+      var change=target-start; var startTime=null;
+      function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+      function step(time){
+        if(!startTime) startTime=time;
+        var p=Math.min((time-startTime)/duration,1);
+        window.scrollTo(0,start+(change*ease(p)));
+        if(p<1) requestAnimationFrame(step); else buildParticles();
+      }
+      requestAnimationFrame(step);
+    }
+
+    function switchScreen(next){
+      wrap.classList.add('lq-switching');
+      setTimeout(function(){
+        if(next==='scriptorium') wrap.classList.add('lq-show-scriptorium');
+        else wrap.classList.remove('lq-show-scriptorium');
+        document.body.style.overflow='';
+        window.scrollTo(0,0);
+        buildParticles();
+      },260);
+      setTimeout(function(){wrap.classList.remove('lq-switching');},900);
+    }
+
+    function scrollToId(id){
+      if(wrap.classList.contains('lq-show-scriptorium')){wrap.classList.remove('lq-show-scriptorium');window.scrollTo(0,0);}
+      var el=document.getElementById(id);
+      if(el){var target=(window.scrollY||0)+el.getBoundingClientRect().top; animateScrollTo(target,1350);}
+    }
+
+    wrap.querySelectorAll('[data-lq-scroll]').forEach(function(a){
+      a.addEventListener('click',function(e){e.preventDefault();scrollToId(a.getAttribute('data-lq-scroll'));});
+    });
+    wrap.querySelectorAll('[data-lq-screen]').forEach(function(a){
+      a.addEventListener('click',function(e){e.preventDefault();
+        if(a.getAttribute('data-lq-screen')==='scriptorium') switchScreen('scriptorium');
+        else switchScreen('home');
+      });
+    });
+    wrap.querySelectorAll('[data-lq-scroll-scriptorium]').forEach(function(a){
+      a.addEventListener('click',function(e){e.preventDefault();animateScrollTo(0,900);});
+    });
+    wrap.querySelectorAll('[data-lq-row]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var row=document.getElementById(btn.getAttribute('data-lq-row'));
+        if(row) row.scrollBy({left:Number(btn.getAttribute('data-lq-dir'))*440,behavior:'smooth'});
+      });
+    });
+
+    var modal=document.getElementById('lq-modal');
+    function openModal(){if(modal){modal.classList.add('open');document.body.style.overflow='hidden';}}
+    function closeModal(){if(modal){modal.classList.remove('open');document.body.style.overflow='';}}
+    wrap.querySelectorAll('[data-lq-open-modal]').forEach(function(el){el.addEventListener('click',openModal);});
+    wrap.querySelectorAll('[data-lq-close-modal]').forEach(function(el){el.addEventListener('click',closeModal);});
+    if(modal) modal.addEventListener('click',function(e){if(e.target===modal) closeModal();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape') closeModal();});
+    wrap.querySelectorAll('[data-lq-lumen]').forEach(function(a){
+      a.addEventListener('click',function(e){e.preventDefault();scrollToId('lq-proyectos');setTimeout(openModal,650);});
+    });
+
+    var layer=document.getElementById('lq-global-particles'); if(!layer) return;
+    function buildParticles(){
+      layer.innerHTML='';
+      var viewportH=window.innerHeight||800;
+      var visibleFooter=wrap.classList.contains('lq-show-scriptorium')
+        ? document.querySelector('.lq-scriptorium-footer')
+        : document.querySelector('.lq-footer-home');
+      var footerTop=visibleFooter ? visibleFooter.getBoundingClientRect().top : viewportH;
+      var h=Math.max(0,Math.min(viewportH,footerTop-3));
+      layer.style.height=h+'px';
+      layer.style.display=h<24?'none':'block';
+      if(h<24) return;
+      var rand=function(min,max){return Math.random()*(max-min)+min};
+
+      if(wrap.classList.contains('lq-show-scriptorium')){
+        var bubbleCount=Math.round(34+Math.min(26,h/28));
+        for(var b=0;b<bubbleCount;b++){
+          var bubble=document.createElement('i'); bubble.className='lq-bubble';
+          var size=Math.round(rand(8,24));
+          var baseTop=rand(Math.max(24,h-190),Math.max(28,h-10));
+          bubble.style.cssText='width:'+size+'px;height:'+size+'px;left:'+rand(4,96).toFixed(2)+'%;top:'+baseTop.toFixed(0)+'px;--dur:'+rand(6.5,14).toFixed(2)+'s;--delay:'+rand(-12,1).toFixed(2)+'s;--op:'+rand(.32,.72).toFixed(2)+';--rise:-'+rand(120,330).toFixed(0)+'px;--drift:'+rand(-34,34).toFixed(0)+'px';
+          layer.appendChild(bubble);
+        }
+        for(var sb=0;sb<12;sb++){
+          var surface=document.createElement('i'); surface.className='lq-surface-bubble';
+          var sSize=Math.round(rand(5,13));
+          surface.style.cssText='width:'+sSize+'px;height:'+sSize+'px;left:'+rand(3,97).toFixed(2)+'%;top:'+rand(76,100).toFixed(0)+'px;--dur:'+rand(3.4,6.8).toFixed(2)+'s;--delay:'+rand(-8,2).toFixed(2)+'s';
+          layer.appendChild(surface);
+        }
+        return;
+      }
+
+      var maxScroll=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+      var progress=Math.min(1,Math.max(0,window.scrollY/maxScroll));
+      var heat=.35+(progress*.95);
+      var bands=[
+        {from:.02,to:.18,s:Math.round(5*heat),d:Math.round(2*heat)},
+        {from:.18,to:.36,s:Math.round(9*heat),d:Math.round(3*heat)},
+        {from:.36,to:.55,s:Math.round(15*heat),d:Math.round(5*heat)},
+        {from:.55,to:.74,s:Math.round(24*heat),d:Math.round(8*heat)},
+        {from:.74,to:.98,s:Math.round(38*heat),d:Math.round(12*heat)}
+      ];
+      bands.forEach(function(b,i){
+        var depth=(i+1)/bands.length;
+        var intensity=Math.min(1,depth*.65+progress*.55);
+        for(var n=0;n<b.s;n++){
+          var el=document.createElement('i'); el.className='lq-spark';
+          var top=rand(b.from*h,b.to*h),left=rand(2,98),dur=rand(3.2,7.2-intensity*1.6),delay=rand(-7,1),ang=rand(-64,-8),op=rand(.16+intensity*.12,.34+intensity*.28);
+          el.style.cssText='left:'+left+'%;top:'+top+'px;--dur:'+dur.toFixed(2)+'s;--delay:'+delay.toFixed(2)+'s;--ang:'+ang.toFixed(1)+'deg;--op:'+op.toFixed(2)+';--rise:-'+rand(70,170+intensity*85).toFixed(0)+'px;--drift:'+rand(-24,24).toFixed(0)+'px';
+          layer.appendChild(el);
+        }
+        for(var m=0;m<b.d;m++){
+          var dot=document.createElement('i'); dot.className='lq-p';
+          var size=Math.round(rand(2,4+intensity*2));
+          dot.style.cssText='width:'+size+'px;height:'+size+'px;left:'+rand(2,98).toFixed(2)+'%;top:'+rand(b.from*h,b.to*h).toFixed(0)+'px;--dur:'+rand(5,11-intensity*1.5).toFixed(2)+'s;--delay:'+rand(-7,1).toFixed(2)+'s;--op:'+rand(.1+intensity*.08,.24+intensity*.18).toFixed(2)+';--rise:-'+rand(60,145+intensity*65).toFixed(0)+'px;--drift:'+rand(-28,28).toFixed(0)+'px';
+          layer.appendChild(dot);
+        }
+      });
+    }
+
+    buildParticles();
+    var resizeTimer; window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(buildParticles,250);});
+    var scrollTimer; window.addEventListener('scroll',function(){clearTimeout(scrollTimer);scrollTimer=setTimeout(buildParticles,160);},{passive:true});
+  })();
+  </script>
+</div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+.lq-wrap .lq-proy-title,
+.lq-wrap .lq-sobre-titulo,
+.lq-wrap .lq-modal-title,
+.lq-wrap .lq-poster-label,
+.lq-wrap .lq-fact-num,
+.lq-wrap .lq-sub {
+  font-family: 'Audiowide', cursive !important;
+  font-weight: 400 !important;
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5P566X0J9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5P566X0J9J');
+</script>
