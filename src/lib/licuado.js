@@ -246,7 +246,48 @@ export function initLicuado(wrap) {
   if (almaPanel) on(almaPanel, 'click', function (e) { if (e.target === almaPanel) closeAlma(); });
   almaShowPage(1);
 
-  on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); } });
+  /* ── Panel \"Verdad\" (frase del footer de Home: ¿Realmente es verdad lo que nos cuentan?) ── */
+  var verdadPanel = wrap.querySelector('#lq-verdad-panel');
+  var verdadPages = wrap.querySelector('#lq-verdad-pages');
+  var verdadPageIdx = 0;
+  var verdadTotal = 2;
+  function verdadShowPage(idx) {
+    verdadPageIdx = Math.max(0, Math.min(verdadTotal - 1, idx));
+    if (verdadPages) verdadPages.style.transform = 'translateX(-' + (verdadPageIdx * 100) + '%)';
+    var vLeft = verdadPanel ? verdadPanel.querySelector('.lq-dios-arrow-left') : null;
+    var vRight = verdadPanel ? verdadPanel.querySelector('.lq-dios-arrow-right') : null;
+    if (vLeft) vLeft.style.display = verdadPageIdx > 0 ? 'flex' : 'none';
+    if (vRight) vRight.style.display = verdadPageIdx < verdadTotal - 1 ? 'flex' : 'none';
+    var vDots = wrap.querySelector('#lq-verdad-dots-fixed');
+    if (vDots) {
+      vDots.innerHTML = '';
+      var dotCount = verdadTotal - verdadPageIdx;
+      for (var vd = 0; vd < dotCount; vd++) {
+        var vdot = document.createElement('span');
+        vdot.className = 'lq-dios-dot';
+        vDots.appendChild(vdot);
+      }
+    }
+  }
+  function openVerdad() {
+    if (verdadPanel) {
+      verdadPanel.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      if (verdadPages) verdadPages.querySelectorAll('.lq-dios-page').forEach(function (p) { p.scrollTop = 0; });
+      verdadShowPage(0);
+    }
+  }
+  function closeVerdad() { if (verdadPanel) { verdadPanel.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; } }
+  wrap.querySelectorAll('[data-lq-open-verdad]').forEach(function (el) { on(el, 'click', function (e) { e.preventDefault(); openVerdad(); }); });
+  wrap.querySelectorAll('[data-lq-close-verdad]').forEach(function (el) { on(el, 'click', closeVerdad); });
+  wrap.querySelectorAll('[data-lq-verdad-dir]').forEach(function (btn) {
+    on(btn, 'click', function (e) { e.stopPropagation(); verdadShowPage(verdadPageIdx + Number(btn.getAttribute('data-lq-verdad-dir'))); });
+  });
+  if (verdadPanel) on(verdadPanel, 'click', function (e) { if (e.target === verdadPanel) closeVerdad(); });
+  verdadShowPage(0);
+
+  on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); closeVerdad(); } });
   wrap.querySelectorAll('[data-lq-lumen]').forEach(function (a) {
     on(a, 'click', function (e) { e.preventDefault(); scrollToId('lq-proyectos'); setTimeout(openModal, 650); });
   });
