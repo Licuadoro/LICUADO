@@ -599,6 +599,94 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
       </div>
     </div>
   </div>
+
+  <div class="lq-modal-overlay" id="lq-verdad-panel">
+    <div class="lq-modal lq-dios-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-verdad aria-label="Cerrar">&#10005;</button>
+      <div class="lq-dios-dots-fixed" id="lq-verdad-dots-fixed"></div>
+      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-verdad-dir="-1" aria-label="Anterior">&#8592;</button>
+      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-verdad-dir="1" aria-label="Siguiente">&#8594;</button>
+      <div class="lq-dios-viewport">
+        <div class="lq-dios-pages" id="lq-verdad-pages">
+          <div class="lq-dios-page lq-dios-text">
+            <p>Tal vez salga un poco del tema en comparativa con lo demás que he escrito, pero...</p>
+            <p>Me gustaría hacer una advertencia.</p>
+            <p>Y es que usar audífonos de bluetooth te hace más bot.</p>
+            <p>No lo digo porque no me gusten.</p>
+            <p>No lo digo porque no me pueda comprar un par y me dé envidia. (Cosa que no es así jajaja)</p>
+            <p>Lo digo porque emiten radiación.</p>
+            <p>Y para que lo entiendas mejor, lo voy a comparar con un microondas.</p>
+            <p>El microondas calienta tu cena emitiendo radiación sobre ella.</p>
+            <p>Utilizan un aparato llamado magnetrón, para generar las microondas.</p>
+            <p>Esas microondas penetran la comida y al agitar las moléculas de la comida, esta se calienta.</p>
+            <p>El microondas está hecho de metal, que cubre todo su mecanismo y el magnetrón.</p>
+            <p>Tal como una cámara de Faraday que atrapa un alma porque no deja salir las ondas electromagnéticas.</p>
+            <p>Y esas capas de metal que rodean el magnetrón nos salvan la vida cada vez que lo usamos.</p>
+            <p>Y es que esa radiación puede causar pérdida de memoria, cataratas, y varias otras desgracias.</p>
+            <p>Bueno, los sistemas de bluetooth y de wifi usan las mismas ondas que produce el magnetrón.</p>
+            <p>Evidentemente, a menor escala, ya que de no ser así, sufrirías los mismos efectos permanentes que mencioné antes.</p>
+            <p>Ya que, los audífonos bluetooth no tienen esas capas de metal que tienen los microondas que evitan que salgan las microondas.</p>
+            <p>Ni tampoco las tienen los routers de wifi, ni un teléfono, ni muchos otros ejemplos.</p>
+            <p>Entonces ¿Por qué hago tanto énfasis en los audífonos bluetooth?</p>
+            <p>Simple.</p>
+            <p>Es lo que va más cerca de tu cerebro.</p>
+            <p>Y creerás que al ser menores las ondas electromagnéticas ya te salvas.</p>
+            <p>Pues no.</p>
+            <p>Igualmente se generan los efectos a largo plazo, y estando tan cerca de tu cerebro, podrían controlar lo que recuerdas o olvidas, o incluso lo que piensas.</p>
+            <p>Porque los pensamientos también son una señal eléctrica que corre por tus neuronas.</p>
+            <p>No es conspiración, se llama física básica.</p>
+            <p>Y si, podrías atrapar un alma en un microondas.</p>
+            <p>¿A qué sabe un alma cocida en microondas?</p>
+          </div>
+          <div class="lq-dios-page lq-dios-text">
+            <p>Sé que puede que haya fanáticos religiosos leyendo esto, así que lo redactaré de forma objetiva.</p>
+            <p>Bueno, pues me parece curioso como tanta gente cree en lo mismo.</p>
+            <p>Muchísima gente comparte la misma religión, un buen porcentaje de la humanidad.</p>
+            <p>Y esas personas probablemente ignoran el hecho de que las religiones fueron creadas como forma de control masivo de masas de gente.</p>
+            <p>Probablemente ignoran el hecho de que todos los textos religiosos fueron escritos por una persona que probablemente estaba aburrida un sábado por la tarde.</p>
+            <p>¿No te has preguntado de qué sirven las donaciones monetarias al dios de cada religión?</p>
+            <p>Porque sea lo que sea, sinceramente no creo que le interese el dinero.</p>
+            <p>Esas donaciones se las suelen gastar las personas que las reciben de primera mano, en sus caprichos y a veces en cosas que se supone que tiene prohibido por su cargo religioso.</p>
+            <p>Y la gente las entrega de buena fé, quizá pensando que su dios se va a poder dar un gusto y comer en un sitio bonito.</p>
+            <p>Bueno, no digo que siempre se roben las donaciones, pero... ¿Realmente a quién se las entregan?</p>
+            <p>¿Se supone que se las dan a la deidad personalmente?</p>
+            <p>Bueno, es diferente de cuando son para gente necesitada, ya que en ese caso si es entendible el medio en el que entregan dichas donaciones.</p>
+            <p>Aunque muchas veces en ese caso también las roban.</p>
+            <p>Personalmente, no creo en ninguna religión de la que la gente hable. Suelo aceptar más la teoría científica, pero los mismos científicos dijeron que hay muchas cosas que no saben.</p>
+            <p>Y es obvio, es evidente que no saben casi nada. Se podría decir que poseen el...</p>
+            <p>0.000000000000000000000000000000000000000000000000000000 [muchísimos más ceros, tal vez infinitos] 00000000000000000000000000000 00000000000000000000000000000000000001%</p>
+            <p>De toda la información que se puede tener, si es que hay un límite.</p>
+            <p>Y cómo mencioné antes, suelo aceptar la teoría científica.</p>
+            <p>Peeeeroo, siempre he creído que hay algún ente divino detrás de todo.</p>
+            <p>Es por eso que, aburrido un sábado por la tarde, inventé una religión propia, de la que ya había hablado alguna vez.</p>
+            <p>Pero resumiendo, que al haber dimensiones infinitas, todo ser pensante es una deidad y crea una nueva dimensión cada vez que imagina algo distinto a su realidad.</p>
+            <p>Cosa que hacemos todo el tiempo.</p>
+            <p>Así que, según eso, puede que nos haya creado alguien ideando algo, aburrido un sábado por la tarde.</p>
+            <p>Tal vez está religión que inventé aburrido un sábado por la tarde sea la próxima religión en la que crea la mayoría.</p>
+            <p>Tal vez el próximo sábado escriba algunos textos religiosos de mi propia invención.</p>
+            <p>En el caso de la mía no es así, al menos mientras sea mía y yo siga con vida, pero muchas veces las religiones son algo macabro.</p>
+            <p>Y es que no solo manipulan a toda la gente que les cree con toda su fé y a veces dedican su vida a eso con las donaciones.</p>
+            <p>¿Un sacrificio? Si, pero quién morirá será una persona que decida la iglesia, una persona que no nos conviene que siga viviendo porque está cerca de demostrar algo.</p>
+            <p>Demostrar que cómo humanos podemos hacer mucho más de lo que creemos, o demostrar que hemos sido engañados toda la vida por instituciones varias.</p>
+            <p>¿O algo más?</p>
+            <p>Ahora esos sacrificios no son algo de lo que se pueda enterar la gente públicamente.</p>
+            <p>Pero en la edad media sacrificaban a las brujas, si verdaderamente hacían magia, o si sabían un poco de herbología o alquimia.</p>
+            <p>Yo creo que eso no ha cambiado mucho hoy en día, y siguen ejecutando a quienes se acercan a ciertas verdades, o símplemente a quienes les conviene.</p>
+            <p>Y hay muchas más formas en las que las religiones manipulan a sus fieles creyentes.</p>
+            <p>Pero no las voy a decir todas porque esto ya se está haciendo bastante largo.</p>
+            <p>Me sorprende haber podido comunicar todo esto objetivamente, y espero haberlo hecho así.</p>
+            <p>Si algún fanático religioso o algo así se ofendió, sepa que no tenía ninguna intención de hacerlo, la verdad, nunca corrijo mis textos, y si me persiguen por hablar mucho, voy a decir que solo lo escribo para perfeccionar mi redacción o porque estoy aburrido, y realmente no estaré mintiendo.</p>
+            <p>Me encanta como la gente le da tantas formas distintas al creador, como le dedican tantos monumentos y santuarios tan increíbles.</p>
+            <p>De hecho, creo que de las cosas que más me gustan de la religión son su arquitectura.</p>
+            <p>Precisamente un arte...</p>
+            <p>...Es curioso.</p>
+            <p>No.</p>
+            <p>Al menos para mí, es totalmente normal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 `;
 
 export default function Home() {
