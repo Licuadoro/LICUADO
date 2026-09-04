@@ -183,7 +183,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO.</span>
-      <span class="lq-footer-made">Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</span>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
     </div>
   </footer>
 
@@ -294,7 +294,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-dios>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
     </div>
   </footer>
 
@@ -367,7 +367,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Notícias.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-verdad>¿Realmente es verdad lo que nos cuentan?</button>
     </div>
   </footer>
 
@@ -500,6 +500,48 @@ const HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-alma-pages">
           <div class="lq-dios-page lq-dios-text">
+            <p>Lo del alma... Lo que dije antes, lo creo, a medias.
+Creo que somos un alma atrapada en un cuerpo.
+Creo en los viajes astrales.
+Peeero, no creo que para hacer realidad eso que llamamos telekiniesis, necesitamos salir del cuerpo.
+Resulta que además del alma, tenemos el aura.
+De verdad.
+Para entenderlo, hay que visualizarlo como una burbuja alrededor de nuestra alma. Un campo electromagnético.
+Podemos mover cosas que estén dentro del aura, si recordamos cómo.
+El aura no se queda alrededor de nuestro cuerpo, si no, alrededor de nuestra alma.
+Así que si salimos del cuerpo también podemos mover cosas a nuestro alrededor.
+Quienes poseen un alma, te dirán que es mentira.
+Quienes no poseen un alma, te dirán que es cosa de hippies.
+Quienes no poseen alma, no pueden hacerlo.
+¿Será que realmente es mentira?
+Puede ser.
+Yo no poseo la verdad absoluta, es posile que todo en lo que creo sea mentira.
+Es posible que nada de las cosas en las que creo sean verdad.
+Pero, ¿Acaso eso es malo?
+No.
+Cómo humanos, vivimos persiguiendo la verdad, como un perro que persigue el palo.
+Cuando el perro consigue atrapar el palo, se lo lleva a quien lo lanzó y el juego termina.
+Cuando creemos conocer la verdad sobre algo, se lo contamos a quienes podamos, y luego somos decapitados.
+Desaparecemos misteriosamente, como Jacobo Grinberg.
+¿No es extraño?
+¿Coincidencia?
+¿Existen las coincidencias?
+No lo sé, por suerte no poseo la verdad.
+Pero, ¿Cómo sé que no lo sé?
+Tal vez lo se sin saber que lo se, y entonces pienso que no lo sé.
+Y si hipotéticamente conseguimos la verdad absoluta sobre todo... El juego termina.
+Igualmente.
+Si lo sabes todo, y sabes que lo sabes, cosa que se incluye en saberlo todo, ya no hay sorpresas.
+Y si ya no hay asombro, ¿Qué sentido tiene?
+Se pierde toda emoción. Y lo único que aún te podrá hacer sentir vivo es crear.
+Y lo único que nos salva...
+...Es...
+...Ser una deidad.
+Y me alegra poder decir...
+...Que solo tenemos certeza de lo que creamos.
+¿Verdad?</p>
+          </div>
+          <div class="lq-dios-page lq-dios-text">
             <p>Ok, cómo lo prometí, voy a havlar de mi percepción del alma.
 Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
 Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
@@ -552,48 +594,6 @@ Obviamente esto no lo he vivido yo mismo, pero dicen que no es buena idea acepta
 Bueno, pues eso es lo que tenía que decir.
 
 Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, solo tú decides si es real. No dejes que nadie te imponga sus creéncias. Yo solo lo comunico, pero nadie está seguro de la verdad sobre nuestro origen o sobre lo que somos, y me incluyo. O al menos en mi caso desconozco la verdad sobre los secretos políticos del vaticano y el área 51 y muchos más. A veces ni siquiera estoy seguro de si estoy vivo o de si soy un jugador, siguiendo esa misma rutina diária todos los días de mi vida en el interminable e inutil instituto.</p>
-          </div>
-          <div class="lq-dios-page lq-dios-text">
-            <p>Lo del alma... Lo que dije antes, lo creo, a medias.
-Creo que somos un alma atrapada en un cuerpo.
-Creo en los viajes astrales.
-Peeero, no creo que para hacer realidad eso que llamamos telekiniesis, necesitamos salir del cuerpo.
-Resulta que además del alma, tenemos el aura.
-De verdad.
-Para entenderlo, hay que visualizarlo como una burbuja alrededor de nuestra alma. Un campo electromagnético.
-Podemos mover cosas que estén dentro del aura, si recordamos cómo.
-El aura no se queda alrededor de nuestro cuerpo, si no, alrededor de nuestra alma.
-Así que si salimos del cuerpo también podemos mover cosas a nuestro alrededor.
-Quienes poseen un alma, te dirán que es mentira.
-Quienes no poseen un alma, te dirán que es cosa de hippies.
-Quienes no poseen alma, no pueden hacerlo.
-¿Será que realmente es mentira?
-Puede ser.
-Yo no poseo la verdad absoluta, es posile que todo en lo que creo sea mentira.
-Es posible que nada de las cosas en las que creo sean verdad.
-Pero, ¿Acaso eso es malo?
-No.
-Cómo humanos, vivimos persiguiendo la verdad, como un perro que persigue el palo.
-Cuando el perro consigue atrapar el palo, se lo lleva a quien lo lanzó y el juego termina.
-Cuando creemos conocer la verdad sobre algo, se lo contamos a quienes podamos, y luego somos decapitados.
-Desaparecemos misteriosamente, como Jacobo Grinberg.
-¿No es extraño?
-¿Coincidencia?
-¿Existen las coincidencias?
-No lo sé, por suerte no poseo la verdad.
-Pero, ¿Cómo sé que no lo sé?
-Tal vez lo se sin saber que lo se, y entonces pienso que no lo sé.
-Y si hipotéticamente conseguimos la verdad absoluta sobre todo... El juego termina.
-Igualmente.
-Si lo sabes todo, y sabes que lo sabes, cosa que se incluye en saberlo todo, ya no hay sorpresas.
-Y si ya no hay asombro, ¿Qué sentido tiene?
-Se pierde toda emoción. Y lo único que aún te podrá hacer sentir vivo es crear.
-Y lo único que nos salva...
-...Es...
-...Ser una deidad.
-Y me alegra poder decir...
-...Que solo tenemos certeza de lo que creamos.
-¿Verdad?</p>
           </div>
         </div>
       </div>
