@@ -183,7 +183,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO.</span>
-      <span class="lq-footer-made">¿Realmente es verdad lo que nos cuentan?</span>
+      <span class="lq-footer-made">Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</span>
     </div>
   </footer>
 
@@ -294,7 +294,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¿Realmente es verdad lo que nos cuentan?</button>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
     </div>
   </footer>
 
@@ -367,7 +367,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Notícias.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¿Realmente es verdad lo que nos cuentan?</button>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
     </div>
   </footer>
 
@@ -500,148 +500,100 @@ const HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-alma-pages">
           <div class="lq-dios-page lq-dios-text">
-            <p>Tal vez salga un poco del tema en comparativa con lo demás que he escrito, pero...
+            <p>Ok, cómo lo prometí, voy a havlar de mi percepción del alma.
+Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
+Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
+Y pensarás que el cuerpo te permite interactuar con el plano físico y con las otras almas atrapadas en un cuerpo...
+Pero yo ceo al cuerpo méramente como un parásito del alma.
+Si, piénsalo, el cuerpo no te trae ninguna ventaja.
+El cuerpo pemite que te juzguen por el mismo, permite que te enfermes y que entren muchas adicciones...
+...El cuerpo te hace dependiente del oxígeno, en el caso de los animales terrícolas, por ejemplo.
+Los ojos, que creemos que nos permiten ver, no son más que un filtro, ya que si no viviéramos atados a ellos, también podríamos ver cosas etéreas, además de lo que ya vemos.
+Y podría decir muchas más desgracias a las que nos condena el cuerpo. Como el hecho de poder sentir dolor.
+Y dirás que sentir dolor es un mecanismo necesario, pero no lo necesitas si no tienes cuerpo.
+Bueno, al fin y al cabo no todo es malo, así como sentimos dolor, también placer.
+Eso me lleva a preguntarme qué o quién nos atrapó masivamente dentro de este parásito y prisión que es el cuerpo.
+Porque no es normal que tantos padezcamos de él.
+Somos literalmente esclavos de el cuerpo.
+Y cuando abandonemos uno, probablemente nos traslademos a otro.
+O tal vez, quienes somos víctimas del parásito del cuerpo no somos una mayoría, porque el mismo cuerpo es un filtro que impide que veamos a los libres que no lo padecen.
+Pero aún así, somos muchos.
+Sin el cuerpo somos eternos. Bueno, no. Siempre somos eternos, lo que puede morir es el cuerpo.
+¿Sabes qué más es eterno? Los dioses.
+Y solo quienes somos un alma somos divinos.
+Peeero, volviendo al tema del alma, nosotros vivimos esclavos del cuerpo como la prisión que es.
+Se dice que hay gente que ha conseguido salir de el y escapar sin que muera el cuerpo.
+Y quienes lo hacen, pueden mover cosas, y en general, comunicarse con el plano físico.
+Quienes lo vean como ficción le llamarán telequinesis y telepatía.
+Pero yo le llamo alminar.
+Es una palabra que inventé yo mismo.
+Pero tiene raíces sentidas.
+Viene de la palabra caminar, que como es bien sabido, en al gunos idiomas de lenguas romance, pierna se dice cama.
+Y de ahí viene caminar, que es la verbalización del acto de usar las piernas para moverse.
+Cama - Caminar.
+Bueno, y de ahí viene alminar, que es una verbalización de la acción de moverse e interactuar con lo demás como alma.
+Bueno, al salir y alminar, tu cuerpo queda dormido, porque no tiene su alma, y no tiene una programación que le haga seguir una rutina como los bots, precisamente porque suele tener alma.
+Entonces, deberías saber como dividirte, y hablo de ti como alma.
+Pero eso puede ser...
+...¿Peligroso?
+Bueno, debo aclarar que esta teoría en general sobre el alma, la inventé yo y me pareció bastante realista y creíble.
+Tiene bastantes cosas de las que puedes aprender.
+Sin embargo, yo mismo no la creo, pero no quita que podría ser verdad.
+Sin embargo, debo aclarar que si hay gente que sale de su cuerpo como alma, y eso se llama realmente "Viaje Astral"
+También quiero hablar del viaje astral, que te permite salir de tu cuerpo como alma, y viajar por ahí.
+Yo no lo he probado, pero si algún día tu lo intentas, no vayas lejos de tu cuerpo, al menos hasta la décima vez.
+Y, NO entres a las cámaras prohibidas del vaticano ni al  área 51.
+Parece una idea astuta, y poder enterarte de cosas que no deberías, pero ellos están preparados para eso, prueba también de que es real.
+Esos sitios tienen cámaras de Faraday.
+Las cámaras de Faraday son similares a jaulas, que impiden que pasen campos electromagnéticos, es decir, el alma.
+Desconozco si también lo hacen en el área 51, pero al menos en el vaticano, las dejan abiertas para que entres, y después no te permiten salir.
+Y la gente del vaticano te dirá que hagas un pacto con ellos y que trabajes para ellos, para dejarte salir.
+Obviamente esto no lo he vivido yo mismo, pero dicen que no es buena idea aceptar.
+Bueno, pues eso es lo que tenía que decir.
 
-Me gustaría hacer una advertencia.
-
-Y es que usar audífonos de bluetooth te hace más bot.
-
-No lo digo porque no me gusten.
-
-No lo digo porque no me pueda comprar un par y me dé envidia. (Cosa que no es así jajaja)
-
-Lo digo porque emiten radiación.
-
-Y para que lo entiendas mejor, lo voy a comparar con un microondas.
-
-El microondas calienta tu cena emitiendo radiación sobre ella.
-
-Utilizan un aparato llamado magnetrón, para generar las microondas.
-
-Esas microondas penetran la comida y al agitar las moléculas de la comida, esta se calienta.
-
-El microondas está hecho de metal, que cubre todo su mecanismo y el magnetrón.
-
-Tal como una cámara de Faraday que atrapa un alma porque no deja salir las ondas electromagnéticas.
-
-Y esas capas de metal que rodean el magnetrón nos salvan la vida cada vez que lo usamos.
-
-Y es que esa radiación puede causar pérdida de memoria, cataratas, y varias otras desgracias.
-
-Bueno, los sistemas de bluetooth y de wifi usan las mismas ondas que produce el magnetrón.
-
-Evidentemente, a menor escala, ya que de no ser así, sufrirías los mismos efectos permanentes que mencioné antes.
-
-Ya que, los audífonos bluetooth no tienen esas capas de metal que tienen los microondas que evitan que salgan las microondas.
-
-Ni tampoco las tienen los routers de wifi, ni un teléfono, ni muchos otros ejemplos.
-
-Entonces ¿Por qué hago tanto énfasis en los audífonos bluetooth?
-
-Simple.
-
-Es lo que va más cerca de tu cerebro.
-
-Y creerás que al ser menores las ondas electromagnéticas ya te salvas.
-
-Pues no.
-
-Igualmente se generan los efectos a largo plazo, y estando tan cerca de tu cerebro, podrían controlar lo que recuerdas o olvidas, o incluso lo que piensas.
-
-Porque los pensamientos también son una señal eléctrica que corre por tus neuronas.
-
-No es conspiración, se llama física básica.
-
-Y si, podrías atrapar un alma en un microondas.
-
-¿A qué sabe un alma cocida en microondas?</p>
+Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, solo tú decides si es real. No dejes que nadie te imponga sus creéncias. Yo solo lo comunico, pero nadie está seguro de la verdad sobre nuestro origen o sobre lo que somos, y me incluyo. O al menos en mi caso desconozco la verdad sobre los secretos políticos del vaticano y el área 51 y muchos más. A veces ni siquiera estoy seguro de si estoy vivo o de si soy un jugador, siguiendo esa misma rutina diária todos los días de mi vida en el interminable e inutil instituto.</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
-            <p>Sé que puede que haya fanáticos religiosos leyendo esto, así que lo redactaré de forma objetiva.
-
-Bueno, pues me parece curioso como tanta gente cree en lo mismo.
-
-Muchísima gente comparte la misma religión, un buen porcentaje de la humanidad.
-
-Y esas personas probablemente ignoran el hecho de que las religiones fueron creadas como forma de control masivo de masas de gente.
-
-Probablemente ignoran el hecho de que todos los textos religiosos fueron escritos por una persona que probablemente estaba aburrida un sábado por la tarde.
-
-¿No te has preguntado de qué sirven las donaciones monetarias al dios de cada religión?
-
-Porque sea lo que sea, sinceramente no creo que le interese el dinero.
-
-Esas donaciones se las suelen gastar las personas que las reciben de primera mano, en sus caprichos y a veces en cosas que se supone que tiene prohibido por su cargo religioso.
-
-Y la gente las entrega de buena fé, quizá pensando que su dios se va a poder dar un gusto y comer en un sitio bonito.
-
-Bueno, no digo que siempre se roben las donaciones, pero... ¿Realmente a quién se las entregan?
-
-¿Se supone que se las dan a la deidad personalmente?
-
-Bueno, es diferente de cuando son para gente necesitada, ya que en ese caso si es entendible el medio en el que entregan dichas donaciones.
-
-Aunque muchas veces en ese caso también las roban.
-
-Personalmente, no creo en ninguna religión de la que la gente hable. Suelo aceptar más la teoría científica, pero los mismos científicos dijeron que hay muchas cosas que no saben.
-
-Y es obvio, es evidente que no saben casi nada. Se podría decir que poseen el...
-
-0.000000000000000000000000000000000000000000000000000000 [muchísimos más ceros, tal vez infinitos] 00000000000000000000000000000 00000000000000000000000000000000000001%
-
-De toda la información que se puede tener, si es que hay un límite.
-
-Y cómo mencioné antes, suelo aceptar la teoría científica.
-
-Peeeeroo, siempre he creído que hay algún ente divino detrás de todo.
-
-Es por eso que, aburrido un sábado por la tarde, inventé una religión propia, de la que ya había hablado alguna vez.
-
-Pero resumiendo, que al haber dimensiones infinitas, todo ser pensante es una deidad y crea una nueva dimensión cada vez que imagina algo distinto a su realidad.
-
-Cosa que hacemos todo el tiempo.
-
-Así que, según eso, puede que nos haya creado alguien ideando algo, aburrido un sábado por la tarde.
-
-Tal vez está religión que inventé aburrido un sábado por la tarde sea la próxima religión en la que crea la mayoría.
-
-Tal vez el próximo sábado escriba algunos textos religiosos de mi propia invención.
-
-En el caso de la mía no es así, al menos mientras sea mía y yo siga con vida, pero muchas veces las religiones son algo macabro.
-
-Y es que no solo manipulan a toda la gente que les cree con toda su fé y a veces dedican su vida a eso con las donaciones.
-
-¿Un sacrificio? Si, pero quién morirá será una persona que decida la iglesia, una persona que no nos conviene que siga viviendo porque está cerca de demostrar algo.
-
-Demostrar que cómo humanos podemos hacer mucho más de lo que creemos, o demostrar que hemos sido engañados toda la vida por instituciones varias.
-
-¿O algo más?
-
-Ahora esos sacrificios no son algo de lo que se pueda enterar la gente públicamente.
-
-Pero en la edad media sacrificaban a las brujas, si verdaderamente hacían magia, o si sabían un poco de herbología o alquimia.
-
-Yo creo que eso no ha cambiado mucho hoy en día, y siguen ejecutando a quienes se acercan a ciertas verdades, o símplemente a quienes les conviene.
-
-Y hay muchas más formas en las que las religiones manipulan a sus fieles creyentes.
-
-Pero no las voy a decir todas porque esto ya se está haciendo bastante largo.
-
-Me sorprende haber podido comunicar todo esto objetivamente, y espero haberlo hecho así.
-
-Si algún fanático religioso o algo así se ofendió, sepa que no tenía ninguna intención de hacerlo, la verdad, nunca corrijo mis textos, y si me persiguen por hablar mucho, voy a decir que solo lo escribo para perfeccionar mi redacción o porque estoy aburrido, y realmente no estaré mintiendo.
-
-Me encanta como la gente le da tantas formas distintas al creador, como le dedican tantos monumentos y santuarios tan increíbles.
-
-De hecho, creo que de las cosas que más me gustan de la religión son su arquitectura.
-
-Precisamente un arte...
-
-...Es curioso.
-
+            <p>Lo del alma... Lo que dije antes, lo creo, a medias.
+Creo que somos un alma atrapada en un cuerpo.
+Creo en los viajes astrales.
+Peeero, no creo que para hacer realidad eso que llamamos telekiniesis, necesitamos salir del cuerpo.
+Resulta que además del alma, tenemos el aura.
+De verdad.
+Para entenderlo, hay que visualizarlo como una burbuja alrededor de nuestra alma. Un campo electromagnético.
+Podemos mover cosas que estén dentro del aura, si recordamos cómo.
+El aura no se queda alrededor de nuestro cuerpo, si no, alrededor de nuestra alma.
+Así que si salimos del cuerpo también podemos mover cosas a nuestro alrededor.
+Quienes poseen un alma, te dirán que es mentira.
+Quienes no poseen un alma, te dirán que es cosa de hippies.
+Quienes no poseen alma, no pueden hacerlo.
+¿Será que realmente es mentira?
+Puede ser.
+Yo no poseo la verdad absoluta, es posile que todo en lo que creo sea mentira.
+Es posible que nada de las cosas en las que creo sean verdad.
+Pero, ¿Acaso eso es malo?
 No.
-
-Al menos para mí, es totalmente normal.</p>
+Cómo humanos, vivimos persiguiendo la verdad, como un perro que persigue el palo.
+Cuando el perro consigue atrapar el palo, se lo lleva a quien lo lanzó y el juego termina.
+Cuando creemos conocer la verdad sobre algo, se lo contamos a quienes podamos, y luego somos decapitados.
+Desaparecemos misteriosamente, como Jacobo Grinberg.
+¿No es extraño?
+¿Coincidencia?
+¿Existen las coincidencias?
+No lo sé, por suerte no poseo la verdad.
+Pero, ¿Cómo sé que no lo sé?
+Tal vez lo se sin saber que lo se, y entonces pienso que no lo sé.
+Y si hipotéticamente conseguimos la verdad absoluta sobre todo... El juego termina.
+Igualmente.
+Si lo sabes todo, y sabes que lo sabes, cosa que se incluye en saberlo todo, ya no hay sorpresas.
+Y si ya no hay asombro, ¿Qué sentido tiene?
+Se pierde toda emoción. Y lo único que aún te podrá hacer sentir vivo es crear.
+Y lo único que nos salva...
+...Es...
+...Ser una deidad.
+Y me alegra poder decir...
+...Que solo tenemos certeza de lo que creamos.
+¿Verdad?</p>
           </div>
         </div>
       </div>
