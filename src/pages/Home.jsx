@@ -294,7 +294,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-dios>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
+      <button type="button" class="lq-footer-made lq-dios-link">Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
     </div>
   </footer>
 
@@ -542,7 +542,7 @@ Y me alegra poder decir...
 ¿Verdad?</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
-            <p>Ok, cómo lo prometí, voy a havlar de mi percepción del alma.
+            <p>Ok, cómo lo prometí, voy a hablar de mi percepción del alma.
 Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
 Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
 Y pensarás que el cuerpo te permite interactuar con el plano físico y con las otras almas atrapadas en un cuerpo...
