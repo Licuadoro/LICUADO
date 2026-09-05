@@ -261,7 +261,7 @@ export function initLicuado(wrap) {
     var vDots = wrap.querySelector('#lq-verdad-dots-fixed');
     if (vDots) {
       vDots.innerHTML = '';
-      var dotCount = verdadTotal - verdadPageIdx;
+      var dotCount = verdadPageIdx + 1;
       for (var vd = 0; vd < dotCount; vd++) {
         var vdot = document.createElement('span');
         vdot.className = 'lq-dios-dot';
