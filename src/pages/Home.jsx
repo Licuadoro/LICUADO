@@ -609,37 +609,6 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-verdad-pages">
           <div class="lq-dios-page lq-dios-text">
-            <p>Tal vez salga un poco del tema en comparativa con lo demás que he escrito, pero...</p>
-            <p>Me gustaría hacer una advertencia.</p>
-            <p>Y es que usar audífonos de bluetooth te hace más bot.</p>
-            <p>No lo digo porque no me gusten.</p>
-            <p>No lo digo porque no me pueda comprar un par y me dé envidia. (Cosa que no es así jajaja)</p>
-            <p>Lo digo porque emiten radiación.</p>
-            <p>Y para que lo entiendas mejor, lo voy a comparar con un microondas.</p>
-            <p>El microondas calienta tu cena emitiendo radiación sobre ella.</p>
-            <p>Utilizan un aparato llamado magnetrón, para generar las microondas.</p>
-            <p>Esas microondas penetran la comida y al agitar las moléculas de la comida, esta se calienta.</p>
-            <p>El microondas está hecho de metal, que cubre todo su mecanismo y el magnetrón.</p>
-            <p>Tal como una cámara de Faraday que atrapa un alma porque no deja salir las ondas electromagnéticas.</p>
-            <p>Y esas capas de metal que rodean el magnetrón nos salvan la vida cada vez que lo usamos.</p>
-            <p>Y es que esa radiación puede causar pérdida de memoria, cataratas, y varias otras desgracias.</p>
-            <p>Bueno, los sistemas de bluetooth y de wifi usan las mismas ondas que produce el magnetrón.</p>
-            <p>Evidentemente, a menor escala, ya que de no ser así, sufrirías los mismos efectos permanentes que mencioné antes.</p>
-            <p>Ya que, los audífonos bluetooth no tienen esas capas de metal que tienen los microondas que evitan que salgan las microondas.</p>
-            <p>Ni tampoco las tienen los routers de wifi, ni un teléfono, ni muchos otros ejemplos.</p>
-            <p>Entonces ¿Por qué hago tanto énfasis en los audífonos bluetooth?</p>
-            <p>Simple.</p>
-            <p>Es lo que va más cerca de tu cerebro.</p>
-            <p>Y creerás que al ser menores las ondas electromagnéticas ya te salvas.</p>
-            <p>Pues no.</p>
-            <p>Igualmente se generan los efectos a largo plazo, y estando tan cerca de tu cerebro, podrían controlar lo que recuerdas o olvidas, o incluso lo que piensas.</p>
-            <p>Porque los pensamientos también son una señal eléctrica que corre por tus neuronas.</p>
-            <p>No es conspiración, se llama física básica.</p>
-            <p>Y si, podrías atrapar un alma en un microondas.</p>
-            <p>¿A qué sabe un alma cocida en microondas?</p>
-          </div>
-          id="lq-verdad-pages">
-          <div class="lq-dios-page lq-dios-text">
             <p>Sé que puede que haya fanáticos religiosos leyendo esto, así que lo redactaré de forma objetiva.</p>
             <p>Bueno, pues me parece curioso como tanta gente cree en lo mismo.</p>
             <p>Muchísima gente comparte la misma religión, un buen porcentaje de la humanidad.</p>
@@ -683,6 +652,36 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
             <p>...Es curioso.</p>
             <p>No.</p>
             <p>Al menos para mí, es totalmente normal.</p>
+          </div>
+          <div class="lq-dios-page lq-dios-text">
+            <p>Tal vez salga un poco del tema en comparativa con lo demás que he escrito, pero...</p>
+            <p>Me gustaría hacer una advertencia.</p>
+            <p>Y es que usar audífonos de bluetooth te hace más bot.</p>
+            <p>No lo digo porque no me gusten.</p>
+            <p>No lo digo porque no me pueda comprar un par y me dé envidia. (Cosa que no es así jajaja)</p>
+            <p>Lo digo porque emiten radiación.</p>
+            <p>Y para que lo entiendas mejor, lo voy a comparar con un microondas.</p>
+            <p>El microondas calienta tu cena emitiendo radiación sobre ella.</p>
+            <p>Utilizan un aparato llamado magnetrón, para generar las microondas.</p>
+            <p>Esas microondas penetran la comida y al agitar las moléculas de la comida, esta se calienta.</p>
+            <p>El microondas está hecho de metal, que cubre todo su mecanismo y el magnetrón.</p>
+            <p>Tal como una cámara de Faraday que atrapa un alma porque no deja salir las ondas electromagnéticas.</p>
+            <p>Y esas capas de metal que rodean el magnetrón nos salvan la vida cada vez que lo usamos.</p>
+            <p>Y es que esa radiación puede causar pérdida de memoria, cataratas, y varias otras desgracias.</p>
+            <p>Bueno, los sistemas de bluetooth y de wifi usan las mismas ondas que produce el magnetrón.</p>
+            <p>Evidentemente, a menor escala, ya que de no ser así, sufrirías los mismos efectos permanentes que mencioné antes.</p>
+            <p>Ya que, los audífonos bluetooth no tienen esas capas de metal que tienen los microondas que evitan que salgan las microondas.</p>
+            <p>Ni tampoco las tienen los routers de wifi, ni un teléfono, ni muchos otros ejemplos.</p>
+            <p>Entonces ¿Por qué hago tanto énfasis en los audífonos bluetooth?</p>
+            <p>Simple.</p>
+            <p>Es lo que va más cerca de tu cerebro.</p>
+            <p>Y creerás que al ser menores las ondas electromagnéticas ya te salvas.</p>
+            <p>Pues no.</p>
+            <p>Igualmente se generan los efectos a largo plazo, y estando tan cerca de tu cerebro, podrían controlar lo que recuerdas o olvidas, o incluso lo que piensas.</p>
+            <p>Porque los pensamientos también son una señal eléctrica que corre por tus neuronas.</p>
+            <p>No es conspiración, se llama física básica.</p>
+            <p>Y si, podrías atrapar un alma en un microondas.</p>
+            <p>¿A qué sabe un alma cocida en microondas?</p>
           </div>
         </div>
       </div>
