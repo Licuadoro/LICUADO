@@ -305,7 +305,7 @@ const HTML = `
     <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
     <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
     
-    <!-- Sección: Más recientes (Top 3) -->
+    <!-- Sección: Más recientes (Top 5) -->
     <div class="lq-news-category">
       <h3 class="lq-category-title">Más recientes</h3>
       <div class="lq-news-grid">
@@ -335,6 +335,25 @@ const HTML = `
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
           <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
+        </div>
+
+        <!-- Notícia 2: Actualización Kronos 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
+          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
+          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Ir a Kronos</span>
+          </a>
+        </div>
+
+        <!-- Notícia 1: Actualización LICUADO 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">7 ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
+          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
+          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
         </div>
       </div>
     </div>
