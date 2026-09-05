@@ -1,8 +1,8 @@
-```gitignore
+```
 # Dependencies
 node_modules/
 
-# Build outputs
+# Build artifacts
 dist/
 build/
 target/
@@ -12,14 +12,12 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.so
 .Python
 env/
 venv/
 .venv/
 .ENV
-.env
-.env.local
-.env.*
 .python-version
 .pytest_cache/
 .mypy_cache/
@@ -29,14 +27,10 @@ coverage/
 # Logs
 *.log
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Environment variables
+.env
+.env.local
+.env.*
 
 # IDE
 .vscode/
@@ -45,14 +39,9 @@ Thumbs.db
 *.swo
 *.tmp
 
-# Environment specific
-.env
-.env.local
-*.env.*
-
-# Coverage reports
-coverage/
-htmlcov/
+# OS
+.DS_Store
+Thumbs.db
 
 # Compressed files
 *.zip
@@ -73,8 +62,4 @@ htmlcov/
 *.Z
 *.lz
 *.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
 ```
