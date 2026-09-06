@@ -1,48 +1,41 @@
-```
-# Dependencies
-node_modules/
+# Examples 1:
+(empty)
 
-# Build artifacts
+# Example 2 (Project with artifacts):
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
 dist/
 build/
 target/
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.so
-.Python
-env/
-venv/
+# Dependencies
 .venv/
-.ENV
-.python-version
-.pytest_cache/
+venv/
+node_modules/
 .mypy_cache/
-.coverage
-coverage/
-
-# Logs
+.pytest_cache/
+# Logs and temp files
 *.log
-
-# Environment variables
+*.tmp
+*.swp
+# Environment
 .env
 .env.local
-.env.*
-
-# IDE
+*.env.*
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
-*.tmp
-
 # OS
 .DS_Store
 Thumbs.db
-
+# Coverage
+coverage/
+htmlcov/
+.coverage
+# Gradle
+.gradle/
 # Compressed files
 *.zip
 *.gz
@@ -62,4 +55,7 @@ Thumbs.db
 *.Z
 *.lz
 *.lzo
-```
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
