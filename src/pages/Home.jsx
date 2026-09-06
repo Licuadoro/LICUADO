@@ -99,7 +99,8 @@ const HTML = `
         <div class="lq-divider-soft"></div>
         <span class="lq-proy-label">Nueva sección</span>
         <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Creatorius</h3>
-        <p class="lq-sobre-parrafo">Creatorius es un espacio dedicado a la creación y experimentación artística, donde las ideas toman forma a través de diferentes medios expresivos.</p>
+        <p class="lq-sobre-parrafo">Creatorius es un negocio que abrí para ganar dinero e impulsar el proyecto LICUADO. Consiste en que me describas una idea y yo hago una web con los elementos que me pidas, a cambio de dinero, y puedes agregar elementos que mezclan mis diferentes virtudes. Debo decir que no puse a Creatorius dentro de LICUADO, porque son cosas diferentes. Y es que LICUADO no es negocio, es el canal por donde salen las ideas que vierto en el teclado y el papel.</p>
+        <a class="lq-link" href="https://creatorius.licuado.workwrs.dev" target="_blank" rel="noopener">Ir a Creatorius &#8599;</a>
         
         <div class="lq-sobre-facts">
           <div class="lq-fact"><span class="lq-fact-num">1</span><span class="lq-fact-label">Artista tras todo lo que ves</span></div>
