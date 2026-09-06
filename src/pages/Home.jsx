@@ -95,6 +95,12 @@ const HTML = `
         <span class="lq-proy-label">Cuento finalista</span>
         <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Cordura</h3>
         <p class="lq-sobre-parrafo">Cordura es un cuento que escribí para un concurso, y tras quedar finalista será publicado en el mes de octubre, en una compilación de cuentos llamada Inventario de fragmentos I, por parte de la editorial corazón de tinta, quienes organizaron el concurso. Los concursos de escritura de cuentos son parte de la financiación de este proyecto, o al menos eso espero, ya que en el concurso en el que participé con cordura no había un premio monetario más que la publicación del cuento en la compilación, por la cual no recibo ganancias al comprar un ejemplar. Sin embargo, me enorgullece que mis escrituras sean conocidas. Pero pienso participar en más concursos a futuro para conseguir presupuesto para el proyecto LICUADO.</p>
+        
+        <div class="lq-divider-soft"></div>
+        <span class="lq-proy-label">Nueva sección</span>
+        <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Creatorius</h3>
+        <p class="lq-sobre-parrafo">Creatorius es un espacio dedicado a la creación y experimentación artística, donde las ideas toman forma a través de diferentes medios expresivos.</p>
+        
         <div class="lq-sobre-facts">
           <div class="lq-fact"><span class="lq-fact-num">1</span><span class="lq-fact-label">Artista tras todo lo que ves</span></div>
           <div class="lq-fact"><span class="lq-fact-num">&#8734;</span><span class="lq-fact-label">Horas de volcar mis ideas en un computador</span></div>
