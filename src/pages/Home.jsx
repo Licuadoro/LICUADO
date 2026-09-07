@@ -79,7 +79,7 @@ const HTML = `
             <div class="lq-news-date">7 ago 2026</div>
             <h3 class="lq-news-title">Actualización 1.00: Deceptio?</h3>
             <p class="lq-news-excerpt">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.</p>
-            <p class="lq-news-excerpt" style="font-style:italic;opacity:0.7;margin-top:0.75rem;">También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+            <p class="lq-news-excerpt"  style="font-style:italic;opacity:0.7;margin-top:0.75rem;">También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
           </article>
           <a href="#" class="lq-btn-scriptorium lq-btn-news w-full" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a>
         </div>
@@ -168,9 +168,9 @@ const HTML = `
         Entrar al Discord
       </a>
       <a class="lq-discord-btn" href="https://youtube.com/@licuado_scriptorium?si=8GNDObIl_y5xVzyq" target="_blank" rel="noopener">Visita el canal de YouTube</a>
-      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
-      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
-      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" ><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
+      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" ><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
       <p class="lq-discord-note">Si quieres comunicarte conmigo, si quieres participar en el proyecto, contáctame...</p>
     </div>
   </section>
@@ -320,14 +320,14 @@ const HTML = `
       <h3 class="lq-category-title">Más recientes</h3>
       <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 6: Creatorius -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 sep 2026</div>
           <h3 class="lq-news-title">Creatorius</h3>
           <p class="lq-news-text">¡Por fin creo que LICUADO está teniendo una fuente de ingresos más estable! Y es que ya abri mi negocio Creatorius. Consiste básicamente en que tú me describes una idea y yo la construyo como web a cambio de dinero. Yo investigué qué precio le suelen poner a estos servicios, y yo lo puse un poco más bajo. Bueno, si quieres apoyar el proyecto LICUADO, siempre puedes pedirme una web. El precio es negociable.</p>
           <a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a>
         </div>
         <!-- Notícia 5: Actualización LICUADO 1.02 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
           <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
@@ -337,7 +337,7 @@ const HTML = `
         </div>
 
         <!-- Notícia 4: Teia -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Teia</h3>
           <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
@@ -348,14 +348,14 @@ const HTML = `
         </div>
 
         <!-- Notícia 3: Actualización LICUADO 1.01 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
           <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
         </div>
 
         <!-- Notícia 2: Actualización Kronos 1.00 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
           <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
@@ -366,7 +366,7 @@ const HTML = `
         </div>
 
         <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
           <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
@@ -380,7 +380,7 @@ const HTML = `
       <h3 class="lq-category-title">Actualizaciones de LICUADO</h3>
       <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 5: Actualización LICUADO 1.02 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
           <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
@@ -390,14 +390,14 @@ const HTML = `
         </div>
 
         <!-- Notícia 3: Actualización LICUADO 1.01 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
           <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
         </div>
 
         <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
           <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
@@ -411,7 +411,7 @@ const HTML = `
       <h3 class="lq-category-title">Actualizaciones de Kronos</h3>
       <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 2: Actualización Kronos 1.00 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
           <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
@@ -428,7 +428,7 @@ const HTML = `
       <h3 class="lq-category-title">Actualizaciones de Teia</h3>
       <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 4: Teia -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Teia</h3>
           <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
@@ -445,7 +445,7 @@ const HTML = `
       <h3 class="lq-category-title">Notícias de Creatorius</h3>
       <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 1: Creatorius -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 sep 2026</div>
           <h3 class="lq-news-title">Creatorius</h3>
           <p class="lq-news-text">¡Por fin creo que LICUADO está teniendo una fuente de ingresos más estable! Y es que ya abri mi negocio Creatorius. Consiste básicamente en que tú me describes una idea y yo la construyo como web a cambio de dinero. Yo investigué qué precio le suelen poner a estos servicios, y yo lo puse un poco más bajo. Bueno, si quieres apoyar el proyecto LICUADO, siempre puedes pedirme una web. El precio es negociable.</p>
@@ -459,14 +459,14 @@ const HTML = `
       <h3 class="lq-category-title">Todas las notícias</h3>
       <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 6: Creatorius -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 sep 2026</div>
           <h3 class="lq-news-title">Creatorius</h3>
           <p class="lq-news-text">¡Por fin creo que LICUADO está teniendo una fuente de ingresos más estable! Y es que ya abri mi negocio Creatorius. Consiste básicamente en que tú me describes una idea y yo la construyo como web a cambio de dinero. Yo investigué qué precio le suelen poner a estos servicios, y yo lo puse un poco más bajo. Bueno, si quieres apoyar el proyecto LICUADO, siempre puedes pedirme una web. El precio es negociable.</p>
           <a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a>
         </div>
         <!-- Notícia 5: Actualización LICUADO 1.02 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
           <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
@@ -476,7 +476,7 @@ const HTML = `
         </div>
 
         <!-- Notícia 4: Teia -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Teia</h3>
           <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
@@ -487,14 +487,14 @@ const HTML = `
         </div>
 
         <!-- Notícia 3: Actualización LICUADO 1.01 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
           <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
         </div>
 
         <!-- Notícia 2: Actualización Kronos 1.00 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
           <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
@@ -505,7 +505,7 @@ const HTML = `
         </div>
 
         <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card">
+        <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
           <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
