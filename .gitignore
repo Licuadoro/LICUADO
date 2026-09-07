@@ -1,48 +1,44 @@
-```javascript
-# Dependencies
-node_modules/
-
-# Build outputs
+```gitignore
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
 dist/
 build/
-*.min.js
-*.bundle.js
+
+# Dependencies
+.venv/
+venv/
+node_modules/
+target/
+.gradle/
+.mypy_cache/
+.pytest_cache/
 
 # Logs and temp files
 *.log
 *.tmp
 *.swp
+*.swo
 
 # Environment
 .env
 .env.local
-.env.*
+*.env.*
 
 # Editors
 .vscode/
 .idea/
 
+# System files
+.DS_Store
+Thumbs.db
+
 # Coverage
 coverage/
 htmlcov/
 .coverage
-
-# Python (if applicable)
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-.Python
-*.egg-info/
-.eggs/
-.venv/
-venv/
-.pytest_cache/
-.mypy_cache/
-.nox/
-.tox/
 
 # Compressed files
 *.zip
@@ -67,20 +63,4 @@ venv/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-
-# System files
-.DS_Store
-Thumbs.db
-```
-
-Wait, let me reconsider this. The changes are only to source files (.js and .jsx), not build artifacts or dependencies. According to rule #6, if the change list contains ONLY source or config files and NO build artifacts, dependencies, or temp files, I should output an EMPTY .gitignore.
-
-The files changed were:
-- src/lib/licuado.js (JavaScript source)
-- src/pages/Home.jsx (JSX source)
-
-These are both source files, so no .gitignore content is needed.
-
-```javascript
-
 ```
