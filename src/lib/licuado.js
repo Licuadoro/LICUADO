@@ -338,6 +338,13 @@ export function initLicuado(wrap) {
         return;
       }
       if (wrap.classList.contains('lq-show-news')) {
+        var dustCount = Math.round(50 + Math.min(40, h / 20));
+        for (var d = 0; d < dustCount; d++) {
+          var dust = document.createElement('i'); dust.className = 'lq-dust';
+          var size = Math.round(crand(2, 5));
+          dust.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + crand(2, 98).toFixed(2) + '%;top:' + crand(0, h).toFixed(0) + 'px;--dur:' + crand(8, 16).toFixed(2) + 's;--delay:' + crand(-14, 2).toFixed(2) + 's;--op:' + crand(.3, .7).toFixed(2) + ';--rise:-' + crand(40, 100).toFixed(0) + 'px;--drift:' + crand(-20, 20).toFixed(0) + 'px;background:rgba(255,100,80,' + crand(.4, .8).toFixed(2) + ')';
+          layer.appendChild(dust);
+        }
         return;
       }
       var bubbleCount = Math.round(34 + Math.min(26, h / 28));
