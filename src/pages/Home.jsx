@@ -313,10 +313,17 @@ const HTML = `
     <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
     <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
     
-    <!-- Sección: Más recientes (Top 5) -->
+    <!-- Sección: Más recientes (Top 6) -->
     <div class="lq-news-category">
       <h3 class="lq-category-title">Más recientes</h3>
-      <div class="lq-news-grid">
+      <div class="lq-news-grid lq-news-grid-centered">
+        <!-- Notícia 6: Creatorius -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">7 sep 2026</div>
+          <h3 class="lq-news-title">Creatorius</h3>
+          <p class="lq-news-text">¡Por fin creo que LICUADO está teniendo una fuente de ingresos más estable! Y es que ya abri mi negocio Creatorius. Consiste básicamente en que tú me describes una idea y yo la construyo como web a cambio de dinero. Yo investigué qué precio le suelen poner a estos servicios, y yo lo puse un poco más bajo. Bueno, si quieres apoyar el proyecto LICUADO, siempre puedes pedirme una web. El precio es negociable.</p>
+          <a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a>
+        </div>
         <!-- Notícia 5: Actualización LICUADO 1.02 -->
         <div class="lq-news-card">
           <div class="lq-news-date">18 Ago 2026</div>
@@ -518,6 +525,7 @@ const HTML = `
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
           <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li style="margin-top:.6rem"><a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a></li>
         </ul>
       </div>
     </div>
