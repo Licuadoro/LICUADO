@@ -287,7 +287,51 @@ export function initLicuado(wrap) {
   if (verdadPanel) on(verdadPanel, 'click', function (e) { if (e.target === verdadPanel) closeVerdad(); });
   verdadShowPage(0);
 
-  on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); closeVerdad(); } });
+
+
+  /* ── Panel "Pipeline" (frase del footer de LICUADO Scriptorium: Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego) ── */
+  var pipelinePanel = wrap.querySelector('#lq-pipeline-panel');
+  var pipelinePages = wrap.querySelector('#lq-pipeline-pages');
+  var pipelinePageIdx = 0;
+  var pipelineTotal = 1;
+  function pipelineShowPage(idx) {
+    pipelinePageIdx = Math.max(0, Math.min(pipelineTotal - 1, idx));
+    if (pipelinePages) pipelinePages.style.transform = 'translateX(-' + (pipelinePageIdx * 100) + '%)';
+    var pLeft = pipelinePanel ? pipelinePanel.querySelector('.lq-dios-arrow-left') : null;
+    var pRight = pipelinePanel ? pipelinePanel.querySelector('.lq-dios-arrow-right') : null;
+    if (pLeft) pLeft.style.display = pipelinePageIdx > 0 ? 'flex' : 'none';
+    if (pRight) pRight.style.display = pipelinePageIdx < pipelineTotal - 1 ? 'flex' : 'none';
+    var pDots = wrap.querySelector('#lq-pipeline-dots-fixed');
+    if (pDots) {
+      pDots.innerHTML = '';
+      var dotCount = pipelineTotal - pipelinePageIdx;
+      for (var pd = 0; pd < dotCount; pd++) {
+        var pdot = document.createElement('span');
+        pdot.className = 'lq-dios-dot';
+        pDots.appendChild(pdot);
+      }
+    }
+  }
+  function openPipeline() {
+    if (pipelinePanel) {
+      pipelinePanel.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      if (pipelinePages) pipelinePages.querySelectorAll('.lq-dios-page').forEach(function (p) { p.scrollTop = 0; });
+      pipelineShowPage(0);
+    }
+  }
+  function closePipeline() { if (pipelinePanel) { pipelinePanel.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; } }
+  wrap.querySelectorAll('[data-lq-open-pipeline]').forEach(function (el) { on(el, 'click', function (e) { e.preventDefault(); openPipeline(); }); });
+  wrap.querySelectorAll('[data-lq-close-pipeline]').forEach(function (el) { on(el, 'click', closePipeline); });
+  wrap.querySelectorAll('[data-lq-pipeline-dir]').forEach(function (btn) {
+    on(btn, 'click', function (e) { e.stopPropagation(); pipelineShowPage(pipelinePageIdx + Number(btn.getAttribute('data-lq-pipeline-dir'))); });
+  });
+  if (pipelinePanel) on(pipelinePanel, 'click', function (e) { if (e.target === pipelinePanel) closePipeline(); });
+  pipelineShowPage(0);
+  }
+
+  on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); closeVerdad(); closePipeline(); } });
   wrap.querySelectorAll('[data-lq-lumen]').forEach(function (a) {
     on(a, 'click', function (e) { e.preventDefault(); scrollToId('lq-proyectos'); setTimeout(openModal, 650); });
   });
