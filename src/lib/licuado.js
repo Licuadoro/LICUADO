@@ -315,7 +315,7 @@ export function initLicuado(wrap) {
     if (!layer) return;
     layer.innerHTML = '';
     var viewportH = window.innerHeight || 800;
-    var isAltScreen = wrap.classList.contains('lq-show-scriptorium') || wrap.classList.contains('lq-show-gallery');
+    var isAltScreen = wrap.classList.contains('lq-show-scriptorium') || wrap.classList.contains('lq-show-gallery') || wrap.classList.contains('lq-show-news');
     var visibleFooter = wrap.classList.contains('lq-show-scriptorium') ? wrap.querySelector('.lq-scriptorium-footer')
       : wrap.classList.contains('lq-show-gallery') ? wrap.querySelector('.lq-gallery-footer')
       : wrap.classList.contains('lq-show-news') ? wrap.querySelector('.lq-news-footer')
@@ -326,6 +326,16 @@ export function initLicuado(wrap) {
     layer.style.display = h < 24 ? 'none' : 'block';
     if (h < 24) return;
 
+    if (wrap.classList.contains('lq-show-news')) {
+      var dustCount = Math.round(50 + Math.min(40, h / 20));
+      for (var d = 0; d < dustCount; d++) {
+        var dust = document.createElement('i'); dust.className = 'lq-dust';
+        var size = Math.round(crand(2, 5));
+        dust.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + crand(2, 98).toFixed(2) + '%;top:' + crand(0, h).toFixed(0) + 'px;--dur:' + crand(8, 16).toFixed(2) + 's;--delay:' + crand(-14, 2).toFixed(2) + 's;--op:' + crand(.3, .7).toFixed(2) + ';--rise:-' + crand(40, 100).toFixed(0) + 'px;--drift:' + crand(-20, 20).toFixed(0) + 'px;background:rgba(255,100,80,' + crand(.4, .8).toFixed(2) + ')';
+        layer.appendChild(dust);
+      }
+      return;
+    }
     if (isAltScreen) {
       if (wrap.classList.contains('lq-show-gallery')) {
         var iceCount = Math.round(42 + Math.min(34, h / 24));
@@ -334,16 +344,6 @@ export function initLicuado(wrap) {
           var iSize = Math.round(crand(3, 9));
           ice.style.cssText = 'width:' + iSize + 'px;height:' + iSize + 'px;left:' + crand(2, 98).toFixed(2) + '%;top:' + crand(0, h).toFixed(0) + 'px;--dur:' + crand(9, 20).toFixed(2) + 's;--delay:' + crand(-18, 3).toFixed(2) + 's;--op:' + crand(.45, .9).toFixed(2) + ';--fall:' + crand(60, 170).toFixed(0) + 'px;--drift:' + crand(-40, 40).toFixed(0) + 'px';
           layer.appendChild(ice);
-        }
-        return;
-      }
-      if (wrap.classList.contains('lq-show-news')) {
-        var dustCount = Math.round(50 + Math.min(40, h / 20));
-        for (var d = 0; d < dustCount; d++) {
-          var dust = document.createElement('i'); dust.className = 'lq-dust';
-          var size = Math.round(crand(2, 5));
-          dust.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + crand(2, 98).toFixed(2) + '%;top:' + crand(0, h).toFixed(0) + 'px;--dur:' + crand(8, 16).toFixed(2) + 's;--delay:' + crand(-14, 2).toFixed(2) + 's;--op:' + crand(.3, .7).toFixed(2) + ';--rise:-' + crand(40, 100).toFixed(0) + 'px;--drift:' + crand(-20, 20).toFixed(0) + 'px;background:rgba(255,100,80,' + crand(.4, .8).toFixed(2) + ')';
-          layer.appendChild(dust);
         }
         return;
       }
