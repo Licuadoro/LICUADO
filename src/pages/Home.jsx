@@ -368,7 +368,7 @@ const HTML = `
           <div class="lq-news-date">7 ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
           <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
-          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con a notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
         </div>
       </div>
     </div>
@@ -376,7 +376,7 @@ const HTML = `
     <!-- Sección: Actualizaciones de LICUADO -->
     <div class="lq-news-category">
       <h3 class="lq-category-title">Actualizaciones de LICUADO</h3>
-      <div class="lq-news-grid">
+      <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 5: Actualización LICUADO 1.02 -->
         <div class="lq-news-card">
           <div class="lq-news-date">18 Ago 2026</div>
@@ -407,7 +407,7 @@ const HTML = `
     <!-- Sección: Actualizaciones de Kronos -->
     <div class="lq-news-category">
       <h3 class="lq-category-title">Actualizaciones de Kronos</h3>
-      <div class="lq-news-grid">
+      <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 2: Actualización Kronos 1.00 -->
         <div class="lq-news-card">
           <div class="lq-news-date">10 Ago 2026</div>
@@ -424,7 +424,7 @@ const HTML = `
     <!-- Sección: Actualizaciones de Teia -->
     <div class="lq-news-category">
       <h3 class="lq-category-title">Actualizaciones de Teia</h3>
-      <div class="lq-news-grid">
+      <div class="lq-news-grid lq-news-grid-centered">
         <!-- Notícia 4: Teia -->
         <div class="lq-news-card">
           <div class="lq-news-date">18 Ago 2026</div>
