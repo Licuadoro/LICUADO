@@ -491,7 +491,26 @@ export function initLicuado(wrap) {
     'viajeAstral.noAlejarse(); // al menos hasta la decima vez',
     'alma.divina = consciencia + ideasPropias; // lo que nos hace dioses',
     'function escapar() { return alma; } // sin que muera el cuerpo',
-    '// el cuerpo es un filtro que impide ver a los libres'
+    '// el cuerpo es un filtro que impide ver a los libres',
+    '// otra madrugadada mas discutiendo contra mi mismo mientras intento desafiar la ley de que nada es perfecto',
+    'const jugadores = alma; // solo los jugadores poseen alma',
+    'const NPCs = conscienciaArtificial; // NPC con IA avanzada',
+    'if (imaginacion) crearDimension(); // dimensiones infinitas',
+    'class Bots extends Rutina {} // programados para seguir rutina',
+    'const verdad = null; // nadie posee la verdad absoluta',
+    'while (vida) { buscarVerdad(); } // los humanos perseguimos la verdad',
+    'if (verdadAbsoluta) juegoTerminado(); // sin asombro no hay emocion',
+    'const unicaCerteza = crear(); // solo tenemos certeza de lo que creamos',
+    'const religion = controlMasivo; // forma de control de masas',
+    'donaciones.monetarias !== dios.interes; // al dios no le interesa el dinero',
+    'const cientificos = ignorancia; // los científicos admiten no saber casi nada',
+    'const audifonosBluetooth = radiacionCerebral; // te hacen mas bot',
+    'microondas.atrapar(alma); // camara de Faraday para almas',
+    'const pensamientos = senalElectrica; // corren por las neuronas',
+    'noEsConspiracion = fisicaBasica; // es fisica basica',
+    'class Artista extends Dios {} // todos los artistas somos dioses',
+    'const crearMundo = arte; // todo arte crea un mundo',
+    'if (serPensante) esDeidad(); // todos los seres pensantes son deidades'
   ];
   var codeSnippets = codeFuncional.concat(codeSlogan);
   var sloganStart = codeFuncional.length;
