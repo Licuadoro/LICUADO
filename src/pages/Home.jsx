@@ -304,7 +304,7 @@ const HTML = `
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link">Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-pipeline>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
     </div>
   </footer>
 
@@ -848,6 +848,58 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
             <p>No es conspiración, se llama física básica.</p>
             <p>Y si, podrías atrapar un alma en un microondas.</p>
             <p>¿A qué sabe un alma cocida en microondas?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lq-modal-overlay" id="lq-pipeline-panel">
+    <div class="lq-modal lq-dios-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-pipeline aria-label="Cerrar">&#10005;</button>
+      <div class="lq-dios-dots-fixed" id="lq-pipeline-dots-fixed"></div>
+      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-pipeline-dir="-1" aria-label="Anterior">&#8592;</button>
+      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-pipeline-dir="1" aria-label="Siguiente">&#8594;</button>
+      <div class="lq-dios-viewport">
+        <div class="lq-dios-pages" id="lq-pipeline-pages">
+          <div class="lq-dios-page lq-dios-text">
+            <p>Ya ha pasado bastante tiempo sin que escriba nada por aquí.</p>
+            <p>Es probable que muchos me hayan declarado loco o mal de la cabeza tras leer mis textos...</p>
+            <p>Pero aquí vengo de nuevo para seguir alimentando eso.</p>
+            <p>Porque me enorgullece que me vean como alguien que está loco.</p>
+            <p>Porque eso implica no pensar como el resto.</p>
+            <p>No ser parte del resto.</p>
+            <p>Porque donde muchos ven a un raro yo veo a un enorme dios.</p>
+            <p>Y es que al percibir su mundo de forma diferente, es un dios que está creando una nueva dimensión.</p>
+            <p>¿¿O no??</p>
+            <p>Porque, ¿cómo sabes que no eres tú quien percibe su mundo de forma distinta?</p>
+            <p>Nadie sabe la verdad sobre la realidad de las cosas, eso ya lo he mencionado alguna vez.</p>
+            <p>Sabemos la verdad sobre nuestra propia percepción y nuestra creación siempre que sea inerte.</p>
+            <p>No sabemos si lo que percibimos es real, o si estamos cuerdos.</p>
+            <p>Yo pienso que la gente que nosotros percibimos como "loca", es esperanzadora.</p>
+            <p>A mi, me devuelve la fe en la humanidad.</p>
+            <p>Y es que, es preocupante ver que la mayoría de personas no estan ahí.</p>
+            <p>Que solo le estás hablando a una cáscara vacía, a una bolsa de carne sin voluntad ni deseos.</p>
+            <p>Y los locos, parece que si tienen alma.</p>
+            <p>Por eso me dan esperanza.</p>
+            <p>Me gusta pensar que soy un loco que no piensa como los demás.</p>
+            <p>También me he dado cuenta de que la forma en la que funciona el mundo,</p>
+            <p>siempre siguiendo una rutina,</p>
+            <p>hace que casi nadie pueda pensar como un loco, y que casi nadie pueda pararse a escribir estas cosas.</p>
+            <p>Porque, casi siempre, por no decir siempre que ves a alguien que no está cuerdo, también es alguien que no consigue sustento ni almento.</p>
+            <p>Y esas personas acaban enfermando.</p>
+            <p>Y muriendo.</p>
+            <p>Y desapareciendo.</p>
+            <p>Pero no es que esté mal ser un loco, de hecho, está perfecto.</p>
+            <p>El problema es que el sistema hace que no convenga pensar de forma diferente...</p>
+            <p>Que no convenga no seguir la rutina.</p>
+            <p>Y, debo decir que me encanta escribir.</p>
+            <p>Lo disfruto mucho.</p>
+            <p>Y a veces temo que se acaben las vacaciones y ya no tenga tiempo para reflexionar en estas cosas, o hacer teorías conspiranóicas o dedicarme a mis proyectos.</p>
+            <p>Y cuando sea adulto y tenga que trabajar, seguramente tendré todavía menos tiempo.</p>
+            <p>Bueno, supongo que es el objetivo de quien nos tiene como marionetas, pero yo no quiero dejar de pensar.</p>
+            <p>Y entre más se acerca el fin de las vacaciones, siento como poco a poco mis neuronas se apagan y mi alma empieza a materializar la idea de tener que volver a reprimirse ante los gritos de un profesor frustrado que disfruta de tener total control sobre sus alumnos y decirles todo lo que deben hacer, para que los padres de los alumnos se puedan ir tranquilos a trabajar y ser productivos, y mantenerse estresados por el trabajo y por todo lo que su vida conlleva, pero aliviados porque creen que sus hijos están aprendiendo muchas cosas útiles y aprovechando su tiempo.</p>
+            <p>Mientras el profesor nos dicta como un dictador o un carcelero todo lo que debemos hacer y no podemos negarnos porque eso nos arriesgaría a decepcionar a nuestros padres.</p>
           </div>
         </div>
       </div>
