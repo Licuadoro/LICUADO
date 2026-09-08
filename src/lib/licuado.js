@@ -329,7 +329,6 @@ export function initLicuado(wrap) {
   });
   if (pipelinePanel) on(pipelinePanel, 'click', function (e) { if (e.target === pipelinePanel) closePipeline(); });
   pipelineShowPage(0);
-  }
 
   on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); closeVerdad(); closePipeline(); } });
   wrap.querySelectorAll('[data-lq-lumen]').forEach(function (a) {
