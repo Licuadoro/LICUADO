@@ -2,14 +2,6 @@
 # Compiled and build artifacts
 *.pyc
 __pycache__/
-*.o
-*.obj
-*.class
-*.exe
-*.dll
-*.so
-*.a
-*.out
 
 # Dependencies
 node_modules/
@@ -17,27 +9,18 @@ venv/
 .venv/
 .env
 .env.local
-.env.*
-
-# Build directories
-dist/
-build/
-target/
-*.log
-*.tmp
-*.swp
+*.env.*
 
 # Editors
 .vscode/
 .idea/
 
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
 # System files
 .DS_Store
 Thumbs.db
-```
-
-Wait, let me reconsider. The only modified file is `src/pages/Home.jsx` which is a source code file. There are no build artifacts, dependency directories, or temporary files in the changes. According to rule #6, if the change list contains only source files and no build artifacts, dependencies, or temp files, I should output an empty .gitignore.
-
-```gitignore
-
 ```
