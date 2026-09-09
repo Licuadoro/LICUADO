@@ -76,10 +76,9 @@ const HTML = `
         <a href="#" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg" data-lq-screen="gallery"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
         <div class="lq-news-preview" style="margin-top:1.5rem;opacity:0;animation:lq-fade-up 1s ease 1.8s forwards;position:relative;z-index:2;">
           <article class="lq-news-card lq-news-card-home">
-            <div class="lq-news-date">7 ago 2026</div>
-            <h3 class="lq-news-title">Actualización 1.00: Deceptio?</h3>
-            <p class="lq-news-excerpt">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.</p>
-            <p class="lq-news-excerpt"  style="font-style:italic;opacity:0.7;margin-top:0.75rem;">También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+            <div class="lq-news-date">7 sep 2026</div>
+            <h3 class="lq-news-title">Furor divinus</h3>
+            <p class="lq-news-excerpt">En esta actualización agregué una nueva sección que anuncia creatorius, un servicio que estoy ofreciendo para financiar el proyecto LICUADO, donde me describes tu idea, y yo hago tu web por encargo. Además, agregué una nova notícia sobre creatorius, aunque no sé por qué sigo diciendo en las notícias que puse notícias jajaja. Y pues como ya es constumbre, nuevos manifiestos conspiranóicos que hago cuando me aburro.</p>
             <a href="#" class="lq-btn-scriptorium lq-btn-news" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a>
           </article>
         </div>
@@ -319,6 +318,12 @@ const HTML = `
     <div class="lq-news-category">
       <h3 class="lq-category-title">Más recientes</h3>
       <div class="lq-news-grid lq-news-grid-centered">
+        <!-- Notícia 7: Furor divinus -->
+        <div class="lq-news-card lq-news-card-home">
+          <div class="lq-news-date">7 sep 2026</div>
+          <h3 class="lq-news-title">Furor divinus</h3>
+          <p class="lq-news-text">En esta actualización agregué una nueva sección que anuncia creatorius, un servicio que estoy ofreciendo para financiar el proyecto LICUADO, donde me describes tu idea, y yo hago tu web por encargo. Además, agregué una nova notícia sobre creatorius, aunque no sé por qué sigo diciendo en las notícias que puse notícias jajaja. Y pues como ya es constumbre, nuevos manifiestos conspiranóicos que hago cuando me aburro.</p>
+        </div>
         <!-- Notícia 6: Creatorius -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 sep 2026</div>
