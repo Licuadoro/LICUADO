@@ -318,14 +318,20 @@ const HTML = `
     <div class="lq-news-category">
       <h3 class="lq-category-title">Más recientes</h3>
       <div class="lq-news-grid lq-news-grid-centered">
-        <!-- Notícia 6: Creatorius -->
+        <!-- Notícia 6: Furor divinus -->
+        <div class="lq-news-card lq-news-card-home">
+          <div class="lq-news-date">7 sep 2026</div>
+          <h3 class="lq-news-title">Furor divinus</h3>
+          <p class="lq-news-text">En esta actualización agregué una nueva sección que anuncia creatorius, un servicio que estoy ofreciendo para financiar el proyecto LICUADO, donde me describes tu idea, y yo hago tu web por encargo. Además, agregué una nova notícia sobre creatorius, aunque no sé por qué sigo diciendo en las notícias que puse notícias jajaja. Y pues como ya es constumbre, nuevos manifiestos conspiranóicos que hago cuando me aburro.</p>
+        </div>
+        <!-- Notícia 5: Creatorius -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 sep 2026</div>
           <h3 class="lq-news-title">Creatorius</h3>
           <p class="lq-news-text">¡Por fin creo que LICUADO está teniendo una fuente de ingresos más estable! Y es que ya abri mi negocio Creatorius. Consiste básicamente en que tú me describes una idea y yo la construyo como web a cambio de dinero. Yo investigué qué precio le suelen poner a estos servicios, y yo lo puse un poco más bajo. Bueno, si quieres apoyar el proyecto LICUADO, siempre puedes pedirme una web. El precio es negociable.</p>
           <a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a>
         </div>
-        <!-- Notícia 5: Actualización LICUADO 1.02 -->
+        <!-- Notícia 4: Actualización LICUADO 1.02 -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
@@ -335,7 +341,7 @@ const HTML = `
           -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
         </div>
 
-        <!-- Notícia 4: Teia -->
+        <!-- Notícia 3: Teia -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">18 Ago 2026</div>
           <h3 class="lq-news-title">Teia</h3>
@@ -346,14 +352,14 @@ const HTML = `
           </a>
         </div>
 
-        <!-- Notícia 3: Actualización LICUADO 1.01 -->
+        <!-- Notícia 2: Actualización LICUADO 1.01 -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
           <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
         </div>
 
-        <!-- Notícia 2: Actualización Kronos 1.00 -->
+        <!-- Notícia 1: Actualización Kronos 1.00 -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">10 Ago 2026</div>
           <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
@@ -362,13 +368,6 @@ const HTML = `
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
             <span>Ir a Kronos</span>
           </a>
-        </div>
-
-        <!-- Notícia 1: Furor divinus -->
-        <div class="lq-news-card lq-news-card-home">
-          <div class="lq-news-date">7 sep 2026</div>
-          <h3 class="lq-news-title">Furor divinus</h3>
-          <p class="lq-news-text">En esta actualización agregué una nueva sección que anuncia creatorius, un servicio que estoy ofreciendo para financiar el proyecto LICUADO, donde me describes tu idea, y yo hago tu web por encargo. Además, agregué una nova notícia sobre creatorius, aunque no sé por qué sigo diciendo en las notícias que puse notícias jajaja. Y pues como ya es constumbre, nuevos manifiestos conspiranóicos que hago cuando me aburro.</p>
         </div>
       </div>
     </div>
