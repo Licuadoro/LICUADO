@@ -369,14 +369,6 @@ const HTML = `
             <span>Ir a Kronos</span>
           </a>
         </div>
-
-        <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card lq-news-card-home">
-          <div class="lq-news-date">7 ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
-          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
-          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con a notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
-        </div>
       </div>
     </div>
 
@@ -407,6 +399,13 @@ const HTML = `
           <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
           <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
           También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+        </div>
+
+        <!-- Notícia 4: Furor divinus -->
+        <div class="lq-news-card lq-news-card-home">
+          <div class="lq-news-date">7 sep 2026</div>
+          <h3 class="lq-news-title">Furor divinus</h3>
+          <p class="lq-news-text">En esta actualización agregué una nueva sección que anuncia creatorius, un servicio que estoy ofreciendo para financiar el proyecto LICUADO, donde me describes tu idea, y yo hago tu web por encargo. Además, agregué una nova notícia sobre creatorius, aunque no sé por qué sigo diciendo en las notícias que puse notícias jajaja. Y pues como ya es constumbre, nuevos manifiestos conspiranóicos que hago cuando me aburro.</p>
         </div>
       </div>
     </div>
@@ -463,6 +462,12 @@ const HTML = `
     <div class="lq-news-category">
       <h3 class="lq-category-title">Todas las notícias</h3>
       <div class="lq-news-grid lq-news-grid-centered">
+        <!-- Notícia 7: Furor divinus -->
+        <div class="lq-news-card lq-news-card-home">
+          <div class="lq-news-date">7 sep 2026</div>
+          <h3 class="lq-news-title">Furor divinus</h3>
+          <p class="lq-news-text">En esta actualización agregué una nueva sección que anuncia creatorius, un servicio que estoy ofreciendo para financiar el proyecto LICUADO, donde me describes tu idea, y yo hago tu web por encargo. Además, agregué una nova notícia sobre creatorius, aunque no sé por qué sigo diciendo en las notícias que puse notícias jajaja. Y pues como ya es constumbre, nuevos manifiestos conspiranóicos que hago cuando me aburro.</p>
+        </div>
         <!-- Notícia 6: Creatorius -->
         <div class="lq-news-card lq-news-card-home">
           <div class="lq-news-date">7 sep 2026</div>
