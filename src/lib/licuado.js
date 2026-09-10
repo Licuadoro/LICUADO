@@ -275,7 +275,7 @@ export function initLicuado(wrap) {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
       if (verdadPages) verdadPages.querySelectorAll('.lq-dios-page').forEach(function (p) { p.scrollTop = 0; });
-      verdadShowPage(0);
+      verdadShowPage(1);
     }
   }
   function closeVerdad() { if (verdadPanel) { verdadPanel.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; } }
@@ -285,8 +285,7 @@ export function initLicuado(wrap) {
     on(btn, 'click', function (e) { e.stopPropagation(); verdadShowPage(verdadPageIdx + Number(btn.getAttribute('data-lq-verdad-dir'))); });
   });
   if (verdadPanel) on(verdadPanel, 'click', function (e) { if (e.target === verdadPanel) closeVerdad(); });
-  verdadShowPage(0);
-
+  verdadShowPage(1);
 
 
   /* ── Panel "Pipeline" (frase del footer de LICUADO Scriptorium: Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego) ── */
