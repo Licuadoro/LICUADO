@@ -582,6 +582,8 @@ const HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-dios-pages">
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">3 Clases que siguen la misma rutina</h3>
+            <p class="lq-dios-date">3 Ago 2026 3:23 pm</p>
             <p>Anteriormente dije que todos somos dioses con una explicación lógica.</p>
             <p>Pero, ¿es acaso cierto?</p>
             <p>Bueno, mencioné que todos los seres pensantes somos dioses.</p>
@@ -624,6 +626,8 @@ const HTML = `
             <p>No.</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Dioses porque imaginamos</h3>
+            <p class="lq-dios-date">1 Ago 2026 11:40 am</p>
             <p>Los videojuegos no son un tipo de arte, son todas las artes.</p>
         <p>Piénsalo, dime un arte que no exista en ningún videojuego.</p>
         <p>Y bueno, si los videojuegos son arte, los devs somos artistas.</p>
