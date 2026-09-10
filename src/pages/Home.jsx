@@ -680,6 +680,8 @@ const HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-alma-pages">
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Alminando eternamente tras la verdad, porque a veces ganar es lo peor</h3>
+            <p class="lq-dios-date">7 Ago 2026 1:20 pm</p>
             <p>Lo del alma... Lo que dije antes, lo creo, a medias.
 Creo que somos un alma atrapada en un cuerpo.
 Creo en los viajes astrales.
@@ -722,6 +724,8 @@ Y me alegra poder decir...
 ¿Verdad?</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Alminar puede ser peligroso</h3>
+            <p class="lq-dios-date">4 Ago 2026 4:13 pm</p>
             <p>Ok, cómo lo prometí, voy a hablar de mi percepción del alma.
 Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
 Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
