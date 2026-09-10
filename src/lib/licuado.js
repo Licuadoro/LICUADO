@@ -285,8 +285,7 @@ export function initLicuado(wrap) {
     on(btn, 'click', function (e) { e.stopPropagation(); verdadShowPage(verdadPageIdx + Number(btn.getAttribute('data-lq-verdad-dir'))); });
   });
   if (verdadPanel) on(verdadPanel, 'click', function (e) { if (e.target === verdadPanel) closeVerdad(); });
-  verdadShowPage(0);
-
+  verdadShowPage(1);
 
 
   /* ── Panel "Pipeline" (frase del footer de LICUADO Scriptorium: Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego) ── */
