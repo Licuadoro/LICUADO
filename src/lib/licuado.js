@@ -275,7 +275,7 @@ export function initLicuado(wrap) {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
       if (verdadPages) verdadPages.querySelectorAll('.lq-dios-page').forEach(function (p) { p.scrollTop = 0; });
-      verdadShowPage(1);
+      verdadShowPage(0);
     }
   }
   function closeVerdad() { if (verdadPanel) { verdadPanel.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; } }
