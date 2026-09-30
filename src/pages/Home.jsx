@@ -209,7 +209,8 @@ const HTML = `
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
           <li><a href="/">Volver a LICUADO</a></li>
-          <li><a href="/Mitte signum">Inicio</a></li>
+          <li><a href="/nuntium">Notícias</a></li>
+          <li><a href="/LICUADO Scriptorium">LICUADO Scriptorium</a></li>
         </ul>
       </div>
     </div>
