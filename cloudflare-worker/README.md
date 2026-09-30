@@ -56,3 +56,19 @@ npx wrangler deploy
 - `GET /api/news` → `{ "news": [...] }` (público)
 - `POST /api/news` → crea/actualiza por `id` (requiere `Authorization: Bearer <NEWS_TOKEN>` si el secret existe)
 - `DELETE /api/news/:id` → borra (mismas reglas)
+
+## Importante al publicar la web (Cloudflare Pages)
+
+Ahora cada pantalla es una URL propia:
+
+- `/` → Inicio
+- `/Mitte signum` → Envía una señal
+- `/LICUADO Scriptorium` → Galería del Scriptorium
+- `/nuntium` → Notícias
+- `/editor` → Editor privado (sin enlaces públicos hacia él)
+
+El proyecto incluye un archivo `public/_redirects` con la regla
+`/*  /index.html  200`, que Vite copia automáticamente a `dist/`.
+Si publicas pegando/cargando la carpeta `dist` en Pages, ya viene incluido.
+Si tu proyecto se construye desde el repositorio, Cloudflare Pages lo detecta
+solo. Sin esa regla, abrir o recargar directamente estas URLs daría error 404.

@@ -357,10 +357,14 @@ export function initLicuado(wrap) {
     if (!layer) return;
     layer.innerHTML = '';
     var viewportH = window.innerHeight || 800;
-    var isAltScreen = wrap.classList.contains('lq-show-scriptorium') || wrap.classList.contains('lq-show-gallery') || wrap.classList.contains('lq-show-news');
-    var visibleFooter = wrap.classList.contains('lq-show-scriptorium') ? wrap.querySelector('.lq-scriptorium-footer')
-      : wrap.classList.contains('lq-show-gallery') ? wrap.querySelector('.lq-gallery-footer')
-      : wrap.classList.contains('lq-show-news') ? wrap.querySelector('.lq-news-footer')
+    // "Pantalla alternativa" también cuando la URL es una página propia
+    // (/Mitte signum, /LICUADO Scriptorium, /nuntium → clase lq-page-* en body)
+    var pageCls = document.body.className || '';
+    var isAltScreen = wrap.classList.contains('lq-show-scriptorium') || wrap.classList.contains('lq-show-gallery') || wrap.classList.contains('lq-show-news')
+      || pageCls.indexOf('lq-page-') >= 0;
+    var visibleFooter = (wrap.classList.contains('lq-show-scriptorium') || pageCls.indexOf('lq-page-scriptorium') >= 0) ? wrap.querySelector('.lq-scriptorium-footer')
+      : (wrap.classList.contains('lq-show-gallery') || pageCls.indexOf('lq-page-gallery') >= 0) ? wrap.querySelector('.lq-gallery-footer')
+      : (wrap.classList.contains('lq-show-news') || pageCls.indexOf('lq-page-news') >= 0) ? wrap.querySelector('.lq-news-footer')
         : wrap.querySelector('.lq-footer-home');
     var footerTop = visibleFooter ? visibleFooter.getBoundingClientRect().top : viewportH;
     var h = Math.max(0, Math.min(viewportH, footerTop - 3));
