@@ -54,3 +54,17 @@
 .ed-footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center;font-size:.78rem;color:rgba(245,245,240,.4);border-top:1px solid rgba(200,24,12,.2);padding-top:1.2rem}
 .ed-footer a{color:rgba(220,60,40,.85);text-decoration:none}
 .ed-footer a:hover{color:#ff3a1f}
+
+/* ── Iconos minimalistas y estado de nube ── */
+.ed-ic{display:inline-block;vertical-align:-2px;margin-right:.35rem;flex:none}
+.ed-header-actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.ed-back-btn{display:inline-flex;align-items:center}
+.ed-toast{display:flex;align-items:center;gap:.55rem}
+.ed-toast.warn{background:linear-gradient(135deg,rgba(215,170,61,.16),rgba(90,66,10,.28));border-color:rgba(215,170,61,.5);color:rgba(255,238,204,.95)}
+.ed-cloud-on{border-color:rgba(118,255,218,.5)!important;color:rgba(210,255,235,.95)!important;display:inline-flex;align-items:center}
+.ed-cloud-off{border-color:rgba(215,170,61,.6)!important;color:rgba(255,238,204,.95)!important;display:inline-flex;align-items:center}
+.ed-mini-btn,.ed-edit-btn,.ed-del-btn,.ed-save-btn{display:inline-flex;align-items:center}
+.ed-notice{display:flex;gap:.7rem;align-items:flex-start;background:rgba(215,170,61,.08);border:1px solid rgba(215,170,61,.35);color:rgba(255,238,204,.9);padding:.8rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5;margin-bottom:1rem}
+.ed-notice .ed-ic{margin-top:.15rem;color:rgba(215,170,61,.9)}
+.ed-section-title{display:flex;align-items:center}
+.ed-save-btn:disabled{opacity:.55;cursor:wait}

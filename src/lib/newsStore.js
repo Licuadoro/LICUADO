@@ -1,7 +1,10 @@
+import { apiFetchAll, apiPut, apiDelete } from '@/lib/newsApi';
+
 // Almacén de notícias del proyecto LICUADO.
-// Las notícias se guardan en localStorage (por navegador) y, si la app Base44 está
-// configurada con la entidad "News", también se sincronizan en la nube para que
-// cualquier visitante vea las mesmas notícias.
+// La fuente de verdad es el API remoto (Cloudflare Worker + KV), para que
+// TODOS los visitantes vean las mesmas notícias, incluso en incógnito o
+// desde otro dispositivo. El localStorage solo se usa como caché instantáneo
+// y respaldo offline. No depende de Base44 ni de sesiones de usuario.
 
 export const NEWS_LOCATIONS = [
   { id: 'home', label: 'Inicio (tarjeta de prévia en Sobre LICUADO)' },
@@ -23,9 +26,6 @@ export const EXTRA_STYLES = [
   { id: 'signal', label: 'Botón «Envía una señal» (verde)' },
   { id: 'custom', label: 'Enlace personalizado (escribe el texto y la URL abajo)' },
 ];
-
-const LS_KEY = 'licuado_news_v1';
-const LS_MIGRATED_KEY = 'licuado_news_migrated_v1';
 
 /* ── Noticias iniciales (las mismas que estaban fijas en la página) ── */
 const SEED_DATE_1 = '7 sep 2026';
@@ -177,10 +177,16 @@ export function sortNews(list) {
   return [...list].sort((a, b) => newsTimestamp(b) - newsTimestamp(a) || String(b.createdAt).localeCompare(String(a.createdAt)));
 }
 
-/* ── Lectura / escritura local ── */
-function readLocal() {
+/* ── Sincronización con la nube (entidade News do propio proyecto Base44) ──
+   Estratexia: a fonte de verdade é a nube. localStorage só serve de caché
+   para que a web cargue rápido e funcione sen conexión. */
+
+const LS_CLOUD_KEY = 'licuado_news_cloud_v1'; // última lista vista na nube
+const LS_SEEDED_KEY = 'licuado_news_seeded_v2';
+
+function readCloudCache() {
   try {
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = localStorage.getItem(LS_CLOUD_KEY);
     if (!raw) return null;
     const data = JSON.parse(raw);
     if (!Array.isArray(data)) return null;
@@ -190,126 +196,91 @@ function readLocal() {
   }
 }
 
-function writeLocal(list) {
+function writeCloudCache(list) {
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify(list));
-  } catch {
-    /* almacenamiento lleno o bloqueado */
-  }
+    localStorage.setItem(LS_CLOUD_KEY, JSON.stringify(list));
+  } catch { /* ignore */ }
 }
 
-/* ── Sincronización opcional con la entidad News de Base44 ── */
-async function getBase44() {
-  try {
-    const mod = await import('@/api/base44Client');
-    const b44 = mod?.base44;
-    if (!b44?.entities?.News) return null;
-    // Comprobación rápida de que la entidad existe en la app
-    await b44.entities.News.list('-created_date', 1);
-    return b44;
-  } catch {
-    return null;
-  }
+function mapFromCloud(r) {
+  return normalize({
+    id: r.id || r._id,
+    title: r.title,
+    date: r.date,
+    text: r.text,
+    extraStyle: r.extra_style,
+    linkText: r.link_text,
+    linkUrl: r.link_url,
+    locations: r.locations,
+    createdAt: r.created_date,
+    updatedAt: r.updated_date,
+  });
 }
 
-let cachedB44;
-async function base44Once() {
-  if (cachedB44 === undefined) cachedB44 = await getBase44();
-  return cachedB44;
-}
-
-async function loadFromBase44() {
-  const b44 = await base44Once();
-  if (!b44) return null;
-  try {
-    const rows = await b44.entities.News.list('', 500);
-    if (!Array.isArray(rows)) return null;
-    return rows.map((r) => normalize({ ...r, id: r.id || r._id }));
-  } catch {
-    return null;
-  }
-}
-
-async function saveToBase44(list) {
-  const b44 = await base44Once();
-  if (!b44) return false;
-  try {
-    const rows = await b44.entities.News.list('', 500).catch(() => []);
-    const existing = Array.isArray(rows) ? rows : [];
-    const existingIds = new Set(existing.map((r) => r.id || r._id));
-    for (const item of list) {
-      const payload = {
-        id: item.id,
-        title: item.title,
-        date: item.date,
-        text: item.text,
-        extra_style: item.extraStyle,
-        link_text: item.linkText,
-        link_url: item.linkUrl,
-        locations: item.locations,
-      };
-      if (existingIds.has(item.id)) await b44.entities.News.update(item.id, payload);
-      else await b44.entities.News.create(payload);
-    }
-    for (const r of existing) {
-      const rid = r.id || r._id;
-      if (rid && !list.some((i) => i.id === rid)) await b44.entities.News.delete(rid).catch(() => {});
-    }
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/* ── API pública ── */
+/**
+ * Carga as notícias: intenta primero el API remoto (para que TODOS os usuarios
+ * vistan as mesmas notícias) y usa o caché local como respaldo instantáneo.
+ */
 export async function fetchNews() {
-  let list = readLocal();
-  if (!list) {
-    const remote = await loadFromBase44();
-    if (remote) {
-      list = remote;
-      writeLocal(list);
-    } else if (!localStorage.getItem(LS_MIGRATED_KEY)) {
-      list = seedNews();
-      writeLocal(list);
-      try {
-        localStorage.setItem(LS_MIGRATED_KEY, '1');
-      } catch { /* ignore */ }
-    } else {
-      list = [];
-      writeLocal(list);
-    }
+  const cached = readCloudCache();
+  let remote = null;
+  try {
+    remote = await apiFetchAll();
+  } catch { remote = null; }
+
+  if (remote !== null) {
+    const list = remote.map(mapFromCloud);
+    writeCloudCache(list);
+    return sortNews(list);
   }
-  // Si hay nube y aún no tenemos nada remoto, intentamos traerlo igualmente
-  if (list.length === 0) {
-    const remote = await loadFromBase44();
-    if (remote && remote.length) {
-      list = remote;
-      writeLocal(list);
+
+  // Sen API dispoñible (sen rede): usar caché ou semente local
+  if (cached && cached.length) return sortNews(cached);
+  if (!localStorage.getItem(LS_SEEDED_KEY)) {
+    const seed = seedNews();
+    writeCloudCache(seed);
+    try { localStorage.setItem(LS_SEEDED_KEY, '1'); } catch { /* ignore */ }
+    return sortNews(seed);
+  }
+  return sortNews(cached || []);
+}
+
+/** Estado do API: true se o endpoint de notícias responde correctamente. */
+export async function cloudStatus() {
+  const rows = await apiFetchAll();
+  return rows !== null;
+}
+
+async function pushItemToCloud(item) {
+  try { return await apiPut(item); } catch { return false; }
+}
+
+/** Crea ou actualiza unha notícia e publícaa no API para todos os visitantes. */
+export async function upsertNews(item) {
+  const norm = normalize({ ...item, id: item.id || genId(), updatedAt: new Date().toISOString() });
+  const ok = await pushItemToCloud(norm);
+  // Actualizar caché local independentemente (funciona sen conexión tamén)
+  const list = readCloudCache() ?? [];
+  const idx = list.findIndex((n) => n.id === norm.id);
+  if (idx >= 0) list[idx] = norm; else list.push(norm);
+  writeCloudCache(list);
+  if (ok) {
+    const fresh = await apiFetchAll().catch(() => null);
+    if (fresh) {
+      const remoteList = fresh.map(mapFromCloud);
+      writeCloudCache(remoteList);
+      return sortNews(remoteList);
     }
   }
   return sortNews(list);
 }
 
-export async function saveNewsList(list) {
-  const clean = list.map(normalize);
-  writeLocal(clean);
-  await saveToBase44(clean);
-  return sortNews(clean);
-}
-
-export async function upsertNews(item) {
-  const list = readLocal() ?? (await fetchNews());
-  const norm = normalize({ ...item, id: item.id || genId() });
-  const idx = list.findIndex((n) => n.id === norm.id);
-  if (idx >= 0) list[idx] = { ...norm, createdAt: list[idx].createdAt, updatedAt: new Date().toISOString() };
-  else list.push({ ...norm, updatedAt: new Date().toISOString() });
-  return saveNewsList(list);
-}
-
+/** Elimina unha notícia do API e do caché local. */
 export async function deleteNews(id) {
-  const list = readLocal() ?? (await fetchNews());
-  return saveNewsList(list.filter((n) => n.id !== id));
+  await apiDelete(id).catch(() => false);
+  const list = (readCloudCache() ?? []).filter((n) => n.id !== id);
+  writeCloudCache(list);
+  return sortNews(list);
 }
 
 export function newsForLocation(list, locationId) {

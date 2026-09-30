@@ -269,6 +269,13 @@ html::-webkit-scrollbar,body::-webkit-scrollbar,.lq-wrap::-webkit-scrollbar{disp
 /* ── PANTALLAS SECUNDARIAS ── */
 .lq-wrap.lq-show-scriptorium .lq-banner,.lq-wrap.lq-show-scriptorium .lq-data-breach,.lq-wrap.lq-show-scriptorium .lq-game-section,.lq-wrap.lq-show-scriptorium .lq-sobre,.lq-wrap.lq-show-scriptorium .lq-art-banner,.lq-wrap.lq-show-scriptorium .lq-footer-home,.lq-wrap.lq-show-gallery .lq-banner,.lq-wrap.lq-show-gallery .lq-data-breach,.lq-wrap.lq-show-gallery .lq-game-section,.lq-wrap.lq-show-gallery .lq-sobre,.lq-wrap.lq-show-gallery .lq-art-banner,.lq-wrap.lq-show-gallery .lq-footer-home,.lq-wrap.lq-show-news .lq-banner,.lq-wrap.lq-show-news .lq-data-breach,.lq-wrap.lq-show-news .lq-game-section,.lq-wrap.lq-show-news .lq-sobre,.lq-wrap.lq-show-news .lq-art-banner,.lq-wrap.lq-show-news .lq-footer-home{display:none}
 .lq-scriptorium,.lq-gallery{display:none;min-height:100vh;width:100vw;max-width:100vw;margin-left:0;margin-right:0;padding:7rem max(4rem,8vw) 4.5rem;position:relative;overflow:hidden;box-sizing:border-box}
+/* Cada pantalla es una URL propia (ver App.jsx): cuando el <body> lleva la
+   clase lq-page-*, esa sección se muestra directamente sin necesidad de la
+   clase lq-show-* y sin ocultar el resto (la página solo contiene su sección). */
+body.lq-page-scriptorium .lq-scriptorium,body.lq-page-gallery .lq-gallery{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+body.lq-page-news .lq-news{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center}
+body.lq-page-scriptorium .lq-scriptorium{justify-content:flex-start;overflow:visible}
+body.lq-page-scriptorium .lq-scriptorium-footer,body.lq-page-gallery .lq-gallery-footer,body.lq-page-news .lq-news-footer{display:block}
 .lq-scriptorium{background:linear-gradient(180deg,rgba(2,28,14,.82),rgba(3,14,9,.92) 42%,#060606),radial-gradient(circle at 50% 18%,rgba(3,252,111,.16),transparent 32%),radial-gradient(circle at 50% 45%,rgba(3,252,111,.1),transparent 42%),#060606}
 .lq-gallery{background:linear-gradient(180deg,rgba(22,17,4,.82),rgba(10,7,2,.92) 42%,#060606),radial-gradient(circle at 50% 18%,rgba(215,170,61,.2),transparent 32%),radial-gradient(circle at 50% 45%,rgba(215,170,61,.14),transparent 42%),#060606}
 .lq-scriptorium:before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 28%,rgba(3,252,111,.08),transparent 35%),radial-gradient(ellipse at 82% 35%,rgba(3,252,111,.05),transparent 34%);pointer-events:none}

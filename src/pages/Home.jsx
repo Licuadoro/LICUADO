@@ -103,7 +103,7 @@ const HTML = `
           </div>
           <div class="lq-frame-plaque"><span class="lq-plaque-small">Lo más nuevo en</span>LICUADO&nbsp;&nbsp;Scriptorium</div>
         </div>
-        <a href="#" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg" data-lq-screen="gallery"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
+        <a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
         <div class="lq-news-preview" style="margin-top:1.5rem;opacity:0;animation:lq-fade-up 1s ease 1.8s forwards;position:relative;z-index:2;" id="lq-home-news-container"></div>
       </div>
       <div>
@@ -162,9 +162,9 @@ const HTML = `
           <li><a href="#lq-top" data-lq-scroll="lq-top">Inicio</a></li>
           <li><a href="#lq-proyectos" data-lq-lumen>Lúmen</a></li>
           <li><a href="https://caribe-studios-portal-883042bb.base44.app/" target="_blank" rel="noopener">Caribe Studios &#8599;</a></li>
-          <li style="margin-top:.6rem"><a href="#" class="lq-btn-scriptorium lq-btn-signal" data-lq-screen="scriptorium"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20v-6"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Envía una señal</a></li>
-          <li><a href="#" class="lq-btn-scriptorium lq-btn-manuscript" data-lq-screen="gallery"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a></li>
-          <li><a href="#" class="lq-btn-scriptorium lq-btn-news" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a></li>
+          <li style="margin-top:.6rem"><a href="/Mitte signum" class="lq-btn-scriptorium lq-btn-signal"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20v-6"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Envía una señal</a></li>
+          <li><a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a></li>
+          <li><a href="/nuntium" class="lq-btn-scriptorium lq-btn-news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a></li>
           <li><a class="lq-btn-scriptorium lq-btn-kronos" href="https://kronos.licuado.workers.dev" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><g class="lq-kronos-hand"><path d="M12 12 12 7"/><path d="M12 12 15.3 13.6"/></g></svg>Kronos</a></li>
           <li><a class="lq-btn-scriptorium lq-btn-teia" href="https://teia.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Teia</a></li>
           <li style="margin-top:.6rem"><a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a></li>
@@ -178,7 +178,7 @@ const HTML = `
   </footer>
 
   <section class="lq-scriptorium" id="lq-scriptorium">
-    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <div class="lq-waterline"></div>
@@ -208,8 +208,8 @@ const HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
-          <li><a href="#lq-scriptorium" data-lq-scroll-scriptorium>Inicio</a></li>
+          <li><a href="/">Volver a LICUADO</a></li>
+          <li><a href="/Mitte signum">Inicio</a></li>
         </ul>
       </div>
     </div>
@@ -220,7 +220,7 @@ const HTML = `
   </footer>
 
   <section class="lq-gallery" id="lq-gallery">
-    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <img class="lq-scriptorium-logo" src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
@@ -320,7 +320,7 @@ const HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li><a href="/">Volver a LICUADO</a></li>
         </ul>
       </div>
     </div>
@@ -331,7 +331,7 @@ const HTML = `
   </footer>
 
   <section class="lq-news" id="lq-news">
-    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
@@ -350,7 +350,7 @@ const HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li><a href="/">Volver a LICUADO</a></li>
         </ul>
       </div>
     </div>
@@ -741,12 +741,19 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
   </div>
 `;
 
-export default function Home() {
+export default function Home({ screen = 'home' }) {
   const wrapRef = useRef(null);
 
   useEffect(() => {
     if (!wrapRef.current) return;
     let disposed = false;
+
+    // Cada pantalla es una URL propia: marcamos el <body> con lq-page-* para
+    // que las reglas CSS y los efectos (partículas/footer) sepan qué sección
+    // es la visible en esta página.
+    const pageClass = 'lq-page-' + screen;
+    document.body.classList.add(pageClass);
+
     const cleanup = initLicuado(wrapRef.current);
 
     const renderDynamic = (html) => {
@@ -771,14 +778,21 @@ export default function Home() {
       renderDynamic(buildNewsHtml(news));
     }).catch(() => {});
 
-    const onStorage = () => {
+    const reload = () => {
       fetchNews().then((news) => { if (!disposed) renderDynamic(buildNewsHtml(news)); }).catch(() => {});
     };
-    window.addEventListener('storage', onStorage);
+    window.addEventListener('storage', reload);
+    // Al volver al inicio desde el editor, refrescar desde la nube
+    const onVisible = () => { if (!document.hidden) reload(); };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', reload);
 
     return () => {
       disposed = true;
-      window.removeEventListener('storage', onStorage);
+      document.body.classList.remove(pageClass);
+      window.removeEventListener('storage', reload);
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', reload);
       cleanup();
     };
   }, []);
