@@ -21,6 +21,9 @@
     // SPA: cualquier ruta desconocida (/Mitte signum, /LICUADO Scriptorium,
     // /nuntium, /editor) sirve index.html con código 200. Se hace mediante
     // esta opción y NO mediante _redirects, para evitar el error 100324.
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    // Belt-and-braces: si por cualquier motivo un _redirects volviera a
+    // colarse en dist/, se excluye del bundle y Cloudflare nunca lo valida.
+    "excluded_assets": ["_redirects"]
   }
 }
