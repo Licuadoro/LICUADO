@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "licuado",
+  "compatibility_date": "2026-09-30",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./dist",
+    // Sirve index.html para cualquier ruta desconocida (SPA) con codigo 200,
+    // sin _redirects: las rutas "/Mitte signum", "/LICUADO Scriptorium",
+    // "/nuntium" y "/editor" funcionan con recarga directa y no provocan
+    // el error 100324 de bucle infinito de Cloudflare.
+    "not_found_handling": "single-page-application",
+    "run_worker_first": false
+  }
+}
