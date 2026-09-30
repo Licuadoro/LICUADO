@@ -321,13 +321,13 @@ function buildExtra(item) {
     return `<a class="lq-btn-scriptorium lq-btn-creatorius" href="${escapeHtml(url)}" target="_blank" rel="noopener">${ICONS.creatorius}${escapeHtml(item.linkText || 'Creatorius')}</a>`;
   }
   if (style === 'news') {
-    return `<a href="#" class="lq-btn-scriptorium lq-btn-news" data-lq-screen="news">${ICONS.news}${escapeHtml(item.linkText || 'Notícias')}</a>`;
+    return `<a href="/nuntium" class="lq-btn-scriptorium lq-btn-news">${ICONS.news}${escapeHtml(item.linkText || 'Notícias')}</a>`;
   }
   if (style === 'scriptorium') {
-    return `<a href="#" class="lq-btn-scriptorium lq-btn-manuscript" data-lq-screen="gallery">${ICONS.manuscript}${escapeHtml(item.linkText || 'LICUADO Scriptorium')}</a>`;
+    return `<a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript">${ICONS.manuscript}${escapeHtml(item.linkText || 'LICUADO Scriptorium')}</a>`;
   }
   if (style === 'signal') {
-    return `<a href="#" class="lq-btn-scriptorium lq-btn-signal" data-lq-screen="scriptorium">${ICONS.signal}${escapeHtml(item.linkText || 'Envía una señal')}</a>`;
+    return `<a href="/Mitte signum" class="lq-btn-scriptorium lq-btn-signal">${ICONS.signal}${escapeHtml(item.linkText || 'Envía una señal')}</a>`;
   }
   // custom
   if (!item.linkUrl) return '';
@@ -348,7 +348,7 @@ export function renderNewsCard(item, mode = 'card') {
     `<h3 class="lq-news-title">${escapeHtml(item.title)}</h3>` +
     `<p class="${bodyClass}">${text}</p>`;
   if (mode === 'excerpt') {
-    html += `<a href="#" class="lq-btn-scriptorium lq-btn-news" data-lq-screen="news">${ICONS.news}Notícias</a>`;
+    html += `<a href="/nuntium" class="lq-btn-scriptorium lq-btn-news">${ICONS.news}Notícias</a>`;
   } else {
     html += buildExtra(item);
   }
