@@ -1,0 +1,26 @@
+// Configuración de Cloudflare Workers (Assets) para la web LICUADO.
+// Se sube a git para que el deploy en Cloudflare no tenga que "adivinarla"
+// con `npx wrangler deploy` (autoconfig), que era lo que causaba el error:
+//   "Invalid _redirects configuration: Line 4: Infinite loop detected…"
+//
+// El build (`npm run build`) genera dist/ con un wrangler.json propio y un
+// archivo .assetsignore; aquí solo fijamos los valores correctos.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "licuado",
+  "compatibility_date": "2026-09-30",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    // Carpeta generada por Vite (está en .gitignore, se crea al compilar).
+    "directory": "./dist",
+    // SPA: cualquier ruta desconocida (/nuntium, /editor, …) sirve index.html.
+    "not_found_handling": "single-page-application",
+    // Clave del fix: desactiva el reescritado automático de URLs "/index.html".
+    // Con html_handling activo (el valor por defecto), la regla /* -> /index.html
+    // de _redirects se dispara otra vez sobre sí misma y Cloudflare rechaza el
+    // deploy con "Infinite loop detected in this rule".
+    "html_handling": "none"
+  }
+}
