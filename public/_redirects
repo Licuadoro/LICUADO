@@ -1,4 +1,0 @@
-# Reglas para Cloudflare Pages (se copia automaticamente a dist/ al compilar)
-# Sin esto, al abrir o recargar /Mitte signum, /LICUADO Scriptorium,
-# /nuntium o /editor directamente, Cloudflare mostraria error 404.
-/*    /index.html   200
