@@ -1,7 +1,2 @@
-# Build artifacts
-# NOTE: dist/ is intentionally NOT ignored — this repo deploys to Cloudflare
-# Workers with "npx wrangler deploy" and the Pages/Workers build command does
-# NOT run "npm run build", so the committed dist/ IS the deployment source.
-# Wrangler/Cloudflare (evitar artefactos de setup automatico)
-.wrangler/
-.env
+# Temp files
+.tmp_blocks/
