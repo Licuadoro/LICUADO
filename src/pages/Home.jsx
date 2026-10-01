@@ -32,12 +32,93 @@ function buildNewsHtml(news) {
   return parts.join('\n');
 }
 
-const HTML = `
+/**
+ * Controlador común das 4 páxinas: cada URL é un documento propio que só
+ * contén a súa sección (nada duplicado doutras páxinas) e inicializa os
+ * efectos correspondentes.
+ */
+export default function Home({ screen = 'home', html }) {
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    let disposed = false;
+
+    // Marcamos o <body> con lq-page-* para que CSS y JS sepan qué pantalla es la visible.
+    const pageClass = 'lq-page-' + screen;
+    document.body.classList.add(pageClass);
+
+    const cleanup = initLicuado(wrapRef.current);
+
+    if (screen === 'home' || screen === 'news') {
+      const renderDynamic = (dyn) => {
+        const wrap = wrapRef.current;
+        if (!wrap) return;
+        const first = dyn.indexOf('<div class="lq-news-card');
+        const newsStart = dyn.indexOf('<div class="lq-news-category');
+        const homeSlot = wrap.querySelector('#lq-home-news-container');
+        if (homeSlot) {
+          const previewHtml = first >= 0 ? dyn.slice(first, newsStart > first ? newsStart : undefined) : '';
+          homeSlot.innerHTML = previewHtml.trim();
+        }
+        const newsSlot = wrap.querySelector('#lq-news-dynamic');
+        if (newsSlot) {
+          const cats = dyn.slice(newsStart >= 0 ? newsStart : dyn.length);
+          newsSlot.innerHTML = cats.trim() || dyn;
+        }
+      };
+
+      fetchNews().then((news) => {
+        if (!disposed) renderDynamic(buildNewsHtml(news));
+      }).catch(() => {});
+
+      const reload = () => {
+        fetchNews().then((news) => { if (!disposed) renderDynamic(buildNewsHtml(news)); }).catch(() => {});
+      };
+      window.addEventListener('storage', reload);
+      // Al volver á inicio desde o editor, refrescar desde a nube
+      const onVisible = () => { if (!document.hidden) reload(); };
+      document.addEventListener('visibilitychange', onVisible);
+      window.addEventListener('focus', reload);
+
+      return () => {
+        disposed = true;
+        document.body.classList.remove(pageClass);
+        window.removeEventListener('storage', reload);
+        document.removeEventListener('visibilitychange', onVisible);
+        window.removeEventListener('focus', reload);
+        cleanup();
+      };
+    }
+
+    return () => {
+      disposed = true;
+      document.body.classList.remove(pageClass);
+      cleanup();
+    };
+  }, [screen]);
+
+  return (
+    <div
+      className="lq-wrap"
+      id="lq-top"
+      ref={wrapRef}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+}
+
+export function LicuadoHome() { return <Home screen="home" html={HOME_HTML} />; }
+export function MitteSignumPage() { return <Home screen="gallery" html={GALLERY_HTML} />; }
+export function ScriptoriumPage() { return <Home screen="scriptorium" html={SIGNUM_HTML} />; }
+export function NuntiumPage() { return <Home screen="news" html={NEWS_HTML} />; }
+
+/* ── BLOQUES HTML POR PÁGINA ── */
+const HOME_HTML = `
   <div class="lq-global-particles" id="lq-global-particles"></div>
   <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
   <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
   <div class="lq-crt" aria-hidden="true"></div>
-
   <section class="lq-banner">
     <img class="lq-banner-bg" aria-hidden="true" src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/3e349e33f_1000056000.jpg" alt="">
     <div class="lq-glow"></div><div class="lq-scan"></div>
@@ -65,10 +146,9 @@ const HTML = `
       </div>
     </div>
   </section>
-
   <div class="lq-data-breach"></div>
 
-  <section class="lq-game-section lq-proyectos" id="lq-proyectos">
+<section class="lq-game-section lq-proyectos" id="lq-proyectos">
     <div class="lq-game-inner">
       <div class="lq-game-narrative">
         <span class="lq-proy-label">En desarrollo</span>
@@ -90,7 +170,10 @@ const HTML = `
 
   <div class="lq-data-breach"></div>
 
-  <section class="lq-sobre" id="lq-sobre">
+
+  <div class="lq-data-breach"></div>
+
+<section class="lq-sobre" id="lq-sobre">
     <div class="lq-sobre-inner">
       <div class="lq-sobre-visual">
         <div class="lq-frame lq-frame-float">
@@ -136,6 +219,7 @@ const HTML = `
 
   <div class="lq-data-breach"></div>
 
+
   <section class="lq-art-banner">
     <img class="lq-art-banner-img" aria-hidden="true" src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/a3cd662d8_1000058723.jpg" alt="">
   </section>
@@ -177,204 +261,16 @@ const HTML = `
     </div>
   </footer>
 
-  <section class="lq-scriptorium" id="lq-scriptorium">
-    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
-    <div class="lq-glow"></div>
-    <div class="lq-scan"></div>
-    <div class="lq-waterline"></div>
-    <h2 class="lq-proy-title" style="position:relative;z-index:1;margin-bottom:.5rem">Envía una señal</h2>
-    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
-    <div class="lq-scriptorium-cta">
-      <a class="lq-discord-btn" href="https://discord.gg/zWeP5sBfwJ" target="_blank" rel="noopener">
-        <img class="lq-discord-icon" src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-white-icon.png" alt="">
-        Entrar al Discord
-      </a>
-      <a class="lq-discord-btn" href="https://youtube.com/@licuado_scriptorium?si=8GNDObIl_y5xVzyq" target="_blank" rel="noopener">Visita el canal de YouTube</a>
-      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" ><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
-      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
-      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" ><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
-      <p class="lq-discord-note">Si quieres comunicarte conmigo, si quieres participar en el proyecto, contáctame...</p>
-    </div>
-  </section>
-
-  <footer class="lq-footer lq-scriptorium-footer">
-    <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
-    <div class="lq-footer-shimmer" aria-hidden="true"></div>
-    <div class="lq-footer-gloss" aria-hidden="true"></div>
-    <div class="lq-footer-inner">
-      <div class="lq-footer-brand">
-        <p class="lq-footer-tagline">¿Te interesa el proyecto? Contáctame.</p>
-      </div>
-      <div>
-        <p class="lq-footer-nav-title">Navegar</p>
-        <ul class="lq-footer-nav">
-          <li><a href="/">Volver a LICUADO</a></li>
-          <li><a href="/nuntium">Notícias</a></li>
-          <li><a href="/LICUADO Scriptorium">LICUADO Scriptorium</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="lq-footer-bottom">
-      <span class="lq-footer-copy">&copy; 2026 LICUADO.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
-    </div>
-  </footer>
-
-  <section class="lq-gallery" id="lq-gallery">
-    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
-    <div class="lq-glow"></div>
-    <div class="lq-scan"></div>
-    <img class="lq-scriptorium-logo" src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
-    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
-    <div class="lq-gallery-illustrations">
-      <div class="lq-proy-header"><span class="lq-proy-label">Galería</span><h2 class="lq-proy-title">Ilustraciones oficiales de LICUADO</h2></div>
-      <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap">
-        <figure style="margin:0;flex:1 1 0;min-width:260px;max-width:460px">
-          <img src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/3e349e33f_1000056000.jpg" alt="LICUADO liberum industrium" style="width:100%;height:auto;border-radius:16px;border:1px solid rgba(215,170,61,.25);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 30px rgba(215,170,61,.1);display:block">
-          <figcaption style="text-align:center;margin-top:.8rem;font-family:'Lilita One',cursive;font-size:.95rem;color:#f5f5f0">LICUADO liberum industrium</figcaption>
-        </figure>
-        <figure style="margin:0;flex:1 1 0;min-width:260px;max-width:460px">
-          <img src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/a3cd662d8_1000058723.jpg" alt="Libertas creandi emittitur" style="width:100%;height:auto;border-radius:16px;border:1px solid rgba(215,170,61,.25);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 30px rgba(215,170,61,.1);display:block">
-          <figcaption style="text-align:center;margin-top:.8rem;font-family:'Lilita One',cursive;font-size:.95rem;color:#f5f5f5f0">Libertas creandi emittitur.</figcaption>
-        </figure>
-      </div>
-    </div>
-    <div class="lq-gallery-illustrations">
-      <div class="lq-proy-header"><span class="lq-proy-label">Galería</span><h2 class="lq-proy-title">Ilustraciones oficiales de Lúmen</h2></div>
-      <div class="lq-row-wrap">
-        <button class="lq-arrow lq-arrow-left" type="button" data-lq-row="lq-illus-row" data-lq-dir="-1">&#8592;</button>
-        <button class="lq-arrow lq-arrow-right" type="button" data-lq-row="lq-illus-row" data-lq-dir="1">&#8594;</button>
-        <div class="lq-row" id="lq-illus-row">
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhD3CzrpqxYqmN-lEMaxaumMnyE7go66e336yjIKnlxT-FmJfzmXilLw5tfEfhsWK4nWxFgu_asKWVU1W6goXkZU8QFGQrXEr6c7yAhvZYHofl-_8bZat-I0Po7UaS6xRmwEFl8YgxbVKHHhS6LvbrFWF7jm1qPPwlKZ8gXn20vbc2a7FfafXsImqs0C38/s1600/EPSON010.JPG" alt="Un boceto de un enemigo de Lúmen">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Un boceto de un enemigo</div>
-          </div>
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAHIHpxxGHH1kSzsaPvfGHRMp2qW8G-8WmeOIHpLxCu8Ikmso_Xx6hdRRfSTOQ4j4CpChq4tFaR2ObFpvCFrv5U0jJNSP1LIT9CWh5CuqUDRNRp2DIr7DeuurJPJN5U3slUKjfFa1wWhmaQkM-slb7jqX2tvKSpRTuLw5jdHcVUk_vJsocEw56cehoiGs/s1600/Fondo%20men%C3%BA.JPG" alt="Fondo del menú inicial de Lúmen">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Fondo del menú</div>
-          </div>
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgjqWJcwSg62ctqengn2viRLfiCZ_clXaLIQhN68CCuPeusgVAbQMG_gUaVNKxoAsj55DIeYC0RyieqTS_bfhqx5CtgS_-PSlP_mBNmtGav9zGvSRZql7BQZkQQnnJotJtsksI3ANdyfJCgWAsX8JUWZ6tMVFFJVzBkWz55yNlEkKA8fmeyGzqrAvBZ3o/s1600/Boceto%20poster%20final.JPG" alt="Símplemente un boceto de un poster de Lúmen">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Símplemente un boceto de un poster</div>
-          </div>
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiOUthM1oqRmMEZQFZ-jTsV4hkzkHWfTWZWMJrfNPJSH6AmLvkES1jjWxvjVmpotpajPCCTKTj4ElJw17k62DtfAbcybaED33cGRMc6JLeXcLnMk81VbwRa6QtK6uQD7H7oRrBWjn6WAbDl-n2K0uiE1Jbf9eAyUzI3Y4wj6j7bhEp7454Kzo7qQm5tt34/s1600/EPSON001.JPG" alt="Sprite del errante siendo golpeado de Lúmen">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Sprite del errante siendo golpeado</div>
-          </div>
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://pbs.twimg.com/media/HNeziANX0AE6iQu?format=jpg&name=4096x4096" alt="Ilustración de Lúmen">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Solo un poster (Aún sin color)</div>
-            <p class="lq-illust-note">Esta imagen no está en su máxima calidad / resolución.</p>
-          </div>
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/adcc3a64f_IMG-20260728-WA0008.jpg" alt="Arte conceptual a lápiz del errante">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Arte conceptual a lápiz del errante</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lq-gallery-illustrations" style="margin-top:5rem">
-      <div class="lq-proy-header"><span class="lq-proy-label">Screenshots</span><h2 class="lq-proy-title">Capturas de pantalla de Lúmen</h2></div>
-      <div class="lq-row-wrap">
-        <div class="lq-row" id="lq-screenshots-row">
-          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
-            <div class="lq-poster-img lq-cover-art-frame">
-              <img class="lq-cover-art" src="https://pbs.twimg.com/media/HJcD1WaWoAEX2hI?format=png&name=900x900" alt="Captura de pantalla de Lúmen">
-              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
-            </div>
-            <div class="lq-poster-label">Errante en la primera habitación del juego</div>
-            <p class="lq-illust-note">Esta imagen no está en su máxima calidad / resolución.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="lq-footer lq-gallery-footer">
-    <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
-    <div class="lq-footer-shimmer" aria-hidden="true"></div>
-    <div class="lq-footer-gloss" aria-hidden="true"></div>
-    <div class="lq-footer-inner">
-      <div class="lq-footer-brand">
-        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
-        <p class="lq-footer-tagline">He aquí las pruebas de que este proyecto existe.</p>
-      </div>
-      <div>
-        <p class="lq-footer-nav-title">Navegar</p>
-        <ul class="lq-footer-nav">
-          <li><a href="/">Volver a LICUADO</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="lq-footer-bottom">
-      <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-pipeline>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
-    </div>
-  </footer>
-
-  <section class="lq-news" id="lq-news">
-    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
-    <div class="lq-glow"></div>
-    <div class="lq-scan"></div>
-    <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
-    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
-    <div id="lq-news-dynamic" style="width:100%;display:flex;flex-direction:column;align-items:center;"></div>
-  </section>
-
-  <footer class="lq-footer lq-news-footer">
-    <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
-    <div class="lq-footer-shimmer" aria-hidden="true"></div>
-    <div class="lq-footer-gloss" aria-hidden="true"></div>
-    <div class="lq-footer-inner">
-      <div class="lq-footer-brand">
-        <p class="lq-footer-tagline">Estas notícias si son reales y sin alteración, y como soy yo el mismo que hace las notícias y los hechos, casi te lo puedo asegurar.</p>
-      </div>
-      <div>
-        <p class="lq-footer-nav-title">Navegar</p>
-        <ul class="lq-footer-nav">
-          <li><a href="/">Volver a LICUADO</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="lq-footer-bottom">
-      <span class="lq-footer-copy">&copy; 2026 LICUADO Notícias.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-verdad>¿Realmente es verdad lo que nos cuentan?</button>
-    </div>
-  </footer>
-
-  <div class="lq-lightbox-overlay" id="lq-lightbox">
-    <button class="lq-modal-close lq-lightbox-close" type="button" id="lq-lightbox-close" aria-label="Cerrar">&#10005;</button>
-    <img id="lq-lightbox-img" src="" alt="">
-  </div>
-
-  <div class="lq-modal-overlay" id="lq-modal">
+  
+<div class="lq-modal-overlay" id="lq-modal">
     <div class="lq-modal">
       <button class="lq-modal-close" type="button" data-lq-close-modal aria-label="Cerrar">&#10005;</button>
-      <div class="lq-modal-title" style="text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:1rem;">Lúmen</div>
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq8xIVIeLa27j0NOcCwHdrSuB4m-Exed2ZdKwvyxWfndYiOPk5L_0_4wnPERG69GNvXfPTomYeUExKsO4ENHIywdjdxw-4GbMPwlssVLzdjvWDISJLc4p_F3GmTo-o9CQGJQ5rQD4UoYoBF4tQQhC-qkwhssg1PwrxDKoZElB_2Ux6188txkWphUe45VA/w1684-h1069-p-k-no-nu/EPSON002.JPG" alt="Lúmen: Ecos bajo la corteza" style="width:100%;border-radius:14px;margin-bottom:1.5rem;display:block;object-fit:cover;max-height:240px;object-position:center center;">
-      <div class="lq-divider-soft"></div>
-      <span class="lq-modal-lore-label">Descripción</span>
-      <div class="lq-modal-lore">
-        <p>Durante esta aventura, tomas el papel de <em>el Errante</em>: un pequeño ser hecho de <em>savia</em>, que tenía una vida tranquila y pacífica en su aldea <em>Crocus Sativus</em>. Pero el ser un ingenuo e inocente infante cambia al presenciar la tortura y ejecución de un ser querido, un guerrero de la aldea bastante cercano a él.</p>
+      <img class="lq-modal-cover" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3I7qjXeBTziyGW7c_4YjHbvlTQvt6_DqST71l3LTYImjxfi7LkKb_f9bTI0DJ_T7aRC2ld39X5L2GL-oIcGj9d7eLvsEgOequ5mqlfpfLCSpBxls9VfnViwBxByWHLF-rxu0wdJM81rO_d4dbpEsgdtMLSpZQ_5f8Vvgbr41taFywwZrLLFZ2-915FjA/s16000/L%C3%BAmen%20Ecos%20bajo%20la%20corteza%20+%20logotipo%20de%20LICUADO.png" alt="Portada de Lúmen: Ecos bajo la corteza">
+      <h2 class="lq-modal-title">Lúmen: Ecos bajo la corteza</h2>
+      <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
+      <div class="lq-modal-body">
+        <p>Eres un diminuto ser hecho de savia que habita el interior de un árbol colosal. Tu aldea fue destruida y tu único objetivo es la venganza... pero el árbol guarda secretos que cambiarán lo que crees saber sobre ti mismo.</p>
+        <p>Tu contexto cambia al presenciar la tortura y ejecución de un ser querido, un guerrero de la aldea bastante cercano a él.</p>
         <p>Explora el árbol madre, revela secretos, busca venganza, intenta ser un mesías, corta tus raíces, descubre civilizaciónes aisladas de todo lo demás, y tal vez... <em>Enfrénta a un dios que desexiste recuerdos por misericordia...</em></p>
         <p>No pienses que te encuentras ante algo sencillo, esta aventura será <em>difícil</em>: sus pasillos esconden cientas de criaturas diferentes que no perdonan, y en sus floemas aguardan <em>jefes imponentes</em> con patrones de ataque que pondrán a prueba cada reflejo que tengas. El combate es intenso, preciso, y brutalmente satisfactorio cuando por fin lo dominas.</p>
         <p>Está en desarrollo, pero prometo una gran obra, porque pongo pasión en cada hora de trabajo, para que disfrutes cada minuto de juego.</p>
@@ -387,7 +283,8 @@ const HTML = `
     </div>
   </div>
 
-  <div class="lq-modal-overlay" id="lq-dios-panel">
+
+<div class="lq-modal-overlay" id="lq-dios-panel">
     <div class="lq-modal lq-dios-modal">
       <button class="lq-modal-close" type="button" data-lq-close-dios aria-label="Cerrar">&#10005;</button>
       <div class="lq-dios-dots-fixed" id="lq-dios-dots-fixed"></div>
@@ -484,8 +381,57 @@ const HTML = `
       </div>
     </div>
   </div>
+`;
 
-  <div class="lq-modal-overlay" id="lq-alma-panel">
+const SIGNUM_HTML = `
+  <div class="lq-global-particles" id="lq-global-particles"></div>
+  <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
+  <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
+  <div class="lq-crt" aria-hidden="true"></div><section class="lq-scriptorium" id="lq-scriptorium">
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
+    <div class="lq-glow"></div>
+    <div class="lq-scan"></div>
+    <div class="lq-waterline"></div>
+    <h2 class="lq-proy-title" style="position:relative;z-index:1;margin-bottom:.5rem">Envía una señal</h2>
+    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
+    <div class="lq-scriptorium-cta">
+      <a class="lq-discord-btn" href="https://discord.gg/zWeP5sBfwJ" target="_blank" rel="noopener">
+        <img class="lq-discord-icon" src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-white-icon.png" alt="">
+        Entrar al Discord
+      </a>
+      <a class="lq-discord-btn" href="https://youtube.com/@licuado_scriptorium?si=8GNDObIl_y5xVzyq" target="_blank" rel="noopener">Visita el canal de YouTube</a>
+      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" ><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
+      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" ><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+      <p class="lq-discord-note">Si quieres comunicarte conmigo, si quieres participar en el proyecto, contáctame...</p>
+    </div>
+  </section>
+
+<footer class="lq-footer lq-scriptorium-footer">
+    <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
+    <div class="lq-footer-shimmer" aria-hidden="true"></div>
+    <div class="lq-footer-gloss" aria-hidden="true"></div>
+    <div class="lq-footer-inner">
+      <div class="lq-footer-brand">
+        <p class="lq-footer-tagline">¿Te interesa el proyecto? Contáctame.</p>
+      </div>
+      <div>
+        <p class="lq-footer-nav-title">Navegar</p>
+        <ul class="lq-footer-nav">
+          <li><a href="/">Volver a LICUADO</a></li>
+          <li><a href="/nuntium">Notícias</a></li>
+          <li><a href="/LICUADO Scriptorium">LICUADO Scriptorium</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lq-footer-bottom">
+      <span class="lq-footer-copy">&copy; 2026 LICUADO.</span>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-alma>¡No intentes hacerte spoilers haciendo un viaje astral!</button>
+    </div>
+  </footer>
+
+
+<div class="lq-modal-overlay" id="lq-alma-panel">
     <div class="lq-modal lq-dios-modal">
       <button class="lq-modal-close" type="button" data-lq-close-alma aria-label="Cerrar">&#10005;</button>
       <div class="lq-dios-dots-fixed" id="lq-alma-dots-fixed"></div>
@@ -591,14 +537,225 @@ Y la gente del vaticano te dirá que hagas un pacto con ellos y que trabajes par
 Obviamente esto no lo he vivido yo mismo, pero dicen que no es buena idea aceptar.
 Bueno, pues eso es lo que tenía que decir.
 
-Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, solo tú decides si es real. No dejes que nadie te imponga sus creéncias. Yo solo lo comunico, pero nadie está seguro de la verdad sobre nuestro origen o sobre lo que somos, y me incluyo. O al menos en mi caso desconozco la verdad sobre los secretos políticos del vaticano y el área 51 y muchos más. A veces ni siquiera estoy seguro de si estoy vivo o de si soy un jugador, siguiendo esa misma rutina diária todos los días de mi vida en el interminable e inutil instituto.</p>
+Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, solo tú decides si es real. No dejes que nadie te imponga sus creéncias. Yo solo lo comunico, pero nadie está seguro de la verdad sobre nuestro origen o sobre lo que somos, y me incluyo. O al menos en mi caso desconozco la verdad sobre los secretos políticos del vaticano y el área 51 y muchos más. A veces ni siquiera estoy seguro de si estoy vivo o de si soy un jugador, siguiendo esa misma rotina diária todos los días de mi vida en el interminable e inutil instituto.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+`;
 
-  <div class="lq-modal-overlay" id="lq-verdad-panel">
+const GALLERY_HTML = `
+  <div class="lq-global-particles" id="lq-global-particles"></div>
+  <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
+  <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
+  <div class="lq-crt" aria-hidden="true"></div><section class="lq-gallery" id="lq-gallery">
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
+    <div class="lq-glow"></div>
+    <div class="lq-scan"></div>
+    <img class="lq-scriptorium-logo" src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
+    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
+    <div class="lq-gallery-illustrations">
+      <div class="lq-proy-header"><span class="lq-proy-label">Galería</span><h2 class="lq-proy-title">Ilustraciones oficiales de LICUADO</h2></div>
+      <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap">
+        <figure style="margin:0;flex:1 1 0;min-width:260px;max-width:460px">
+          <img src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/3e349e33f_1000056000.jpg" alt="LICUADO liberum industrium" style="width:100%;height:auto;border-radius:16px;border:1px solid rgba(215,170,61,.25);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 30px rgba(215,170,61,.1);display:block">
+          <figcaption style="text-align:center;margin-top:.8rem;font-family:'Lilita One',cursive;font-size:.95rem;color:#f5f5f0">LICUADO liberum industrium</figcaption>
+        </figure>
+        <figure style="margin:0;flex:1 1 0;min-width:260px;max-width:460px">
+          <img src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/a3cd662d8_1000058723.jpg" alt="Libertas creandi emittitur" style="width:100%;height:auto;border-radius:16px;border:1px solid rgba(215,170,61,.25);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 30px rgba(215,170,61,.1);display:block">
+          <figcaption style="text-align:center;margin-top:.8rem;font-family:'Lilita One',cursive;font-size:.95rem;color:#f5f5f5f0">Libertas creandi emittitur.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="lq-gallery-illustrations">
+      <div class="lq-proy-header"><span class="lq-proy-label">Galería</span><h2 class="lq-proy-title">Ilustraciones oficiales de Lúmen</h2></div>
+      <div class="lq-row-wrap">
+        <button class="lq-arrow lq-arrow-left" type="button" data-lq-row="lq-illus-row" data-lq-dir="-1">&#8592;</button>
+        <button class="lq-arrow lq-arrow-right" type="button" data-lq-row="lq-illus-row" data-lq-dir="1">&#8594;</button>
+        <div class="lq-row" id="lq-illus-row">
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhD3CzrpqxYqmN-lEMaxaumMnyE7go66e336yjIKnlxT-FmJfzmXilLw5tfEfhsWK4nWxFgu_asKWVU1W6goXkZU8QFGQrXEr6c7yAhvZYHofl-_8bZat-I0Po7UaS6xRmwEFl8YgxbVKHHhS6LvbrFWF7jm1qPPwlKZ8gXn20vbc2a7FfafXsImqs0C38/s1600/EPSON010.JPG" alt="Un boceto de un enemigo de Lúmen">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Un boceto de un enemigo</div>
+          </div>
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAHIHpxxGHH1kSzsaPvfGHRMp2qW8G-8WmeOIHpLxCu8Ikmso_Xx6hdRRfSTOQ4j4CpChq4tFaR2ObFpvCFrv5U0jJNSP1LIT9CWh5CuqUDRNRp2DIr7DeuurJPJN5U3slUKjfFa1wWhmaQkM-slb7jqX2tvKSpRTuLw5jdHcVUk_vJsocEw56cehoiGs/s1600/Fondo%20men%C3%BA.JPG" alt="Fondo del menú inicial de Lúmen">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Fondo del menú</div>
+          </div>
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgjqWJcwSg62ctqengn2viRLfiCZ_clXaLIQhN68CCuPeusgVAbQMG_gUaVNKxoAsj55DIeYC0RyieqTS_bfhqx5CtgS_-PSlP_mBNmtGav9zGvSRZql7BQZkQQnnJotJtsksI3ANdyfJCgWAsX8JUWZ6tMVFFJVzBkWz55yNlEkKA8fmeyGzqrAvBZ3o/s1600/Boceto%20poster%20final.JPG" alt="Símplemente un boceto de un poster de Lúmen">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Símplemente un boceto de un poster</div>
+          </div>
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiOUthM1oqRmMEZQFZ-jTsV4hkzkHWfTWZWMJrfNPJSH6AmLvkES1jjWxvjVmpotpajPCCTKTj4ElJw17k62DtfAbcybaED33cGRMc6JLeXcLnMk81VbwRa6QtK6uQD7H7oRrBWjn6WAbDl-n2K0uiE1Jbf9eAyUzI3Y4wj6j7bhEp7454Kzo7qQm5tt34/s1600/EPSON001.JPG" alt="Sprite del errante siendo golpeado de Lúmen">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Sprite del errante siendo golpeado</div>
+          </div>
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://pbs.twimg.com/media/HNeziANX0AE6iQu?format=jpg&name=4096x4096" alt="Ilustración de Lúmen">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Solo un poster (Aún sin color)</div>
+            <p class="lq-illust-note">Esta imagen no está en su máxima calidad / resolución.</p>
+          </div>
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/adcc3a64f_IMG-20260728-WA0008.jpg" alt="Arte conceptual a lápiz del errante">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Arte conceptual a lápiz del errante</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lq-gallery-illustrations" style="margin-top:5rem">
+      <div class="lq-proy-header"><span class="lq-proy-label">Screenshots</span><h2 class="lq-proy-title">Capturas de pantalla de Lúmen</h2></div>
+      <div class="lq-row-wrap">
+        <div class="lq-row" id="lq-screenshots-row">
+          <div class="lq-poster lq-illus-card" data-lq-open-lightbox>
+            <div class="lq-poster-img lq-cover-art-frame">
+              <img class="lq-cover-art" src="https://pbs.twimg.com/media/HJcD1WaWoAEX2hI?format=png&name=900x900" alt="Captura de pantalla de Lúmen">
+              <div class="lq-poster-overlay"><span class="lq-poster-overlay-text">Ver imagen</span></div>
+            </div>
+            <div class="lq-poster-label">Errante en la primera habitación del juego</div>
+            <p class="lq-illust-note">Esta imagen no está en su máxima calidad / resolución.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<footer class="lq-footer lq-gallery-footer">
+    <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
+    <div class="lq-footer-shimmer" aria-hidden="true"></div>
+    <div class="lq-footer-gloss" aria-hidden="true"></div>
+    <div class="lq-footer-inner">
+      <div class="lq-footer-brand">
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
+        <p class="lq-footer-tagline">He aquí las pruebas de que este proyecto existe.</p>
+      </div>
+      <div>
+        <p class="lq-footer-nav-title">Navegar</p>
+        <ul class="lq-footer-nav">
+          <li><a href="/">Volver a LICUADO</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lq-footer-bottom">
+      <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-pipeline>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
+    </div>
+  </footer>
+
+
+<div class="lq-lightbox-overlay" id="lq-lightbox">
+    <button class="lq-modal-close lq-lightbox-close" type="button" id="lq-lightbox-close" aria-label="Cerrar">&#10005;</button>
+    <img id="lq-lightbox-img" src="" alt="">
+  </div>
+
+
+<div class="lq-modal-overlay" id="lq-pipeline-panel">
+    <div class="lq-modal lq-dios-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-pipeline aria-label="Cerrar">&#10005;</button>
+      <div class="lq-dios-dots-fixed" id="lq-pipeline-dots-fixed"></div>
+      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-pipeline-dir="-1" aria-label="Anterior">&#8592;</button>
+      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-pipeline-dir="1" aria-label="Siguiente">&#8594;</button>
+      <div class="lq-dios-viewport">
+        <div class="lq-dios-pages" id="lq-pipeline-pages">
+          <div class="lq-dios-page lq-dios-text">
+            <p>Ya ha pasado bastante tiempo sin que escriba nada por aquí.</p>
+            <p>Es probable que muchos me hayan declarado loco o mal de la cabeza tras leer mis textos...</p>
+            <p>Pero aquí vengo de nuevo para seguir alimentando eso.</p>
+            <p>Porque me enorgullece que me vean como alguien que está loco.</p>
+            <p>Porque eso implica no pensar como el resto.</p>
+            <p>No ser parte del resto.</p>
+            <p>Porque donde muchos ven a un raro yo veo a un enorme dios.</p>
+            <p>Y es que al percibir su mundo de forma diferente, es un dios que está creando una nueva dimensión.</p>
+            <p>¿¿O no??</p>
+            <p>Porque, ¿cómo sabes que no eres tú quien percibe su mundo de forma distinta?</p>
+            <p>Nadie sabe la verdad sobre la realidad de las cosas, eso ya lo he mencionado alguna vez.</p>
+            <p>Sabemos la verdad sobre nuestra propia percepción y nuestra creación siempre que sea inerte.</p>
+            <p>No sabemos si lo que percibimos es real, o si estamos cuerdos.</p>
+            <p>Yo pienso que la gente que nosotros percibimos como "loca", es esperanzadora.</p>
+            <p>A mi, me devuelve la fe en la humanidad.</p>
+            <p>Y es que, es preocupante ver que la mayoría de personas no estan ahí.</p>
+            <p>Que solo le estás hablando a una cáscara vacía, a una bolsa de carne sin voluntad ni deseos.</p>
+            <p>Y los locos, parece que si tienen alma.</p>
+            <p>Por eso me dan esperanza.</p>
+            <p>Me gusta pensar que soy un loco que no piensa como los demás.</p>
+            <p>También me he dado cuenta de que la forma en la que funciona el mundo,</p>
+            <p>siempre siguiendo una rutina,</p>
+            <p>hace que casi nadie pueda pensar como un loco, y que casi nadie pueda pararse a escribir estas cosas.</p>
+            <p>Porque, casi siempre, por no decir siempre que ves a alguien que no está cuerdo, también es alguien que no consigue sustento ni almento.</p>
+            <p>Y esas personas acaban enfermando.</p>
+            <p>Y muriendo.</p>
+            <p>Y desapareciendo.</p>
+            <p>Pero no es que esté mal ser un loco, de hecho, está perfecto.</p>
+            <p>El problema es que el sistema hace que no convenga pensar de forma diferente...</p>
+            <p>Que no convenga no seguir la rutina.</p>
+            <p>Y, debo decir que me encanta escribir.</p>
+            <p>Lo disfruto mucho.</p>
+            <p>Y a veces temo que se acaben las vacaciones y ya no tenga tiempo para reflexionar en estas cosas, o hacer teorías conspiranóicas o dedicarme a mis proyectos.</p>
+            <p>Y cuando sea adulto y tenga que trabajar, seguramente tendré todavía menos tiempo.</p>
+            <p>Bueno, supongo que es el objetivo de quien nos tiene como marionetas, pero yo no quiero dejar de pensar.</p>
+            <p>Y entre más se acerca el fin de las vacaciones, siento como poco a poco mis neuronas se apagan y mi alma empieza a materializar la idea de tener que volver a reprimirse ante los gritos de un profesor frustrado que disfruta de tener total control sobre sus alumnos y decirles todo lo que deben hacer, para que los padres de los alumnos se puedan ir tranquilos a trabajar y ser productivos, y mantenerse estresados por el trabajo y por todo lo que su vida conlleva, pero aliviados porque creen que sus hijos están aprendiendo muchas cosas útiles y aprovechando su tiempo.</p>
+            <p>Mientras el profesor nos dicta como un dictador o un carcelero todo lo que debemos hacer y no podemos negarnos porque eso nos arriesgaría a decepcionar a nuestros padres.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+const NEWS_HTML = `
+  <div class="lq-global-particles" id="lq-global-particles"></div>
+  <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
+  <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
+  <div class="lq-crt" aria-hidden="true"></div><section class="lq-news" id="lq-news">
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
+    <div class="lq-glow"></div>
+    <div class="lq-scan"></div>
+    <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
+    <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
+    <div id="lq-news-dynamic" style="width:100%;display:flex;flex-direction:column;align-items:center;"></div>
+  </section>
+
+<footer class="lq-footer lq-news-footer">
+    <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
+    <div class="lq-footer-shimmer" aria-hidden="true"></div>
+    <div class="lq-footer-gloss" aria-hidden="true"></div>
+    <div class="lq-footer-inner">
+      <div class="lq-footer-brand">
+        <p class="lq-footer-tagline">Estas notícias si son reales y sin alteración, y como soy yo el mismo que hace las notícias y los hechos, casi te lo puedo asegurar.</p>
+      </div>
+      <div>
+        <p class="lq-footer-nav-title">Navegar</p>
+        <ul class="lq-footer-nav">
+          <li><a href="/">Volver a LICUADO</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lq-footer-bottom">
+      <span class="lq-footer-copy">&copy; 2026 LICUADO Notícias.</span>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-verdad>¿Realmente es verdad lo que nos cuentan?</button>
+    </div>
+  </footer>
+
+
+<div class="lq-modal-overlay" id="lq-verdad-panel">
     <div class="lq-modal lq-dios-modal">
       <button class="lq-modal-close" type="button" data-lq-close-verdad aria-label="Cerrar">&#10005;</button>
       <div class="lq-dios-dots-fixed" id="lq-verdad-dots-fixed"></div>
@@ -688,122 +845,4 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
         </div>
     </div>
   </div>
-
-  <div class="lq-modal-overlay" id="lq-pipeline-panel">
-    <div class="lq-modal lq-dios-modal">
-      <button class="lq-modal-close" type="button" data-lq-close-pipeline aria-label="Cerrar">&#10005;</button>
-      <div class="lq-dios-dots-fixed" id="lq-pipeline-dots-fixed"></div>
-      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-pipeline-dir="-1" aria-label="Anterior">&#8592;</button>
-      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-pipeline-dir="1" aria-label="Siguiente">&#8594;</button>
-      <div class="lq-dios-viewport">
-        <div class="lq-dios-pages" id="lq-pipeline-pages">
-          <div class="lq-dios-page lq-dios-text">
-            <p>Ya ha pasado bastante tiempo sin que escriba nada por aquí.</p>
-            <p>Es probable que muchos me hayan declarado loco o mal de la cabeza tras leer mis textos...</p>
-            <p>Pero aquí vengo de nuevo para seguir alimentando eso.</p>
-            <p>Porque me enorgullece que me vean como alguien que está loco.</p>
-            <p>Porque eso implica no pensar como el resto.</p>
-            <p>No ser parte del resto.</p>
-            <p>Porque donde muchos ven a un raro yo veo a un enorme dios.</p>
-            <p>Y es que al percibir su mundo de forma diferente, es un dios que está creando una nueva dimensión.</p>
-            <p>¿¿O no??</p>
-            <p>Porque, ¿cómo sabes que no eres tú quien percibe su mundo de forma distinta?</p>
-            <p>Nadie sabe la verdad sobre la realidad de las cosas, eso ya lo he mencionado alguna vez.</p>
-            <p>Sabemos la verdad sobre nuestra propia percepción y nuestra creación siempre que sea inerte.</p>
-            <p>No sabemos si lo que percibimos es real, o si estamos cuerdos.</p>
-            <p>Yo pienso que la gente que nosotros percibimos como "loca", es esperanzadora.</p>
-            <p>A mi, me devuelve la fe en la humanidad.</p>
-            <p>Y es que, es preocupante ver que la mayoría de personas no estan ahí.</p>
-            <p>Que solo le estás hablando a una cáscara vacía, a una bolsa de carne sin voluntad ni deseos.</p>
-            <p>Y los locos, parece que si tienen alma.</p>
-            <p>Por eso me dan esperanza.</p>
-            <p>Me gusta pensar que soy un loco que no piensa como los demás.</p>
-            <p>También me he dado cuenta de que la forma en la que funciona el mundo,</p>
-            <p>siempre siguiendo una rutina,</p>
-            <p>hace que casi nadie pueda pensar como un loco, y que casi nadie pueda pararse a escribir estas cosas.</p>
-            <p>Porque, casi siempre, por no decir siempre que ves a alguien que no está cuerdo, también es alguien que no consigue sustento ni almento.</p>
-            <p>Y esas personas acaban enfermando.</p>
-            <p>Y muriendo.</p>
-            <p>Y desapareciendo.</p>
-            <p>Pero no es que esté mal ser un loco, de hecho, está perfecto.</p>
-            <p>El problema es que el sistema hace que no convenga pensar de forma diferente...</p>
-            <p>Que no convenga no seguir la rutina.</p>
-            <p>Y, debo decir que me encanta escribir.</p>
-            <p>Lo disfruto mucho.</p>
-            <p>Y a veces temo que se acaben las vacaciones y ya no tenga tiempo para reflexionar en estas cosas, o hacer teorías conspiranóicas o dedicarme a mis proyectos.</p>
-            <p>Y cuando sea adulto y tenga que trabajar, seguramente tendré todavía menos tiempo.</p>
-            <p>Bueno, supongo que es el objetivo de quien nos tiene como marionetas, pero yo no quiero dejar de pensar.</p>
-            <p>Y entre más se acerca el fin de las vacaciones, siento como poco a poco mis neuronas se apagan y mi alma empieza a materializar la idea de tener que volver a reprimirse ante los gritos de un profesor frustrado que disfruta de tener total control sobre sus alumnos y decirles todo lo que deben hacer, para que los padres de los alumnos se puedan ir tranquilos a trabajar y ser productivos, y mantenerse estresados por el trabajo y por todo lo que su vida conlleva, pero aliviados porque creen que sus hijos están aprendiendo muchas cosas útiles y aprovechando su tiempo.</p>
-            <p>Mientras el profesor nos dicta como un dictador o un carcelero todo lo que debemos hacer y no podemos negarnos porque eso nos arriesgaría a decepcionar a nuestros padres.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 `;
-
-export default function Home({ screen = 'home' }) {
-  const wrapRef = useRef(null);
-
-  useEffect(() => {
-    if (!wrapRef.current) return;
-    let disposed = false;
-
-    // Cada pantalla es una URL propia: marcamos el <body> con lq-page-* para
-    // que las reglas CSS y los efectos (partículas/footer) sepan qué sección
-    // es la visible en esta página.
-    const pageClass = 'lq-page-' + screen;
-    document.body.classList.add(pageClass);
-
-    const cleanup = initLicuado(wrapRef.current);
-
-    const renderDynamic = (html) => {
-      const wrap = wrapRef.current;
-      if (!wrap) return;
-      const first = html.indexOf('<div class="lq-news-card');
-      const newsStart = html.indexOf('<div class="lq-news-category');
-      const homeSlot = wrap.querySelector('#lq-home-news-container');
-      if (homeSlot) {
-        const previewHtml = first >= 0 ? html.slice(first, newsStart > first ? newsStart : undefined) : '';
-        homeSlot.innerHTML = previewHtml.trim();
-      }
-      const newsSlot = wrap.querySelector('#lq-news-dynamic');
-      if (newsSlot) {
-        const cats = html.slice(newsStart >= 0 ? newsStart : html.length);
-        newsSlot.innerHTML = cats.trim() || html;
-      }
-    };
-
-    fetchNews().then((news) => {
-      if (disposed) return;
-      renderDynamic(buildNewsHtml(news));
-    }).catch(() => {});
-
-    const reload = () => {
-      fetchNews().then((news) => { if (!disposed) renderDynamic(buildNewsHtml(news)); }).catch(() => {});
-    };
-    window.addEventListener('storage', reload);
-    // Al volver al inicio desde el editor, refrescar desde la nube
-    const onVisible = () => { if (!document.hidden) reload(); };
-    document.addEventListener('visibilitychange', onVisible);
-    window.addEventListener('focus', reload);
-
-    return () => {
-      disposed = true;
-      document.body.classList.remove(pageClass);
-      window.removeEventListener('storage', reload);
-      document.removeEventListener('visibilitychange', onVisible);
-      window.removeEventListener('focus', reload);
-      cleanup();
-    };
-  }, []);
-
-  return (
-    <div
-      className="lq-wrap"
-      id="lq-top"
-      ref={wrapRef}
-      dangerouslySetInnerHTML={{ __html: HTML }}
-    />
-  );
-}

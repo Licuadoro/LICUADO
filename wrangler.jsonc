@@ -1,3 +1,17 @@
+// ════════════════════════════════════════════════════════════════════════
+// ¡¡IMPORTANTE!!  Este archivo DEBE estar commiteado en la RAÍZ del repo.
+// El pipeline de Cloudflare ejecuta directamente "npx wrangler deploy" sin
+// compilar nada; si no encuentra esta configuración, wrangler entra en modo
+// interactivo y RE-CREA el proyecto desde cero: genera un dist/wrangler.json
+// propio con main="index.ja?js" (worker vacío) y copia los _redirects que
+// había en el despliegue anterior → eso es lo que provocaba el error:
+//   "Invalid _redirects configuration: Line 4: Infinite loop detected"
+// Con este archivo presente, wrangler NO regenera nada y sube solo assets.
+// ════════════════════════════════════════════════════════════════════════
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "licuado",
+  "compatibility_date": "2026-09-01",
 // Configuración de Cloudflare Workers (Assets) para la web LICUADO.
 // Se sube a git para que el deploy en Cloudflare no tenga que "adivinarla"
 // con `npx wrangler deploy` (autoconfig), que era lo que causaba el error:
@@ -13,6 +27,15 @@
     "enabled": true
   },
   "assets": {
+    // dist/ está commiteado a propósito: el pipeline no corre "npm run build".
+    "directory": "./dist",
+    // SPA: cualquier ruta desconocida (/Mitte signum, /LICUADO Scriptorium,
+    // /nuntium, /editor) sirve index.html con código 200. Se hace mediante
+    // esta opción y NO mediante _redirects, para evitar el error 100324.
+    "not_found_handling": "single-page-application",
+    // Belt-and-braces: si por cualquier motivo un _redirects volviera a
+    // colarse en dist/, se excluye del bundle y Cloudflare nunca lo valida.
+    "excluded_assets": ["_redirects"]
     // Carpeta generada por Vite (está en .gitignore, se crea al compilar).
     "directory": "./dist",
     // SPA: cualquier ruta desconocida (/nuntium, /editor, …) sirve index.html.
