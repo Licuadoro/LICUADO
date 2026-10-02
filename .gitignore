@@ -1,3 +1,13 @@
-# Temp files
-.tmp_blocks/
+# Dependencias: SIEMPRE excluidas. Su contenido (p.ej. el binario workerd de
+# 128 MB en node_modules/@cloudflare/workerd-linux-64/bin/workerd) supera el
+# límite de GitHub de 100 MB y provocaba el rechazo GH001 en el push.
 node_modules/
+
+# Producción local (el pipeline usa el dist/ commiteado; no subir builds nuevos)
+dist/
+
+# Otros artefactos locales
+.wrangler/
+*.log
+.env
+.env.local

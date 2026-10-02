@@ -1,24 +1,20 @@
 // ════════════════════════════════════════════════════════════════════════
-// ¡¡IMPORTANTE!!  Este archivo DEBE estar commiteado en la RAÍZ del repo.
+// Configuración de Cloudflare Workers (Assets) para la web LICUADO.
+// ¡¡IMPORTANTE!! Este archivo DEBE estar commiteado en la RAÍZ del repo.
+//
 // El pipeline de Cloudflare ejecuta directamente "npx wrangler deploy" sin
 // compilar nada; si no encuentra esta configuración, wrangler entra en modo
-// interactivo y RE-CREA el proyecto desde cero: genera un dist/wrangler.json
-// propio con main="index.ja?js" (worker vacío) y copia los _redirects que
-// había en el despliegue anterior → eso es lo que provocaba el error:
-//   "Invalid _redirects configuration: Line 4: Infinite loop detected"
-// Con este archivo presente, wrangler NO regenera nada y sube solo assets.
-// ════════════════════════════════════════════════════════════════════════
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "licuado",
-  "compatibility_date": "2026-09-01",
-// Configuración de Cloudflare Workers (Assets) para la web LICUADO.
-// Se sube a git para que el deploy en Cloudflare no tenga que "adivinarla"
-// con `npx wrangler deploy` (autoconfig), que era lo que causaba el error:
-//   "Invalid _redirects configuration: Line 4: Infinite loop detected…"
+// interactivo/autoconfig y re-genera un dist/wrangler.json propio con
+// _redirects heredados → error 100324:
+//   "Invalid _redirects configuration: Infinite loop detected"
 //
-// El build (`npm run build`) genera dist/ con un wrangler.json propio y un
-// archivo .assetsignore; aquí solo fijamos los valores correctos.
+// Con este archivo presente y válido, wrangler NO regenera nada y sube solo
+// los assets de dist/.
+//
+// (Este archivo estaba corrupto: contenía DOS objetos JSON concatenados —una
+// fusión mala de dos versiones— lo que provocaba el fallo de parseo
+// "PropertyNameExpected" en la línea 22 durante el deploy.)
+// ════════════════════════════════════════════════════════════════════════
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "licuado",
@@ -30,20 +26,10 @@
     // dist/ está commiteado a propósito: el pipeline no corre "npm run build".
     "directory": "./dist",
     // SPA: cualquier ruta desconocida (/Mitte signum, /LICUADO Scriptorium,
-    // /nuntium, /editor) sirve index.html con código 200. Se hace mediante
+    // /nuntium, /editor, …) sirve index.html con código 200. Se hace mediante
     // esta opción y NO mediante _redirects, para evitar el error 100324.
-    "not_found_handling": "single-page-application",
-    // Belt-and-braces: si por cualquier motivo un _redirects volviera a
-    // colarse en dist/, se excluye del bundle y Cloudflare nunca lo valida.
-    "excluded_assets": ["_redirects"]
-    // Carpeta generada por Vite (está en .gitignore, se crea al compilar).
-    "directory": "./dist",
-    // SPA: cualquier ruta desconocida (/nuntium, /editor, …) sirve index.html.
-    "not_found_handling": "single-page-application",
-    // Clave del fix: desactiva el reescritado automático de URLs "/index.html".
-    // Con html_handling activo (el valor por defecto), la regla /* -> /index.html
-    // de _redirects se dispara otra vez sobre sí misma y Cloudflare rechaza el
-    // deploy con "Infinite loop detected in this rule".
-    "html_handling": "none"
+    "not_found_handling": "single-page-application"
+    // Nota: no se usa "_redirects" en dist/ (la SPA ya se resuelve con
+    // not_found_handling), así que no hace falta excluirlo del bundle.
   }
 }
