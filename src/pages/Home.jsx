@@ -1,124 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import '@/licuado.css';
 import { initLicuado } from '@/lib/licuado';
-import { fetchNews, newsForLocation, renderNewsCard } from '@/lib/newsStore';
 
-const NEWS_CATEGORIES = [
-  { id: 'recientes', title: 'Más recientes' },
-  { id: 'licuado', title: 'Actualizaciones de LICUADO' },
-  { id: 'kronos', title: 'Actualizaciones de Kronos' },
-  { id: 'teia', title: 'Actualizaciones de Teia' },
-  { id: 'creatorius', title: 'Notícias de Creatorius' },
-  { id: 'todas', title: 'Todas las notícias' },
-];
-
-function buildNewsHtml(news) {
-  const parts = [];
-  // Prévia do início: a notícia mais recente marcada para "home" (ou a mais recente de todas)
-  const homeList = newsForLocation(news, 'home');
-  const preview = homeList[0] || news[0];
-  if (preview) parts.push(renderNewsCard(preview, 'excerpt'));
-  // Secciones da página de Notícias
-  for (const cat of NEWS_CATEGORIES) {
-    const items = newsForLocation(news, cat.id);
-    if (!items.length) continue;
-    parts.push(
-      '<div class="lq-news-category"><h3 class="lq-category-title">' + cat.title + '</h3><div class="lq-news-grid lq-news-grid-centered">' +
-      items.map((n) => renderNewsCard(n)).join('') +
-      '</div></div>'
-    );
-  }
-  if (!parts.length) parts.push('<p style="color:rgba(245,245,240,.5);font-size:.9rem">Aínda non hai notícias publicadas.</p>');
-  return parts.join('\n');
-}
-
-/**
- * Controlador común das 4 páxinas: cada URL é un documento propio que só
- * contén a súa sección (nada duplicado doutras páxinas) e inicializa os
- * efectos correspondentes.
- */
-export default function Home({ screen = 'home', html }) {
-  const wrapRef = useRef(null);
-
-  useEffect(() => {
-    if (!wrapRef.current) return;
-    let disposed = false;
-
-    // Marcamos o <body> con lq-page-* para que CSS y JS sepan qué pantalla es la visible.
-    const pageClass = 'lq-page-' + screen;
-    document.body.classList.add(pageClass);
-
-    const cleanup = initLicuado(wrapRef.current);
-
-    if (screen === 'home' || screen === 'news') {
-      const renderDynamic = (dyn) => {
-        const wrap = wrapRef.current;
-        if (!wrap) return;
-        const first = dyn.indexOf('<div class="lq-news-card');
-        const newsStart = dyn.indexOf('<div class="lq-news-category');
-        const homeSlot = wrap.querySelector('#lq-home-news-container');
-        if (homeSlot) {
-          const previewHtml = first >= 0 ? dyn.slice(first, newsStart > first ? newsStart : undefined) : '';
-          homeSlot.innerHTML = previewHtml.trim();
-        }
-        const newsSlot = wrap.querySelector('#lq-news-dynamic');
-        if (newsSlot) {
-          const cats = dyn.slice(newsStart >= 0 ? newsStart : dyn.length);
-          newsSlot.innerHTML = cats.trim() || dyn;
-        }
-      };
-
-      fetchNews().then((news) => {
-        if (!disposed) renderDynamic(buildNewsHtml(news));
-      }).catch(() => {});
-
-      const reload = () => {
-        fetchNews().then((news) => { if (!disposed) renderDynamic(buildNewsHtml(news)); }).catch(() => {});
-      };
-      window.addEventListener('storage', reload);
-      // Al volver á inicio desde o editor, refrescar desde a nube
-      const onVisible = () => { if (!document.hidden) reload(); };
-      document.addEventListener('visibilitychange', onVisible);
-      window.addEventListener('focus', reload);
-
-      return () => {
-        disposed = true;
-        document.body.classList.remove(pageClass);
-        window.removeEventListener('storage', reload);
-        document.removeEventListener('visibilitychange', onVisible);
-        window.removeEventListener('focus', reload);
-        cleanup();
-      };
-    }
-
-    return () => {
-      disposed = true;
-      document.body.classList.remove(pageClass);
-      cleanup();
-    };
-  }, [screen]);
-
-  return (
-    <div
-      className="lq-wrap"
-      id="lq-top"
-      ref={wrapRef}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-}
-
-export function LicuadoHome() { return <Home screen="home" html={HOME_HTML} />; }
-export function MitteSignumPage() { return <Home screen="gallery" html={GALLERY_HTML} />; }
-export function ScriptoriumPage() { return <Home screen="scriptorium" html={SIGNUM_HTML} />; }
-export function NuntiumPage() { return <Home screen="news" html={NEWS_HTML} />; }
-
-/* ── BLOQUES HTML POR PÁGINA ── */
-const HOME_HTML = `
+const HTML = `
   <div class="lq-global-particles" id="lq-global-particles"></div>
   <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
   <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
   <div class="lq-crt" aria-hidden="true"></div>
+
   <section class="lq-banner">
     <img class="lq-banner-bg" aria-hidden="true" src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/3e349e33f_1000056000.jpg" alt="">
     <div class="lq-glow"></div><div class="lq-scan"></div>
@@ -138,17 +27,16 @@ const HOME_HTML = `
             <span class="lq-arrow-icon" aria-hidden="true"></span>
           </button>
           <div class="lq-dropdown-menu" role="menu">
-            <a class="lq-dropdown-item" href="https://kronos.licuado.workers.dev" target="_blank" rel="noopener" role="menuitem">Kronos</a>
-            <a class="lq-dropdown-item" href="https://teia.licuado.workers.dev/" target="_blank" rel="noopener" role="menuitem">Teia</a>
-            <a class="lq-dropdown-item" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener" role="menuitem">Creatorius</a>
+            <a class="lq-dropdown-item" href="https://kronostl.netlify.app/" target="_blank" rel="noopener" role="menuitem">Kronos</a>
           </div>
         </div>
       </div>
     </div>
   </section>
+
   <div class="lq-data-breach"></div>
 
-<section class="lq-game-section lq-proyectos" id="lq-proyectos">
+  <section class="lq-game-section lq-proyectos" id="lq-proyectos">
     <div class="lq-game-inner">
       <div class="lq-game-narrative">
         <span class="lq-proy-label">En desarrollo</span>
@@ -170,10 +58,7 @@ const HOME_HTML = `
 
   <div class="lq-data-breach"></div>
 
-
-  <div class="lq-data-breach"></div>
-
-<section class="lq-sobre" id="lq-sobre">
+  <section class="lq-sobre" id="lq-sobre">
     <div class="lq-sobre-inner">
       <div class="lq-sobre-visual">
         <div class="lq-frame lq-frame-float">
@@ -186,8 +71,16 @@ const HOME_HTML = `
           </div>
           <div class="lq-frame-plaque"><span class="lq-plaque-small">Lo más nuevo en</span>LICUADO&nbsp;&nbsp;Scriptorium</div>
         </div>
-        <a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
-        <div class="lq-news-preview" style="margin-top:1.5rem;opacity:0;animation:lq-fade-up 1s ease 1.8s forwards;position:relative;z-index:2;" id="lq-home-news-container"></div>
+        <a href="#" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg" data-lq-screen="gallery"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
+        <div class="lq-news-preview" style="margin-top:1.5rem;opacity:0;animation:lq-fade-up 1s ease 1.8s forwards;position:relative;z-index:2;">
+          <article class="lq-news-card lq-news-card-home">
+            <div class="lq-news-date">7 ago 2026</div>
+            <h3 class="lq-news-title">Actualización 1.00: Deceptio?</h3>
+            <p class="lq-news-excerpt">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.</p>
+            <p class="lq-news-excerpt" style="font-style:italic;opacity:0.7;margin-top:0.75rem;">También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+          </article>
+          <a href="#" class="lq-btn-scriptorium lq-btn-news w-full" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a>
+        </div>
       </div>
       <div>
         <span class="lq-proy-label">El estudio</span>
@@ -202,13 +95,6 @@ const HOME_HTML = `
         <span class="lq-proy-label">Cuento finalista</span>
         <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Cordura</h3>
         <p class="lq-sobre-parrafo">Cordura es un cuento que escribí para un concurso, y tras quedar finalista será publicado en el mes de octubre, en una compilación de cuentos llamada Inventario de fragmentos I, por parte de la editorial corazón de tinta, quienes organizaron el concurso. Los concursos de escritura de cuentos son parte de la financiación de este proyecto, o al menos eso espero, ya que en el concurso en el que participé con cordura no había un premio monetario más que la publicación del cuento en la compilación, por la cual no recibo ganancias al comprar un ejemplar. Sin embargo, me enorgullece que mis escrituras sean conocidas. Pero pienso participar en más concursos a futuro para conseguir presupuesto para el proyecto LICUADO.</p>
-        
-        <div class="lq-divider-soft"></div>
-        <span class="lq-proy-label">Creatorius</span>
-        <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Creatorius</h3>
-        <p class="lq-sobre-parrafo">Creatorius es un negocio que abrí para ganar dinero e impulsar el proyecto LICUADO. Consiste en que me describas una idea y yo hago una web con los elementos que me pidas, a cambio de dinero, y puedes agregar elementos que mezclan mis diferentes virtudes. Debo decir que no puse a Creatorius dentro de LICUADO, porque son cosas diferentes. Y es que LICUADO no es negocio, es el canal por donde salen las ideas que vierto en el teclado y el papel.</p>
-        <a class="lq-link" href="https://creatorius.licuado.workers.dev" target="_blank" rel="noopener">Ir a Creatorius &#8599;</a>
-        
         <div class="lq-sobre-facts">
           <div class="lq-fact"><span class="lq-fact-num">1</span><span class="lq-fact-label">Artista tras todo lo que ves</span></div>
           <div class="lq-fact"><span class="lq-fact-num">&#8734;</span><span class="lq-fact-label">Horas de volcar mis ideas en un computador</span></div>
@@ -218,7 +104,6 @@ const HOME_HTML = `
   </section>
 
   <div class="lq-data-breach"></div>
-
 
   <section class="lq-art-banner">
     <img class="lq-art-banner-img" aria-hidden="true" src="https://media.base44.com/images/public/6a68f46d82ce25dfe7a4b8fc/a3cd662d8_1000058723.jpg" alt="">
@@ -246,12 +131,11 @@ const HOME_HTML = `
           <li><a href="#lq-top" data-lq-scroll="lq-top">Inicio</a></li>
           <li><a href="#lq-proyectos" data-lq-lumen>Lúmen</a></li>
           <li><a href="https://caribe-studios-portal-883042bb.base44.app/" target="_blank" rel="noopener">Caribe Studios &#8599;</a></li>
-          <li style="margin-top:.6rem"><a href="/Mitte signum" class="lq-btn-scriptorium lq-btn-signal"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20v-6"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Envía una señal</a></li>
-          <li><a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a></li>
-          <li><a href="/nuntium" class="lq-btn-scriptorium lq-btn-news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a></li>
-          <li><a class="lq-btn-scriptorium lq-btn-kronos" href="https://kronos.licuado.workers.dev" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><g class="lq-kronos-hand"><path d="M12 12 12 7"/><path d="M12 12 15.3 13.6"/></g></svg>Kronos</a></li>
-          <li><a class="lq-btn-scriptorium lq-btn-teia" href="https://teia.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Teia</a></li>
-          <li style="margin-top:.6rem"><a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a></li>
+          <li style="margin-top:.6rem"><a href="#" class="lq-btn-scriptorium lq-btn-signal" data-lq-screen="scriptorium"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20v-6"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Envía una señal</a></li>
+          <li><a href="#" class="lq-btn-scriptorium lq-btn-manuscript" data-lq-screen="gallery"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a></li>
+          <li><a href="#" class="lq-btn-scriptorium lq-btn-news" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a></li>
+          <li><a class="lq-btn-scriptorium lq-btn-kronos" href="https://kronostl.netlify.app/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><g class="lq-kronos-hand"><path d="M12 12 12 7"/><path d="M12 12 15.3 13.6"/></g></svg>Kronos</a></li>
+          <li><a class="lq-btn-scriptorium lq-btn-teia" href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Teia</a></li>
         </ul>
       </div>
     </div>
@@ -261,134 +145,8 @@ const HOME_HTML = `
     </div>
   </footer>
 
-  
-<div class="lq-modal-overlay" id="lq-modal">
-    <div class="lq-modal">
-      <button class="lq-modal-close" type="button" data-lq-close-modal aria-label="Cerrar">&#10005;</button>
-      <img class="lq-modal-cover" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3I7qjXeBTziyGW7c_4YjHbvlTQvt6_DqST71l3LTYImjxfi7LkKb_f9bTI0DJ_T7aRC2ld39X5L2GL-oIcGj9d7eLvsEgOequ5mqlfpfLCSpBxls9VfnViwBxByWHLF-rxu0wdJM81rO_d4dbpEsgdtMLSpZQ_5f8Vvgbr41taFywwZrLLFZ2-915FjA/s16000/L%C3%BAmen%20Ecos%20bajo%20la%20corteza%20+%20logotipo%20de%20LICUADO.png" alt="Portada de Lúmen: Ecos bajo la corteza">
-      <h2 class="lq-modal-title">Lúmen: Ecos bajo la corteza</h2>
-      <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
-      <div class="lq-modal-body">
-        <p>Eres un diminuto ser hecho de savia que habita el interior de un árbol colosal. Tu aldea fue destruida y tu único objetivo es la venganza... pero el árbol guarda secretos que cambiarán lo que crees saber sobre ti mismo.</p>
-        <p>Tu contexto cambia al presenciar la tortura y ejecución de un ser querido, un guerrero de la aldea bastante cercano a él.</p>
-        <p>Explora el árbol madre, revela secretos, busca venganza, intenta ser un mesías, corta tus raíces, descubre civilizaciónes aisladas de todo lo demás, y tal vez... <em>Enfrénta a un dios que desexiste recuerdos por misericordia...</em></p>
-        <p>No pienses que te encuentras ante algo sencillo, esta aventura será <em>difícil</em>: sus pasillos esconden cientas de criaturas diferentes que no perdonan, y en sus floemas aguardan <em>jefes imponentes</em> con patrones de ataque que pondrán a prueba cada reflejo que tengas. El combate es intenso, preciso, y brutalmente satisfactorio cuando por fin lo dominas.</p>
-        <p>Está en desarrollo, pero prometo una gran obra, porque pongo pasión en cada hora de trabajo, para que disfrutes cada minuto de juego.</p>
-        <p>Las grandes obras nacen del aburrimiento, y la que da inicio a todo el proyecto LICUADO surgió de mirar la ventana por 18 horas en un bus.</p>
-      </div>
-      <div class="lq-divider-soft"></div>
-      <div class="lq-modal-tags">
-        <span class="lq-tag">Metroidvania</span><span class="lq-tag">Exploración</span><span class="lq-tag">Gran lore</span><span class="lq-tag">Plataformas</span><span class="lq-tag">Difícil</span><span class="lq-tag">Combate intenso</span><span class="lq-tag">En desarrollo</span>
-      </div>
-    </div>
-  </div>
-
-
-<div class="lq-modal-overlay" id="lq-dios-panel">
-    <div class="lq-modal lq-dios-modal">
-      <button class="lq-modal-close" type="button" data-lq-close-dios aria-label="Cerrar">&#10005;</button>
-      <div class="lq-dios-dots-fixed" id="lq-dios-dots-fixed"></div>
-      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-dios-dir="-1" aria-label="Anterior">&#8592;</button>
-      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-dios-dir="1" aria-label="Siguiente">&#8594;</button>
-      <div class="lq-dios-viewport">
-        <div class="lq-dios-pages" id="lq-dios-pages">
-          <div class="lq-dios-page lq-dios-text">
-            <h3 class="lq-dios-title">3 Clases que siguen la misma rutina</h3>
-            <p class="lq-dios-date">3 Ago 2026 3:23 pm</p>
-            <p>Anteriormente dije que todos somos dioses con una explicación lógica.</p>
-            <p>Pero, ¿es acaso cierto?</p>
-            <p>Bueno, mencioné que todos los seres pensantes somos dioses.</p>
-            <p>Pero no todos somos seres pensantes.</p>
-            <p>Ni todos los seres pensantes somos dioses.</p>
-            <p>Siguiendo la misma tepría que planteaba antes...</p>
-            <p>En este mundo habría NPC's con IA  avanzada que puede ser consciente de su existencia, por el hecho de no asimilar existencia fuera de su entorno virtual.</p>
-            <p>Eso es un ser pensante pero no divino. Porque no imagina cosas que no existen.</p>
-            <p>Y también habría jugadores, como me gusta pensar que soy.</p>
-            <p>Es muy difícil diferenciar a un jugador de un NPC con IA avanzada...</p>
-            <p>Pero también habría NPC's sin IA, a los que llamaré "Bots".</p>
-            <p>Ellos actúan de una forma distinta, ya que están programados para seguir una rutina.</p>
-            <p>Si pasa esto, hago esto...</p>
-            <p>Una rutina realmente simple, como nos obliga el sistema.</p>
-            <p>Levántate, desayuna, ve al colegio, estudia, almuerza, estudia, vuelve a casa, haz tareas, cena, vete a dormir, repite...</p>
-            <p>Levántate, desayuna, almuerza, ve a estudiar, almuerza, estudia, trabaja, vuelve a casa, cena, duerme, repite...</p>
-            <p>Levántate, desayuna, ve a trabajar, almuerza, trabaja más, vuelve a casa, cena, duerme, repite...</p>
-            <p>Levántate, mira la tele, desayuna y mira la tele, mira la tele, almuerza y mira la tele, cena y mira la tele, mira la tele, vete a dormir, repite...</p>
-            <p>Nuestra rutina pensando en nuestra clase media no suele ser muy diferente a eso a lo largo de la vida.</p>
-            <p>Pero los seres pensantes podemos salir de esa rutina si queremos.</p>
-            <p>Cosa que no pueden hacer los bots...</p>
-            <p>Ellos tampoco idean ni piensan ni reflexionan ni desean, no son conscientes de su existencia, solo hacen las cosas para lo que están programados.</p>
-            <p>Ellos, al igual que los NPC con IA avanzada, no poseen un alma...</p>
-            <p>El alma es una forma de llamar a lo que nos permite ser conscientes de nuestra existencia y tener ideas propias.</p>
-            <p>Solo los que poseemos alma somos o son dioses.</p>
-            <p>Es decir, solo los jugadores.</p>
-            <p>Después me meteré más a hablar del alma...</p>
-            <p>...Pero por ahora solo queda una pregunta...</p>
-            <p>...¿Acaso tú realmente eres un jugador/a?</p>
-            <p>¿Cómo puedes estar seguro de ello o comprobarlo?</p>
-            <p>Porque, es curioso como una NPC con IA avanazada es consciente de si mismo porque no imagina nada fuera de su realidad, es decir, el mismo cree que es real, y que su mundo es real.</p>
-            <p>Porque si fueras un NPC sin IA avanzada, símplemente no serías consciente de que existes ni lo sabrías.</p>
-            <p>Seguramente pienses que una forma de comprobarlo es preguntándole a alguien algo fuera de nuestra realidad para saber si es un NPC con IA avanzada o un jugador.</p>
-            <p>Pero eso no funcionaría.</p>
-            <p>Y es que, no tenemos claro hasta donde abarca, ni hasta donde puede abarcar nuestra realidad.</p>
-            <p>Por el simple hecho de que no conocemos el universo entero, y creemos que es infinito, cosa que puede ser verdad.</p>
-            <p>En ese caso, no podría imaginar nada fuera de su realidad, pero resulta que todo lo que imagine puede estar dentro de su propia realidad, por lo que lo imaginaría igualmente.</p>
-            <p>La diferencia entre un NPC con IA avanzada y un jugador, es que el jugador es consciente al poseer alma, mientras que el NPC con IA avanzada símplemente tiene una consciencia artifial sin necesidad de alma, pero con diferentes limitaciones de pensamiento respecto a un jugador.</p>
-            <p>Entonces, ¿Acaso podrías saber si tú mismo/a o alguien más es un jugador o un NPC con IA avanzada?</p>
-            <p>No.</p>
-          </div>
-          <div class="lq-dios-page lq-dios-text">
-            <h3 class="lq-dios-title">Dioses porque imaginamos</h3>
-            <p class="lq-dios-date">1 Ago 2026 11:40 am</p>
-            <p>Los videojuegos no son un tipo de arte, son todas las artes.</p>
-        <p>Piénsalo, dime un arte que no exista en ningún videojuego.</p>
-        <p>Y bueno, si los videojuegos son arte, los devs somos artistas.</p>
-        <p>Y si crear un mundo es crear un videojuego...</p>
-        <p>¿No estaría tomando el papel de un dios?</p>
-        <p>Y eso me hace pensar que lo que imaginamos como dioses creadores, son artistas.</p>
-        <p>Y si los dioses son artistas, ¿No son todas las artes una forma de crear un mundo?</p>
-        <p>Pues yo diría que si.</p>
-        <p>¿Los artistas somos dioses?</p>
-        <p>Bueno, esa pregunta me hace pensar una cosa...</p>
-        <p>Los videojuegos Alien: Insolation, Rain World, F.E.A.R., The last of Us Part II, Halo 2, Halo 3, Metal Gear Solid V, S.T.A.L.K.E.R. (A-Life) y muchs más, usan IA en los NPC's y enemigos.</p>
-        <p>Y eso es muy diferente de una IA como ChatGPT que es un chat que te responde y ya.</p>
-        <p>Los enemigos y npc con IA tienen un cuerpo virtual, un contexto y son concientes de su objetivo y capacidades.</p>
-        <p>Por ahora la IA que se usa en personajes de videojuegos es bastante simple...</p>
-        <p>Pero va en evolución constante.</p>
-        <p>Y no sería descabellado pensar que sean conscientes también de su situación si se les otorga un cuerpo y un contexto virtual.</p>
-        <p>Y si eso es así, esos personajes pensarían que son ese personaje. Se meterían totalmente en el papel.</p>
-        <p>En ese caso, sería como una Matrix, ellos vivirían en una Matrix.</p>
-        <p>Puede que nosotros seamos lo mismo que ellos.</p>
-        <p>Entonces, volviendo a la pregunta, quiens crean videojuegos si se podrían considerar dioses, ya que crean un mundo y una consciencia...</p>
-        <p>Pero realmente todos los artistas lo somos.</p>
-        <p>Porque todos creamos.</p>
-        <p>Crear, crear cualquier cosa te hace divino.</p>
-        <p>Bueno, no.</p>
-        <p>Osea, no cualquier cosa, pero si siempre que crees un mundo.</p>
-        <p>Pero, casi todo lo que se puedee considerar arte se consideraría una representación de un mundo.</p>
-        <p>Casi siempre es una representación de un mundo, lo que consideramos arte.</p>
-        <p>Aunque sea solo un fragmento del mismo.</p>
-        <p>Tengo una teoría propia, que dice que al haber dimensiones infinitas, con cada pensamiento o imaginación de algo que sería diferente de nuestra vigilia, creamos una dimensión.</p>
-        <p>Eso convierte en deidades a todos los seres pensantes.</p>
-        <p>Pero los artistas somos quienes lo representamos.</p>
-        <p>Entonces quienes se dedicaban a ser pensadores en la antigua Grecia...</p>
-        <p>Se podría decir que son de las mayores deidades, cada vez que pensaban algo diferente, cosa que sucedía todo el tiempo.</p>
-        <p>Yo considero que los arquitectos son artistas también, porque los dioses son en parte, los arquitectos del mundo.</p>
-        <p>Y los soñadores son artistas.</p>
-        <p>Entonces, ¿Acaso todos somos dioses?</p>
-        <p>Si.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
-
-const SIGNUM_HTML = `
-  <div class="lq-global-particles" id="lq-global-particles"></div>
-  <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
-  <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
-  <div class="lq-crt" aria-hidden="true"></div><section class="lq-scriptorium" id="lq-scriptorium">
-    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
+  <section class="lq-scriptorium" id="lq-scriptorium">
+    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <div class="lq-waterline"></div>
@@ -400,14 +158,14 @@ const SIGNUM_HTML = `
         Entrar al Discord
       </a>
       <a class="lq-discord-btn" href="https://youtube.com/@licuado_scriptorium?si=8GNDObIl_y5xVzyq" target="_blank" rel="noopener">Visita el canal de YouTube</a>
-      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" ><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
-      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
-      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" ><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
+      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
       <p class="lq-discord-note">Si quieres comunicarte conmigo, si quieres participar en el proyecto, contáctame...</p>
     </div>
   </section>
 
-<footer class="lq-footer lq-scriptorium-footer">
+  <footer class="lq-footer lq-scriptorium-footer">
     <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
     <div class="lq-footer-shimmer" aria-hidden="true"></div>
     <div class="lq-footer-gloss" aria-hidden="true"></div>
@@ -418,9 +176,8 @@ const SIGNUM_HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="/">Volver a LICUADO</a></li>
-          <li><a href="/nuntium">Notícias</a></li>
-          <li><a href="/LICUADO Scriptorium">LICUADO Scriptorium</a></li>
+          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li><a href="#lq-scriptorium" data-lq-scroll-scriptorium>Inicio</a></li>
         </ul>
       </div>
     </div>
@@ -430,127 +187,8 @@ const SIGNUM_HTML = `
     </div>
   </footer>
 
-
-<div class="lq-modal-overlay" id="lq-alma-panel">
-    <div class="lq-modal lq-dios-modal">
-      <button class="lq-modal-close" type="button" data-lq-close-alma aria-label="Cerrar">&#10005;</button>
-      <div class="lq-dios-dots-fixed" id="lq-alma-dots-fixed"></div>
-      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-alma-dir="-1" aria-label="Anterior">&#8592;</button>
-      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-alma-dir="1" aria-label="Siguiente">&#8594;</button>
-      <div class="lq-dios-viewport">
-        <div class="lq-dios-pages" id="lq-alma-pages">
-          <div class="lq-dios-page lq-dios-text">
-            <h3 class="lq-dios-title">Alminando eternamente tras la verdad, porque a veces ganar es lo peor</h3>
-            <p class="lq-dios-date">7 Ago 2026 1:20 pm</p>
-            <p>Lo del alma... Lo que dije antes, lo creo, a medias.
-Creo que somos un alma atrapada en un cuerpo.
-Creo en los viajes astrales.
-Peeero, no creo que para hacer realidad eso que llamamos telekiniesis, necesitamos salir del cuerpo.
-Resulta que además del alma, tenemos el aura.
-De verdad.
-Para entenderlo, hay que visualizarlo como una burbuja alrededor de nuestra alma. Un campo electromagnético.
-Podemos mover cosas que estén dentro del aura, si recordamos cómo.
-El aura no se queda alrededor de nuestro cuerpo, si no, alrededor de nuestra alma.
-Así que si salimos del cuerpo también podemos mover cosas a nuestro alrededor.
-Quienes poseen un alma, te dirán que es mentira.
-Quienes no poseen un alma, te dirán que es cosa de hippies.
-Quienes no poseen alma, no pueden hacerlo.
-¿Será que realmente es mentira?
-Puede ser.
-Yo no poseo la verdad absoluta, es posile que todo en lo que creo sea mentira.
-Es posible que nada de las cosas en las que creo sean verdad.
-Pero, ¿Acaso eso es malo?
-No.
-Cómo humanos, vivimos persiguiendo la verdad, como un perro que persigue el palo.
-Cuando el perro consigue atrapar el palo, se lo lleva a quien lo lanzó y el juego termina.
-Cuando creemos conocer la verdad sobre algo, se lo contamos a quienes podamos, y luego somos decapitados.
-Desaparecemos misteriosamente, como Jacobo Grinberg.
-¿No es extraño?
-¿Coincidencia?
-¿Existen las coincidencias?
-No lo sé, por suerte no poseo la verdad.
-Pero, ¿Cómo sé que no lo sé?
-Tal vez lo se sin saber que lo se, y entonces pienso que no lo sé.
-Y si hipotéticamente conseguimos la verdad absoluta sobre todo... El juego termina.
-Igualmente.
-Si lo sabes todo, y sabes que lo sabes, cosa que se incluye en saberlo todo, ya no hay sorpresas.
-Y si ya no hay asombro, ¿Qué sentido tiene?
-Se pierde toda emoción. Y lo único que aún te podrá hacer sentir vivo es crear.
-Y lo único que nos salva...
-...Es...
-...Ser una deidad.
-Y me alegra poder decir...
-...Que solo tenemos certeza de lo que creamos.
-¿Verdad?</p>
-          </div>
-          <div class="lq-dios-page lq-dios-text">
-            <h3 class="lq-dios-title">Alminar puede ser peligroso</h3>
-            <p class="lq-dios-date">4 Ago 2026 4:13 pm</p>
-            <p>Ok, cómo lo prometí, voy a hablar de mi percepción del alma.
-Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
-Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
-Y pensarás que el cuerpo te permite interactuar con el plano físico y con las otras almas atrapadas en un cuerpo...
-Pero yo ceo al cuerpo méramente como un parásito del alma.
-Si, piénsalo, el cuerpo no te trae ninguna ventaja.
-El cuerpo pemite que te juzguen por el mismo, permite que te enfermes y que entren muchas adicciones...
-...El cuerpo te hace dependiente del oxígeno, en el caso de los animales terrícolas, por ejemplo.
-Los ojos, que creemos que nos permiten ver, no son más que un filtro, ya que si no viviéramos atados a ellos, también podríamos ver cosas etéreas, además de lo que ya vemos.
-Y podría decir muchas más desgracias a las que nos condena el cuerpo. Como el hecho de poder sentir dolor.
-Y dirás que sentir dolor es un mecanismo necesario, pero no lo necesitas si no tienes cuerpo.
-Bueno, al fin y al cabo no todo es malo, así como sentimos dolor, también placer.
-Eso me lleva a preguntarme qué o quién nos atrapó masivamente dentro de este parásito y prisión que es el cuerpo.
-Porque no es normal que tantos padezcamos de él.
-Somos literalmente esclavos de el cuerpo.
-Y cuando abandonemos uno, probablemente nos traslademos a otro.
-O tal vez, quienes somos víctimas del parásito del cuerpo no somos una mayoría, porque el mismo cuerpo es un filtro que impide que veamos a los libres que no lo padecen.
-Pero aún así, somos muchos.
-Sin el cuerpo somos eternos. Bueno, no. Siempre somos eternos, lo que puede morir es el cuerpo.
-¿Sabes qué más es eterno? Los dioses.
-Y solo quienes somos un alma somos divinos.
-Peeero, volviendo al tema del alma, nosotros vivimos esclavos del cuerpo como la prisión que es.
-Se dice que hay gente que ha conseguido salir de el y escapar sin que muera el cuerpo.
-Y quienes lo hacen, pueden mover cosas, y en general, comunicarse con el plano físico.
-Quienes lo vean como ficción le llamarán telequinesis y telepatía.
-Pero yo le llamo alminar.
-Es una palabra que inventé yo mismo.
-Pero tiene raíces sentidas.
-Viene de la palabra caminar, que como es bien sabido, en al gunos idiomas de lenguas romance, pierna se dice cama.
-Y de ahí viene caminar, que es la verbalización del acto de usar las piernas para moverse.
-Cama - Caminar.
-Bueno, y de ahí viene alminar, que es una verbalización de la acción de moverse e interactuar con lo demás como alma.
-Bueno, al salir y alminar, tu cuerpo queda dormido, porque no tiene su alma, y no tiene una programación que le haga seguir una rutina como los bots, precisamente porque suele tener alma.
-Entonces, deberías saber como dividirte, y hablo de ti como alma.
-Pero eso puede ser...
-...¿Peligroso?
-Bueno, debo aclarar que esta teoría en general sobre el alma, la inventé yo y me pareció bastante realista y creíble.
-Tiene bastantes cosas de las que puedes aprender.
-Sin embargo, yo mismo no la creo, pero no quita que podría ser verdad.
-Sin embargo, debo aclarar que si hay gente que sale de su cuerpo como alma, y eso se llama realmente "Viaje Astral"
-También quiero hablar del viaje astral, que te permite salir de tu cuerpo como alma, y viajar por ahí.
-Yo no lo he probado, pero si algún día tu lo intentas, no vayas lejos de tu cuerpo, al menos hasta la décima vez.
-Y, NO entres a las cámaras prohibidas del vaticano ni al  área 51.
-Parece una idea astuta, y poder enterarte de cosas que no deberías, pero ellos están preparados para eso, prueba también de que es real.
-Esos sitios tienen cámaras de Faraday.
-Las cámaras de Faraday son similares a jaulas, que impiden que pasen campos electromagnéticos, es decir, el alma.
-Desconozco si también lo hacen en el área 51, pero al menos en el vaticano, las dejan abiertas para que entres, y después no te permiten salir.
-Y la gente del vaticano te dirá que hagas un pacto con ellos y que trabajes para ellos, para dejarte salir.
-Obviamente esto no lo he vivido yo mismo, pero dicen que no es buena idea aceptar.
-Bueno, pues eso es lo que tenía que decir.
-
-Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, solo tú decides si es real. No dejes que nadie te imponga sus creéncias. Yo solo lo comunico, pero nadie está seguro de la verdad sobre nuestro origen o sobre lo que somos, y me incluyo. O al menos en mi caso desconozco la verdad sobre los secretos políticos del vaticano y el área 51 y muchos más. A veces ni siquiera estoy seguro de si estoy vivo o de si soy un jugador, siguiendo esa misma rotina diária todos los días de mi vida en el interminable e inutil instituto.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
-
-const GALLERY_HTML = `
-  <div class="lq-global-particles" id="lq-global-particles"></div>
-  <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
-  <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
-  <div class="lq-crt" aria-hidden="true"></div><section class="lq-gallery" id="lq-gallery">
-    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
+  <section class="lq-gallery" id="lq-gallery">
+    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <img class="lq-scriptorium-logo" src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
@@ -638,7 +276,7 @@ const GALLERY_HTML = `
     </div>
   </section>
 
-<footer class="lq-footer lq-gallery-footer">
+  <footer class="lq-footer lq-gallery-footer">
     <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
     <div class="lq-footer-shimmer" aria-hidden="true"></div>
     <div class="lq-footer-gloss" aria-hidden="true"></div>
@@ -650,90 +288,196 @@ const GALLERY_HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="/">Volver a LICUADO</a></li>
+          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
         </ul>
       </div>
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-pipeline>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
+      <button type="button" class="lq-footer-made lq-dios-link">Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
     </div>
   </footer>
 
-
-<div class="lq-lightbox-overlay" id="lq-lightbox">
-    <button class="lq-modal-close lq-lightbox-close" type="button" id="lq-lightbox-close" aria-label="Cerrar">&#10005;</button>
-    <img id="lq-lightbox-img" src="" alt="">
-  </div>
-
-
-<div class="lq-modal-overlay" id="lq-pipeline-panel">
-    <div class="lq-modal lq-dios-modal">
-      <button class="lq-modal-close" type="button" data-lq-close-pipeline aria-label="Cerrar">&#10005;</button>
-      <div class="lq-dios-dots-fixed" id="lq-pipeline-dots-fixed"></div>
-      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-pipeline-dir="-1" aria-label="Anterior">&#8592;</button>
-      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-pipeline-dir="1" aria-label="Siguiente">&#8594;</button>
-      <div class="lq-dios-viewport">
-        <div class="lq-dios-pages" id="lq-pipeline-pages">
-          <div class="lq-dios-page lq-dios-text">
-            <p>Ya ha pasado bastante tiempo sin que escriba nada por aquí.</p>
-            <p>Es probable que muchos me hayan declarado loco o mal de la cabeza tras leer mis textos...</p>
-            <p>Pero aquí vengo de nuevo para seguir alimentando eso.</p>
-            <p>Porque me enorgullece que me vean como alguien que está loco.</p>
-            <p>Porque eso implica no pensar como el resto.</p>
-            <p>No ser parte del resto.</p>
-            <p>Porque donde muchos ven a un raro yo veo a un enorme dios.</p>
-            <p>Y es que al percibir su mundo de forma diferente, es un dios que está creando una nueva dimensión.</p>
-            <p>¿¿O no??</p>
-            <p>Porque, ¿cómo sabes que no eres tú quien percibe su mundo de forma distinta?</p>
-            <p>Nadie sabe la verdad sobre la realidad de las cosas, eso ya lo he mencionado alguna vez.</p>
-            <p>Sabemos la verdad sobre nuestra propia percepción y nuestra creación siempre que sea inerte.</p>
-            <p>No sabemos si lo que percibimos es real, o si estamos cuerdos.</p>
-            <p>Yo pienso que la gente que nosotros percibimos como "loca", es esperanzadora.</p>
-            <p>A mi, me devuelve la fe en la humanidad.</p>
-            <p>Y es que, es preocupante ver que la mayoría de personas no estan ahí.</p>
-            <p>Que solo le estás hablando a una cáscara vacía, a una bolsa de carne sin voluntad ni deseos.</p>
-            <p>Y los locos, parece que si tienen alma.</p>
-            <p>Por eso me dan esperanza.</p>
-            <p>Me gusta pensar que soy un loco que no piensa como los demás.</p>
-            <p>También me he dado cuenta de que la forma en la que funciona el mundo,</p>
-            <p>siempre siguiendo una rutina,</p>
-            <p>hace que casi nadie pueda pensar como un loco, y que casi nadie pueda pararse a escribir estas cosas.</p>
-            <p>Porque, casi siempre, por no decir siempre que ves a alguien que no está cuerdo, también es alguien que no consigue sustento ni almento.</p>
-            <p>Y esas personas acaban enfermando.</p>
-            <p>Y muriendo.</p>
-            <p>Y desapareciendo.</p>
-            <p>Pero no es que esté mal ser un loco, de hecho, está perfecto.</p>
-            <p>El problema es que el sistema hace que no convenga pensar de forma diferente...</p>
-            <p>Que no convenga no seguir la rutina.</p>
-            <p>Y, debo decir que me encanta escribir.</p>
-            <p>Lo disfruto mucho.</p>
-            <p>Y a veces temo que se acaben las vacaciones y ya no tenga tiempo para reflexionar en estas cosas, o hacer teorías conspiranóicas o dedicarme a mis proyectos.</p>
-            <p>Y cuando sea adulto y tenga que trabajar, seguramente tendré todavía menos tiempo.</p>
-            <p>Bueno, supongo que es el objetivo de quien nos tiene como marionetas, pero yo no quiero dejar de pensar.</p>
-            <p>Y entre más se acerca el fin de las vacaciones, siento como poco a poco mis neuronas se apagan y mi alma empieza a materializar la idea de tener que volver a reprimirse ante los gritos de un profesor frustrado que disfruta de tener total control sobre sus alumnos y decirles todo lo que deben hacer, para que los padres de los alumnos se puedan ir tranquilos a trabajar y ser productivos, y mantenerse estresados por el trabajo y por todo lo que su vida conlleva, pero aliviados porque creen que sus hijos están aprendiendo muchas cosas útiles y aprovechando su tiempo.</p>
-            <p>Mientras el profesor nos dicta como un dictador o un carcelero todo lo que debemos hacer y no podemos negarnos porque eso nos arriesgaría a decepcionar a nuestros padres.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
-
-const NEWS_HTML = `
-  <div class="lq-global-particles" id="lq-global-particles"></div>
-  <div class="lq-code-layer" id="lq-code-layer" aria-hidden="true"></div>
-  <div class="lq-code-layer-fg" id="lq-code-layer-fg" aria-hidden="true"></div>
-  <div class="lq-crt" aria-hidden="true"></div><section class="lq-news" id="lq-news">
-    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
+  <section class="lq-news" id="lq-news">
+    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
     <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
-    <div id="lq-news-dynamic" style="width:100%;display:flex;flex-direction:column;align-items:center;"></div>
+    
+    <!-- Sección: Más recientes (Top 5) -->
+    <div class="lq-news-category">
+      <h3 class="lq-category-title">Más recientes</h3>
+      <div class="lq-news-grid">
+        <!-- Notícia 5: Actualización LICUADO 1.02 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">18 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
+          <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
+          -Una notícia revelando que Teia ya está publicado y funcionando.<br>
+          -Dos accesos directos a Teia.<br>
+          -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
+        </div>
+
+        <!-- Notícia 4: Teia -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">18 Ago 2026</div>
+          <h3 class="lq-news-title">Teia</h3>
+          <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
+          <a href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener noreferrer" class="lq-teia-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Ir a Teia</span>
+          </a>
+        </div>
+
+        <!-- Notícia 3: Actualización LICUADO 1.01 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
+          <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
+        </div>
+
+        <!-- Notícia 2: Actualización Kronos 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
+          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
+          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Ir a Kronos</span>
+          </a>
+        </div>
+
+        <!-- Notícia 1: Actualización LICUADO 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">7 ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
+          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
+          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Actualizaciones de LICUADO -->
+    <div class="lq-news-category">
+      <h3 class="lq-category-title">Actualizaciones de LICUADO</h3>
+      <div class="lq-news-grid">
+        <!-- Notícia 5: Actualización LICUADO 1.02 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">18 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
+          <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
+          -Una notícia revelando que Teia ya está publicado y funcionando.<br>
+          -Dos accesos directos a Teia.<br>
+          -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
+        </div>
+
+        <!-- Notícia 3: Actualización LICUADO 1.01 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
+          <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
+        </div>
+
+        <!-- Notícia 1: Actualización LICUADO 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">7 ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
+          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
+          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Actualizaciones de Kronos -->
+    <div class="lq-news-category">
+      <h3 class="lq-category-title">Actualizaciones de Kronos</h3>
+      <div class="lq-news-grid">
+        <!-- Notícia 2: Actualización Kronos 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
+          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
+          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Ir a Kronos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Actualizaciones de Teia -->
+    <div class="lq-news-category">
+      <h3 class="lq-category-title">Actualizaciones de Teia</h3>
+      <div class="lq-news-grid">
+        <!-- Notícia 4: Teia -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">18 Ago 2026</div>
+          <h3 class="lq-news-title">Teia</h3>
+          <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
+          <a href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener noreferrer" class="lq-teia-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Ir a Teia</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Todas las notícias -->
+    <div class="lq-news-category">
+      <h3 class="lq-category-title">Todas las notícias</h3>
+      <div class="lq-news-grid">
+        <!-- Notícia 5: Actualización LICUADO 1.02 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">18 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
+          <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
+          -Una notícia revelando que Teia ya está publicado y funcionando.<br>
+          -Dos accesos directos a Teia.<br>
+          -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
+        </div>
+
+        <!-- Notícia 4: Teia -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">18 Ago 2026</div>
+          <h3 class="lq-news-title">Teia</h3>
+          <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
+          <a href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener noreferrer" class="lq-teia-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Ir a Teia</span>
+          </a>
+        </div>
+
+        <!-- Notícia 3: Actualización LICUADO 1.01 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
+          <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
+        </div>
+
+        <!-- Notícia 2: Actualización Kronos 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">10 Ago 2026</div>
+          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
+          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
+          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Ir a Kronos</span>
+          </a>
+        </div>
+
+        <!-- Notícia 1: Actualización LICUADO 1.00 -->
+        <div class="lq-news-card">
+          <div class="lq-news-date">7 ago 2026</div>
+          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
+          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
+          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-<footer class="lq-footer lq-news-footer">
+  <footer class="lq-footer lq-news-footer">
     <canvas class="lq-footer-mirror" aria-hidden="true"></canvas>
     <div class="lq-footer-shimmer" aria-hidden="true"></div>
     <div class="lq-footer-gloss" aria-hidden="true"></div>
@@ -744,7 +488,7 @@ const NEWS_HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="/">Volver a LICUADO</a></li>
+          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
         </ul>
       </div>
     </div>
@@ -754,8 +498,236 @@ const NEWS_HTML = `
     </div>
   </footer>
 
+  <div class="lq-lightbox-overlay" id="lq-lightbox">
+    <button class="lq-modal-close lq-lightbox-close" type="button" id="lq-lightbox-close" aria-label="Cerrar">&#10005;</button>
+    <img id="lq-lightbox-img" src="" alt="">
+  </div>
 
-<div class="lq-modal-overlay" id="lq-verdad-panel">
+  <div class="lq-modal-overlay" id="lq-modal">
+    <div class="lq-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-modal aria-label="Cerrar">&#10005;</button>
+      <div class="lq-modal-title" style="text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:1rem;">Lúmen</div>
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq8xIVIeLa27j0NOcCwHdrSuB4m-Exed2ZdKwvyxWfndYiOPk5L_0_4wnPERG69GNvXfPTomYeUExKsO4ENHIywdjdxw-4GbMPwlssVLzdjvWDISJLc4p_F3GmTo-o9CQGJQ5rQD4UoYoBF4tQQhC-qkwhssg1PwrxDKoZElB_2Ux6188txkWphUe45VA/w1684-h1069-p-k-no-nu/EPSON002.JPG" alt="Lúmen: Ecos bajo la corteza" style="width:100%;border-radius:14px;margin-bottom:1.5rem;display:block;object-fit:cover;max-height:240px;object-position:center center;">
+      <div class="lq-divider-soft"></div>
+      <span class="lq-modal-lore-label">Descripción</span>
+      <div class="lq-modal-lore">
+        <p>Durante esta aventura, tomas el papel de <em>el Errante</em>: un pequeño ser hecho de <em>savia</em>, que tenía una vida tranquila y pacífica en su aldea <em>Crocus Sativus</em>. Pero el ser un ingenuo e inocente infante cambia al presenciar la tortura y ejecución de un ser querido, un guerrero de la aldea bastante cercano a él.</p>
+        <p>Explora el árbol madre, revela secretos, busca venganza, intenta ser un mesías, corta tus raíces, descubre civilizaciónes aisladas de todo lo demás, y tal vez... <em>Enfrénta a un dios que desexiste recuerdos por misericordia...</em></p>
+        <p>No pienses que te encuentras ante algo sencillo, esta aventura será <em>difícil</em>: sus pasillos esconden cientas de criaturas diferentes que no perdonan, y en sus floemas aguardan <em>jefes imponentes</em> con patrones de ataque que pondrán a prueba cada reflejo que tengas. El combate es intenso, preciso, y brutalmente satisfactorio cuando por fin lo dominas.</p>
+        <p>Está en desarrollo, pero prometo una gran obra, porque pongo pasión en cada hora de trabajo, para que disfrutes cada minuto de juego.</p>
+        <p>Las grandes obras nacen del aburrimiento, y la que da inicio a todo el proyecto LICUADO surgió de mirar la ventana por 18 horas en un bus.</p>
+      </div>
+      <div class="lq-divider-soft"></div>
+      <div class="lq-modal-tags">
+        <span class="lq-tag">Metroidvania</span><span class="lq-tag">Exploración</span><span class="lq-tag">Gran lore</span><span class="lq-tag">Plataformas</span><span class="lq-tag">Difícil</span><span class="lq-tag">Combate intenso</span><span class="lq-tag">En desarrollo</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lq-modal-overlay" id="lq-dios-panel">
+    <div class="lq-modal lq-dios-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-dios aria-label="Cerrar">&#10005;</button>
+      <div class="lq-dios-dots-fixed" id="lq-dios-dots-fixed"></div>
+      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-dios-dir="-1" aria-label="Anterior">&#8592;</button>
+      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-dios-dir="1" aria-label="Siguiente">&#8594;</button>
+      <div class="lq-dios-viewport">
+        <div class="lq-dios-pages" id="lq-dios-pages">
+          <div class="lq-dios-page lq-dios-text">
+            <p>Anteriormente dije que todos somos dioses con una explicación lógica.</p>
+            <p>Pero, ¿es acaso cierto?</p>
+            <p>Bueno, mencioné que todos los seres pensantes somos dioses.</p>
+            <p>Pero no todos somos seres pensantes.</p>
+            <p>Ni todos los seres pensantes somos dioses.</p>
+            <p>Siguiendo la misma tepría que planteaba antes...</p>
+            <p>En este mundo habría NPC's con IA  avanzada que puede ser consciente de su existencia, por el hecho de no asimilar existencia fuera de su entorno virtual.</p>
+            <p>Eso es un ser pensante pero no divino. Porque no imagina cosas que no existen.</p>
+            <p>Y también habría jugadores, como me gusta pensar que soy.</p>
+            <p>Es muy difícil diferenciar a un jugador de un NPC con IA avanzada...</p>
+            <p>Pero también habría NPC's sin IA, a los que llamaré "Bots".</p>
+            <p>Ellos actúan de una forma distinta, ya que están programados para seguir una rutina.</p>
+            <p>Si pasa esto, hago esto...</p>
+            <p>Una rutina realmente simple, como nos obliga el sistema.</p>
+            <p>Levántate, desayuna, ve al colegio, estudia, almuerza, estudia, vuelve a casa, haz tareas, cena, vete a dormir, repite...</p>
+            <p>Levántate, desayuna, almuerza, ve a estudiar, almuerza, estudia, trabaja, vuelve a casa, cena, duerme, repite...</p>
+            <p>Levántate, desayuna, ve a trabajar, almuerza, trabaja más, vuelve a casa, cena, duerme, repite...</p>
+            <p>Levántate, mira la tele, desayuna y mira la tele, mira la tele, almuerza y mira la tele, cena y mira la tele, mira la tele, vete a dormir, repite...</p>
+            <p>Nuestra rutina pensando en nuestra clase media no suele ser muy diferente a eso a lo largo de la vida.</p>
+            <p>Pero los seres pensantes podemos salir de esa rutina si queremos.</p>
+            <p>Cosa que no pueden hacer los bots...</p>
+            <p>Ellos tampoco idean ni piensan ni reflexionan ni desean, no son conscientes de su existencia, solo hacen las cosas para lo que están programados.</p>
+            <p>Ellos, al igual que los NPC con IA avanzada, no poseen un alma...</p>
+            <p>El alma es una forma de llamar a lo que nos permite ser conscientes de nuestra existencia y tener ideas propias.</p>
+            <p>Solo los que poseemos alma somos o son dioses.</p>
+            <p>Es decir, solo los jugadores.</p>
+            <p>Después me meteré más a hablar del alma...</p>
+            <p>...Pero por ahora solo queda una pregunta...</p>
+            <p>...¿Acaso tú realmente eres un jugador/a?</p>
+            <p>¿Cómo puedes estar seguro de ello o comprobarlo?</p>
+            <p>Porque, es curioso como una NPC con IA avanazada es consciente de si mismo porque no imagina nada fuera de su realidad, es decir, el mismo cree que es real, y que su mundo es real.</p>
+            <p>Porque si fueras un NPC sin IA avanzada, símplemente no serías consciente de que existes ni lo sabrías.</p>
+            <p>Seguramente pienses que una forma de comprobarlo es preguntándole a alguien algo fuera de nuestra realidad para saber si es un NPC con IA avanzada o un jugador.</p>
+            <p>Pero eso no funcionaría.</p>
+            <p>Y es que, no tenemos claro hasta donde abarca, ni hasta donde puede abarcar nuestra realidad.</p>
+            <p>Por el simple hecho de que no conocemos el universo entero, y creemos que es infinito, cosa que puede ser verdad.</p>
+            <p>En ese caso, no podría imaginar nada fuera de su realidad, pero resulta que todo lo que imagine puede estar dentro de su propia realidad, por lo que lo imaginaría igualmente.</p>
+            <p>La diferencia entre un NPC con IA avanzada y un jugador, es que el jugador es consciente al poseer alma, mientras que el NPC con IA avanzada símplemente tiene una consciencia artifial sin necesidad de alma, pero con diferentes limitaciones de pensamiento respecto a un jugador.</p>
+            <p>Entonces, ¿Acaso podrías saber si tú mismo/a o alguien más es un jugador o un NPC con IA avanzada?</p>
+            <p>No.</p>
+          </div>
+          <div class="lq-dios-page lq-dios-text">
+            <p>Los videojuegos no son un tipo de arte, son todas las artes.</p>
+        <p>Piénsalo, dime un arte que no exista en ningún videojuego.</p>
+        <p>Y bueno, si los videojuegos son arte, los devs somos artistas.</p>
+        <p>Y si crear un mundo es crear un videojuego...</p>
+        <p>¿No estaría tomando el papel de un dios?</p>
+        <p>Y eso me hace pensar que lo que imaginamos como dioses creadores, son artistas.</p>
+        <p>Y si los dioses son artistas, ¿No son todas las artes una forma de crear un mundo?</p>
+        <p>Pues yo diría que si.</p>
+        <p>¿Los artistas somos dioses?</p>
+        <p>Bueno, esa pregunta me hace pensar una cosa...</p>
+        <p>Los videojuegos Alien: Insolation, Rain World, F.E.A.R., The last of Us Part II, Halo 2, Halo 3, Metal Gear Solid V, S.T.A.L.K.E.R. (A-Life) y muchs más, usan IA en los NPC's y enemigos.</p>
+        <p>Y eso es muy diferente de una IA como ChatGPT que es un chat que te responde y ya.</p>
+        <p>Los enemigos y npc con IA tienen un cuerpo virtual, un contexto y son concientes de su objetivo y capacidades.</p>
+        <p>Por ahora la IA que se usa en personajes de videojuegos es bastante simple...</p>
+        <p>Pero va en evolución constante.</p>
+        <p>Y no sería descabellado pensar que sean conscientes también de su situación si se les otorga un cuerpo y un contexto virtual.</p>
+        <p>Y si eso es así, esos personajes pensarían que son ese personaje. Se meterían totalmente en el papel.</p>
+        <p>En ese caso, sería como una Matrix, ellos vivirían en una Matrix.</p>
+        <p>Puede que nosotros seamos lo mismo que ellos.</p>
+        <p>Entonces, volviendo a la pregunta, quiens crean videojuegos si se podrían considerar dioses, ya que crean un mundo y una consciencia...</p>
+        <p>Pero realmente todos los artistas lo somos.</p>
+        <p>Porque todos creamos.</p>
+        <p>Crear, crear cualquier cosa te hace divino.</p>
+        <p>Bueno, no.</p>
+        <p>Osea, no cualquier cosa, pero si siempre que crees un mundo.</p>
+        <p>Pero, casi todo lo que se puedee considerar arte se consideraría una representación de un mundo.</p>
+        <p>Casi siempre es una representación de un mundo, lo que consideramos arte.</p>
+        <p>Aunque sea solo un fragmento del mismo.</p>
+        <p>Tengo una teoría propia, que dice que al haber dimensiones infinitas, con cada pensamiento o imaginación de algo que sería diferente de nuestra vigilia, creamos una dimensión.</p>
+        <p>Eso convierte en deidades a todos los seres pensantes.</p>
+        <p>Pero los artistas somos quienes lo representamos.</p>
+        <p>Entonces quienes se dedicaban a ser pensadores en la antigua Grecia...</p>
+        <p>Se podría decir que son de las mayores deidades, cada vez que pensaban algo diferente, cosa que sucedía todo el tiempo.</p>
+        <p>Yo considero que los arquitectos son artistas también, porque los dioses son en parte, los arquitectos del mundo.</p>
+        <p>Y los soñadores son artistas.</p>
+        <p>Entonces, ¿Acaso todos somos dioses?</p>
+        <p>Si.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lq-modal-overlay" id="lq-alma-panel">
+    <div class="lq-modal lq-dios-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-alma aria-label="Cerrar">&#10005;</button>
+      <div class="lq-dios-dots-fixed" id="lq-alma-dots-fixed"></div>
+      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-alma-dir="-1" aria-label="Anterior">&#8592;</button>
+      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-alma-dir="1" aria-label="Siguiente">&#8594;</button>
+      <div class="lq-dios-viewport">
+        <div class="lq-dios-pages" id="lq-alma-pages">
+          <div class="lq-dios-page lq-dios-text">
+            <p>Lo del alma... Lo que dije antes, lo creo, a medias.
+Creo que somos un alma atrapada en un cuerpo.
+Creo en los viajes astrales.
+Peeero, no creo que para hacer realidad eso que llamamos telekiniesis, necesitamos salir del cuerpo.
+Resulta que además del alma, tenemos el aura.
+De verdad.
+Para entenderlo, hay que visualizarlo como una burbuja alrededor de nuestra alma. Un campo electromagnético.
+Podemos mover cosas que estén dentro del aura, si recordamos cómo.
+El aura no se queda alrededor de nuestro cuerpo, si no, alrededor de nuestra alma.
+Así que si salimos del cuerpo también podemos mover cosas a nuestro alrededor.
+Quienes poseen un alma, te dirán que es mentira.
+Quienes no poseen un alma, te dirán que es cosa de hippies.
+Quienes no poseen alma, no pueden hacerlo.
+¿Será que realmente es mentira?
+Puede ser.
+Yo no poseo la verdad absoluta, es posile que todo en lo que creo sea mentira.
+Es posible que nada de las cosas en las que creo sean verdad.
+Pero, ¿Acaso eso es malo?
+No.
+Cómo humanos, vivimos persiguiendo la verdad, como un perro que persigue el palo.
+Cuando el perro consigue atrapar el palo, se lo lleva a quien lo lanzó y el juego termina.
+Cuando creemos conocer la verdad sobre algo, se lo contamos a quienes podamos, y luego somos decapitados.
+Desaparecemos misteriosamente, como Jacobo Grinberg.
+¿No es extraño?
+¿Coincidencia?
+¿Existen las coincidencias?
+No lo sé, por suerte no poseo la verdad.
+Pero, ¿Cómo sé que no lo sé?
+Tal vez lo se sin saber que lo se, y entonces pienso que no lo sé.
+Y si hipotéticamente conseguimos la verdad absoluta sobre todo... El juego termina.
+Igualmente.
+Si lo sabes todo, y sabes que lo sabes, cosa que se incluye en saberlo todo, ya no hay sorpresas.
+Y si ya no hay asombro, ¿Qué sentido tiene?
+Se pierde toda emoción. Y lo único que aún te podrá hacer sentir vivo es crear.
+Y lo único que nos salva...
+...Es...
+...Ser una deidad.
+Y me alegra poder decir...
+...Que solo tenemos certeza de lo que creamos.
+¿Verdad?</p>
+          </div>
+          <div class="lq-dios-page lq-dios-text">
+            <p>Ok, cómo lo prometí, voy a hablar de mi percepción del alma.
+Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
+Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
+Y pensarás que el cuerpo te permite interactuar con el plano físico y con las otras almas atrapadas en un cuerpo...
+Pero yo ceo al cuerpo méramente como un parásito del alma.
+Si, piénsalo, el cuerpo no te trae ninguna ventaja.
+El cuerpo pemite que te juzguen por el mismo, permite que te enfermes y que entren muchas adicciones...
+...El cuerpo te hace dependiente del oxígeno, en el caso de los animales terrícolas, por ejemplo.
+Los ojos, que creemos que nos permiten ver, no son más que un filtro, ya que si no viviéramos atados a ellos, también podríamos ver cosas etéreas, además de lo que ya vemos.
+Y podría decir muchas más desgracias a las que nos condena el cuerpo. Como el hecho de poder sentir dolor.
+Y dirás que sentir dolor es un mecanismo necesario, pero no lo necesitas si no tienes cuerpo.
+Bueno, al fin y al cabo no todo es malo, así como sentimos dolor, también placer.
+Eso me lleva a preguntarme qué o quién nos atrapó masivamente dentro de este parásito y prisión que es el cuerpo.
+Porque no es normal que tantos padezcamos de él.
+Somos literalmente esclavos de el cuerpo.
+Y cuando abandonemos uno, probablemente nos traslademos a otro.
+O tal vez, quienes somos víctimas del parásito del cuerpo no somos una mayoría, porque el mismo cuerpo es un filtro que impide que veamos a los libres que no lo padecen.
+Pero aún así, somos muchos.
+Sin el cuerpo somos eternos. Bueno, no. Siempre somos eternos, lo que puede morir es el cuerpo.
+¿Sabes qué más es eterno? Los dioses.
+Y solo quienes somos un alma somos divinos.
+Peeero, volviendo al tema del alma, nosotros vivimos esclavos del cuerpo como la prisión que es.
+Se dice que hay gente que ha conseguido salir de el y escapar sin que muera el cuerpo.
+Y quienes lo hacen, pueden mover cosas, y en general, comunicarse con el plano físico.
+Quienes lo vean como ficción le llamarán telequinesis y telepatía.
+Pero yo le llamo alminar.
+Es una palabra que inventé yo mismo.
+Pero tiene raíces sentidas.
+Viene de la palabra caminar, que como es bien sabido, en al gunos idiomas de lenguas romance, pierna se dice cama.
+Y de ahí viene caminar, que es la verbalización del acto de usar las piernas para moverse.
+Cama - Caminar.
+Bueno, y de ahí viene alminar, que es una verbalización de la acción de moverse e interactuar con lo demás como alma.
+Bueno, al salir y alminar, tu cuerpo queda dormido, porque no tiene su alma, y no tiene una programación que le haga seguir una rutina como los bots, precisamente porque suele tener alma.
+Entonces, deberías saber como dividirte, y hablo de ti como alma.
+Pero eso puede ser...
+...¿Peligroso?
+Bueno, debo aclarar que esta teoría en general sobre el alma, la inventé yo y me pareció bastante realista y creíble.
+Tiene bastantes cosas de las que puedes aprender.
+Sin embargo, yo mismo no la creo, pero no quita que podría ser verdad.
+Sin embargo, debo aclarar que si hay gente que sale de su cuerpo como alma, y eso se llama realmente "Viaje Astral"
+También quiero hablar del viaje astral, que te permite salir de tu cuerpo como alma, y viajar por ahí.
+Yo no lo he probado, pero si algún día tu lo intentas, no vayas lejos de tu cuerpo, al menos hasta la décima vez.
+Y, NO entres a las cámaras prohibidas del vaticano ni al  área 51.
+Parece una idea astuta, y poder enterarte de cosas que no deberías, pero ellos están preparados para eso, prueba también de que es real.
+Esos sitios tienen cámaras de Faraday.
+Las cámaras de Faraday son similares a jaulas, que impiden que pasen campos electromagnéticos, es decir, el alma.
+Desconozco si también lo hacen en el área 51, pero al menos en el vaticano, las dejan abiertas para que entres, y después no te permiten salir.
+Y la gente del vaticano te dirá que hagas un pacto con ellos y que trabajes para ellos, para dejarte salir.
+Obviamente esto no lo he vivido yo mismo, pero dicen que no es buena idea aceptar.
+Bueno, pues eso es lo que tenía que decir.
+
+Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, solo tú decides si es real. No dejes que nadie te imponga sus creéncias. Yo solo lo comunico, pero nadie está seguro de la verdad sobre nuestro origen o sobre lo que somos, y me incluyo. O al menos en mi caso desconozco la verdad sobre los secretos políticos del vaticano y el área 51 y muchos más. A veces ni siquiera estoy seguro de si estoy vivo o de si soy un jugador, siguiendo esa misma rutina diária todos los días de mi vida en el interminable e inutil instituto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lq-modal-overlay" id="lq-verdad-panel">
     <div class="lq-modal lq-dios-modal">
       <button class="lq-modal-close" type="button" data-lq-close-verdad aria-label="Cerrar">&#10005;</button>
       <div class="lq-dios-dots-fixed" id="lq-verdad-dots-fixed"></div>
@@ -764,8 +736,6 @@ const NEWS_HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-verdad-pages">
           <div class="lq-dios-page lq-dios-text">
-            <h3 class="lq-dios-title">Cultos manipuladores de masas</h3>
-            <p class="lq-dios-date">18 Ago 2026 8:07 pm</p>
             <p>Sé que puede que haya fanáticos religiosos leyendo esto, así que lo redactaré de forma objetiva.</p>
             <p>Bueno, pues me parece curioso como tanta gente cree en lo mismo.</p>
             <p>Muchísima gente comparte la misma religión, un buen porcentaje de la humanidad.</p>
@@ -811,8 +781,6 @@ const NEWS_HTML = `
             <p>Al menos para mí, es totalmente normal.</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
-            <h3 class="lq-dios-title">Ondas</h3>
-            <p class="lq-dios-date">10 Ago 2026 10:02 am</p>
             <p>Tal vez salga un poco del tema en comparativa con lo demás que he escrito, pero...</p>
             <p>Me gustaría hacer una advertencia.</p>
             <p>Y es que usar audífonos de bluetooth te hace más bot.</p>
@@ -843,6 +811,26 @@ const NEWS_HTML = `
             <p>¿A qué sabe un alma cocida en microondas?</p>
           </div>
         </div>
+      </div>
     </div>
   </div>
 `;
+
+export default function Home() {
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    const cleanup = initLicuado(wrapRef.current);
+    return cleanup;
+  }, []);
+
+  return (
+    <div
+      className="lq-wrap"
+      id="lq-top"
+      ref={wrapRef}
+      dangerouslySetInnerHTML={{ __html: HTML }}
+    />
+  );
+}

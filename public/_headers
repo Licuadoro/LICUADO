@@ -1,8 +1,0 @@
-# Cabeceras para Cloudflare (Workers Assets / Pages).
-# Aplicadas sobre TODAS las rutas entregadas desde dist/.
-/*
-  Access-Control-Allow-Origin: *
-  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
-  Access-Control-Allow-Headers: Content-Type, Authorization
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,13 +1,65 @@
-# Dependencias: SIEMPRE excluidas. Su contenido (p.ej. el binario workerd de
-# 128 MB en node_modules/@cloudflare/workerd-linux-64/bin/workerd) supera el
-# límite de GitHub de 100 MB y provocaba el rechazo GH001 en el push.
+```
+# Dependencies
 node_modules/
 
-# Producción local (el pipeline usa el dist/ commiteado; no subir builds nuevos)
+# Build artifacts
 dist/
+build/
+target/
 
-# Otros artefactos locales
-.wrangler/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+.Python
+env/
+venv/
+.venv/
+.ENV
+.python-version
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage/
+
+# Logs
 *.log
+
+# Environment variables
 .env
 .env.local
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+```

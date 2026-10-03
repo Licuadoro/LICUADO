@@ -1,7 +1,0 @@
-# Archivos que NO deben acabar en el bundle de despliegue de Cloudflare.
-# Los wrangler.jsonc del repo (raíz y cloudflare-worker/) se copian dentro de
-# dist/ al compilar; si llegan al bundle, "npx wrangler deploy" puede detectar
-# varias configuraciones y entrar en modo setup automático, regenerando un
-# dist/wrangler.json con _redirects heredados → error 100324 (bucle infinito).
-# La configuración válida es SIEMPRE la wrangler.jsonc de la raíz del repo.
-wrangler.jsonc
