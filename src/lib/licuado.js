@@ -285,9 +285,51 @@ export function initLicuado(wrap) {
     on(btn, 'click', function (e) { e.stopPropagation(); verdadShowPage(verdadPageIdx + Number(btn.getAttribute('data-lq-verdad-dir'))); });
   });
   if (verdadPanel) on(verdadPanel, 'click', function (e) { if (e.target === verdadPanel) closeVerdad(); });
-  verdadShowPage(0);
+  verdadShowPage(1);
 
-  on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); closeVerdad(); } });
+
+  /* ── Panel "Pipeline" (frase del footer de LICUADO Scriptorium: Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego) ── */
+  var pipelinePanel = wrap.querySelector('#lq-pipeline-panel');
+  var pipelinePages = wrap.querySelector('#lq-pipeline-pages');
+  var pipelinePageIdx = 0;
+  var pipelineTotal = 1;
+  function pipelineShowPage(idx) {
+    pipelinePageIdx = Math.max(0, Math.min(pipelineTotal - 1, idx));
+    if (pipelinePages) pipelinePages.style.transform = 'translateX(-' + (pipelinePageIdx * 100) + '%)';
+    var pLeft = pipelinePanel ? pipelinePanel.querySelector('.lq-dios-arrow-left') : null;
+    var pRight = pipelinePanel ? pipelinePanel.querySelector('.lq-dios-arrow-right') : null;
+    if (pLeft) pLeft.style.display = pipelinePageIdx > 0 ? 'flex' : 'none';
+    if (pRight) pRight.style.display = pipelinePageIdx < pipelineTotal - 1 ? 'flex' : 'none';
+    var pDots = wrap.querySelector('#lq-pipeline-dots-fixed');
+    if (pDots) {
+      pDots.innerHTML = '';
+      var dotCount = pipelineTotal - pipelinePageIdx;
+      for (var pd = 0; pd < dotCount; pd++) {
+        var pdot = document.createElement('span');
+        pdot.className = 'lq-dios-dot';
+        pDots.appendChild(pdot);
+      }
+    }
+  }
+  function openPipeline() {
+    if (pipelinePanel) {
+      pipelinePanel.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      if (pipelinePages) pipelinePages.querySelectorAll('.lq-dios-page').forEach(function (p) { p.scrollTop = 0; });
+      pipelineShowPage(0);
+    }
+  }
+  function closePipeline() { if (pipelinePanel) { pipelinePanel.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; } }
+  wrap.querySelectorAll('[data-lq-open-pipeline]').forEach(function (el) { on(el, 'click', function (e) { e.preventDefault(); openPipeline(); }); });
+  wrap.querySelectorAll('[data-lq-close-pipeline]').forEach(function (el) { on(el, 'click', closePipeline); });
+  wrap.querySelectorAll('[data-lq-pipeline-dir]').forEach(function (btn) {
+    on(btn, 'click', function (e) { e.stopPropagation(); pipelineShowPage(pipelinePageIdx + Number(btn.getAttribute('data-lq-pipeline-dir'))); });
+  });
+  if (pipelinePanel) on(pipelinePanel, 'click', function (e) { if (e.target === pipelinePanel) closePipeline(); });
+  pipelineShowPage(0);
+
+  on(document, 'keydown', function (e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); closeDios(); closeAlma(); closeVerdad(); closePipeline(); } });
   wrap.querySelectorAll('[data-lq-lumen]').forEach(function (a) {
     on(a, 'click', function (e) { e.preventDefault(); scrollToId('lq-proyectos'); setTimeout(openModal, 650); });
   });
@@ -315,10 +357,14 @@ export function initLicuado(wrap) {
     if (!layer) return;
     layer.innerHTML = '';
     var viewportH = window.innerHeight || 800;
-    var isAltScreen = wrap.classList.contains('lq-show-scriptorium') || wrap.classList.contains('lq-show-gallery');
-    var visibleFooter = wrap.classList.contains('lq-show-scriptorium') ? wrap.querySelector('.lq-scriptorium-footer')
-      : wrap.classList.contains('lq-show-gallery') ? wrap.querySelector('.lq-gallery-footer')
-      : wrap.classList.contains('lq-show-news') ? wrap.querySelector('.lq-news-footer')
+    // "Pantalla alternativa" también cuando la URL es una página propia
+    // (/Mitte signum, /LICUADO Scriptorium, /nuntium → clase lq-page-* en body)
+    var pageCls = document.body.className || '';
+    var isAltScreen = wrap.classList.contains('lq-show-scriptorium') || wrap.classList.contains('lq-show-gallery') || wrap.classList.contains('lq-show-news')
+      || pageCls.indexOf('lq-page-') >= 0;
+    var visibleFooter = (wrap.classList.contains('lq-show-scriptorium') || pageCls.indexOf('lq-page-scriptorium') >= 0) ? wrap.querySelector('.lq-scriptorium-footer')
+      : (wrap.classList.contains('lq-show-gallery') || pageCls.indexOf('lq-page-gallery') >= 0) ? wrap.querySelector('.lq-gallery-footer')
+      : (wrap.classList.contains('lq-show-news') || pageCls.indexOf('lq-page-news') >= 0) ? wrap.querySelector('.lq-news-footer')
         : wrap.querySelector('.lq-footer-home');
     var footerTop = visibleFooter ? visibleFooter.getBoundingClientRect().top : viewportH;
     var h = Math.max(0, Math.min(viewportH, footerTop - 3));
@@ -326,6 +372,16 @@ export function initLicuado(wrap) {
     layer.style.display = h < 24 ? 'none' : 'block';
     if (h < 24) return;
 
+    if (wrap.classList.contains('lq-show-news')) {
+      var dustCount = Math.round(50 + Math.min(40, h / 20));
+      for (var d = 0; d < dustCount; d++) {
+        var dust = document.createElement('i'); dust.className = 'lq-dust';
+        var size = Math.round(crand(2, 5));
+        dust.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + crand(2, 98).toFixed(2) + '%;top:' + crand(0, h).toFixed(0) + 'px;--dur:' + crand(8, 16).toFixed(2) + 's;--delay:' + crand(-14, 2).toFixed(2) + 's;--op:' + crand(.3, .7).toFixed(2) + ';--rise:-' + crand(40, 100).toFixed(0) + 'px;--drift:' + crand(-20, 20).toFixed(0) + 'px;background:rgba(255,100,80,' + crand(.4, .8).toFixed(2) + ')';
+        layer.appendChild(dust);
+      }
+      return;
+    }
     if (isAltScreen) {
       if (wrap.classList.contains('lq-show-gallery')) {
         var iceCount = Math.round(42 + Math.min(34, h / 24));
@@ -335,9 +391,6 @@ export function initLicuado(wrap) {
           ice.style.cssText = 'width:' + iSize + 'px;height:' + iSize + 'px;left:' + crand(2, 98).toFixed(2) + '%;top:' + crand(0, h).toFixed(0) + 'px;--dur:' + crand(9, 20).toFixed(2) + 's;--delay:' + crand(-18, 3).toFixed(2) + 's;--op:' + crand(.45, .9).toFixed(2) + ';--fall:' + crand(60, 170).toFixed(0) + 'px;--drift:' + crand(-40, 40).toFixed(0) + 'px';
           layer.appendChild(ice);
         }
-        return;
-      }
-      if (wrap.classList.contains('lq-show-news')) {
         return;
       }
       var bubbleCount = Math.round(34 + Math.min(26, h / 28));
@@ -484,7 +537,26 @@ export function initLicuado(wrap) {
     'viajeAstral.noAlejarse(); // al menos hasta la decima vez',
     'alma.divina = consciencia + ideasPropias; // lo que nos hace dioses',
     'function escapar() { return alma; } // sin que muera el cuerpo',
-    '// el cuerpo es un filtro que impide ver a los libres'
+    '// el cuerpo es un filtro que impide ver a los libres',
+    '// otra madrugadada mas discutiendo contra mi mismo mientras intento desafiar la ley de que nada es perfecto',
+    'const jugadores = alma; // solo los jugadores poseen alma',
+    'const NPCs = conscienciaArtificial; // NPC con IA avanzada',
+    'if (imaginacion) crearDimension(); // dimensiones infinitas',
+    'class Bots extends Rutina {} // programados para seguir rutina',
+    'const verdad = null; // nadie posee la verdad absoluta',
+    'while (vida) { buscarVerdad(); } // los humanos perseguimos la verdad',
+    'if (verdadAbsoluta) juegoTerminado(); // sin asombro no hay emocion',
+    'const unicaCerteza = crear(); // solo tenemos certeza de lo que creamos',
+    'const religion = controlMasivo; // forma de control de masas',
+    'donaciones.monetarias !== dios.interes; // al dios no le interesa el dinero',
+    'const cientificos = ignorancia; // los científicos admiten no saber casi nada',
+    'const audifonosBluetooth = radiacionCerebral; // te hacen mas bot',
+    'microondas.atrapar(alma); // camara de Faraday para almas',
+    'const pensamientos = senalElectrica; // corren por las neuronas',
+    'noEsConspiracion = fisicaBasica; // es fisica basica',
+    'class Artista extends Dios {} // todos los artistas somos dioses',
+    'const crearMundo = arte; // todo arte crea un mundo',
+    'if (serPensante) esDeidad(); // todos los seres pensantes son deidades'
   ];
   var codeSnippets = codeFuncional.concat(codeSlogan);
   var sloganStart = codeFuncional.length;

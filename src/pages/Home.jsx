@@ -1,6 +1,36 @@
 import React, { useEffect, useRef } from 'react';
 import '@/licuado.css';
 import { initLicuado } from '@/lib/licuado';
+import { fetchNews, newsForLocation, renderNewsCard } from '@/lib/newsStore';
+
+const NEWS_CATEGORIES = [
+  { id: 'recientes', title: 'Más recientes' },
+  { id: 'licuado', title: 'Actualizaciones de LICUADO' },
+  { id: 'kronos', title: 'Actualizaciones de Kronos' },
+  { id: 'teia', title: 'Actualizaciones de Teia' },
+  { id: 'creatorius', title: 'Notícias de Creatorius' },
+  { id: 'todas', title: 'Todas las notícias' },
+];
+
+function buildNewsHtml(news) {
+  const parts = [];
+  // Prévia do início: a notícia mais recente marcada para "home" (ou a mais recente de todas)
+  const homeList = newsForLocation(news, 'home');
+  const preview = homeList[0] || news[0];
+  if (preview) parts.push(renderNewsCard(preview, 'excerpt'));
+  // Secciones da página de Notícias
+  for (const cat of NEWS_CATEGORIES) {
+    const items = newsForLocation(news, cat.id);
+    if (!items.length) continue;
+    parts.push(
+      '<div class="lq-news-category"><h3 class="lq-category-title">' + cat.title + '</h3><div class="lq-news-grid lq-news-grid-centered">' +
+      items.map((n) => renderNewsCard(n)).join('') +
+      '</div></div>'
+    );
+  }
+  if (!parts.length) parts.push('<p style="color:rgba(245,245,240,.5);font-size:.9rem">Aínda non hai notícias publicadas.</p>');
+  return parts.join('\n');
+}
 
 const HTML = `
   <div class="lq-global-particles" id="lq-global-particles"></div>
@@ -27,7 +57,9 @@ const HTML = `
             <span class="lq-arrow-icon" aria-hidden="true"></span>
           </button>
           <div class="lq-dropdown-menu" role="menu">
-            <a class="lq-dropdown-item" href="https://kronostl.netlify.app/" target="_blank" rel="noopener" role="menuitem">Kronos</a>
+            <a class="lq-dropdown-item" href="https://kronos.licuado.workers.dev" target="_blank" rel="noopener" role="menuitem">Kronos</a>
+            <a class="lq-dropdown-item" href="https://teia.licuado.workers.dev/" target="_blank" rel="noopener" role="menuitem">Teia</a>
+            <a class="lq-dropdown-item" href="https://creatorius.licuado.workers.dev/" target="_blank" rel="noopener" role="menuitem">Creatorius</a>
           </div>
         </div>
       </div>
@@ -71,16 +103,8 @@ const HTML = `
           </div>
           <div class="lq-frame-plaque"><span class="lq-plaque-small">Lo más nuevo en</span>LICUADO&nbsp;&nbsp;Scriptorium</div>
         </div>
-        <a href="#" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg" data-lq-screen="gallery"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
-        <div class="lq-news-preview" style="margin-top:1.5rem;opacity:0;animation:lq-fade-up 1s ease 1.8s forwards;position:relative;z-index:2;">
-          <article class="lq-news-card lq-news-card-home">
-            <div class="lq-news-date">7 ago 2026</div>
-            <h3 class="lq-news-title">Actualización 1.00: Deceptio?</h3>
-            <p class="lq-news-excerpt">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.</p>
-            <p class="lq-news-excerpt" style="font-style:italic;opacity:0.7;margin-top:0.75rem;">También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
-          </article>
-          <a href="#" class="lq-btn-scriptorium lq-btn-news w-full" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a>
-        </div>
+        <a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript lq-btn-script-lg"><svg class="lq-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a>
+        <div class="lq-news-preview" style="margin-top:1.5rem;opacity:0;animation:lq-fade-up 1s ease 1.8s forwards;position:relative;z-index:2;" id="lq-home-news-container"></div>
       </div>
       <div>
         <span class="lq-proy-label">El estudio</span>
@@ -95,6 +119,13 @@ const HTML = `
         <span class="lq-proy-label">Cuento finalista</span>
         <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Cordura</h3>
         <p class="lq-sobre-parrafo">Cordura es un cuento que escribí para un concurso, y tras quedar finalista será publicado en el mes de octubre, en una compilación de cuentos llamada Inventario de fragmentos I, por parte de la editorial corazón de tinta, quienes organizaron el concurso. Los concursos de escritura de cuentos son parte de la financiación de este proyecto, o al menos eso espero, ya que en el concurso en el que participé con cordura no había un premio monetario más que la publicación del cuento en la compilación, por la cual no recibo ganancias al comprar un ejemplar. Sin embargo, me enorgullece que mis escrituras sean conocidas. Pero pienso participar en más concursos a futuro para conseguir presupuesto para el proyecto LICUADO.</p>
+        
+        <div class="lq-divider-soft"></div>
+        <span class="lq-proy-label">Creatorius</span>
+        <h3 class="lq-sobre-titulo" style="font-size:clamp(1.7rem,3.5vw,2.3rem);margin:.3rem 0 1rem">Creatorius</h3>
+        <p class="lq-sobre-parrafo">Creatorius es un negocio que abrí para ganar dinero e impulsar el proyecto LICUADO. Consiste en que me describas una idea y yo hago una web con los elementos que me pidas, a cambio de dinero, y puedes agregar elementos que mezclan mis diferentes virtudes. Debo decir que no puse a Creatorius dentro de LICUADO, porque son cosas diferentes. Y es que LICUADO no es negocio, es el canal por donde salen las ideas que vierto en el teclado y el papel.</p>
+        <a class="lq-link" href="https://creatorius.licuado.workers.dev" target="_blank" rel="noopener">Ir a Creatorius &#8599;</a>
+        
         <div class="lq-sobre-facts">
           <div class="lq-fact"><span class="lq-fact-num">1</span><span class="lq-fact-label">Artista tras todo lo que ves</span></div>
           <div class="lq-fact"><span class="lq-fact-num">&#8734;</span><span class="lq-fact-label">Horas de volcar mis ideas en un computador</span></div>
@@ -131,11 +162,12 @@ const HTML = `
           <li><a href="#lq-top" data-lq-scroll="lq-top">Inicio</a></li>
           <li><a href="#lq-proyectos" data-lq-lumen>Lúmen</a></li>
           <li><a href="https://caribe-studios-portal-883042bb.base44.app/" target="_blank" rel="noopener">Caribe Studios &#8599;</a></li>
-          <li style="margin-top:.6rem"><a href="#" class="lq-btn-scriptorium lq-btn-signal" data-lq-screen="scriptorium"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20v-6"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Envía una señal</a></li>
-          <li><a href="#" class="lq-btn-scriptorium lq-btn-manuscript" data-lq-screen="gallery"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a></li>
-          <li><a href="#" class="lq-btn-scriptorium lq-btn-news" data-lq-screen="news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a></li>
-          <li><a class="lq-btn-scriptorium lq-btn-kronos" href="https://kronostl.netlify.app/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><g class="lq-kronos-hand"><path d="M12 12 12 7"/><path d="M12 12 15.3 13.6"/></g></svg>Kronos</a></li>
-          <li><a class="lq-btn-scriptorium lq-btn-teia" href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Teia</a></li>
+          <li style="margin-top:.6rem"><a href="/Mitte signum" class="lq-btn-scriptorium lq-btn-signal"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20v-6"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Envía una señal</a></li>
+          <li><a href="/LICUADO Scriptorium" class="lq-btn-scriptorium lq-btn-manuscript"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 7-2 3-3 6-3 9 3 0 6-1 9-3 5-3 7-8 7-12 0-.4-.4-1-1-1Z"/><path d="M9 15 4 20"/><path d="M13 8.5c-2 .3-4 1.6-5.3 3.6"/></svg>LICUADO Scriptorium</a></li>
+          <li><a href="/nuntium" class="lq-btn-scriptorium lq-btn-news"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>Notícias</a></li>
+          <li><a class="lq-btn-scriptorium lq-btn-kronos" href="https://kronos.licuado.workers.dev" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><g class="lq-kronos-hand"><path d="M12 12 12 7"/><path d="M12 12 15.3 13.6"/></g></svg>Kronos</a></li>
+          <li><a class="lq-btn-scriptorium lq-btn-teia" href="https://teia.licuado.workers.dev/" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Teia</a></li>
+          <li style="margin-top:.6rem"><a class="lq-btn-scriptorium lq-btn-creatorius" href="https://creatorius.licuado.workers.dev" target="_blank" rel="noopener"><svg class="lq-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Creatorius</a></li>
         </ul>
       </div>
     </div>
@@ -146,7 +178,7 @@ const HTML = `
   </footer>
 
   <section class="lq-scriptorium" id="lq-scriptorium">
-    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <div class="lq-waterline"></div>
@@ -158,9 +190,9 @@ const HTML = `
         Entrar al Discord
       </a>
       <a class="lq-discord-btn" href="https://youtube.com/@licuado_scriptorium?si=8GNDObIl_y5xVzyq" target="_blank" rel="noopener">Visita el canal de YouTube</a>
-      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
-      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
-      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+      <a class="lq-discord-btn" href="https://x.com/LicuadoProject" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,255,68,.9)" xmlns="http://www.w3.org/2000/svg" ><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Sígueme en X</a>
+      <a class="lq-discord-btn" href="https://www.instagram.com/licuado_project/" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+      <a class="lq-discord-btn" href="https://www.facebook.com/profile.php?id=61590552870419&locale=es_ES" target="_blank" rel="noopener" style="border-color:rgba(0,255,68,.4);background:linear-gradient(135deg,rgba(0,255,68,.12),rgba(0,50,20,.25))"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" ><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
       <p class="lq-discord-note">Si quieres comunicarte conmigo, si quieres participar en el proyecto, contáctame...</p>
     </div>
   </section>
@@ -176,8 +208,8 @@ const HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
-          <li><a href="#lq-scriptorium" data-lq-scroll-scriptorium>Inicio</a></li>
+          <li><a href="/">Volver a LICUADO</a></li>
+          <li><a href="/Mitte signum">Inicio</a></li>
         </ul>
       </div>
     </div>
@@ -188,7 +220,7 @@ const HTML = `
   </footer>
 
   <section class="lq-gallery" id="lq-gallery">
-    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <img class="lq-scriptorium-logo" src="https://blogger.googleusercontent.com/img/a/AVvXsEi6oGzPeDv1Pfc5h8v6rFfrOjPjL_p6bKyf0_qJpQ4TA3O9ZJsazWFa4PuhL0qzIXX6-tvyJiYGVSRqEkGENX7dU0M5zLfgPzPrWsbr5J1e_q2QP8G_QI_3YX8REA23UKfQRhzBvzmhlh-IlS-6k87n8vQ3k-YkLB9Avuu2MaDQc7UnuRmF9bnrYyrzlSuR=s16000" alt="LICUADO Scriptorium">
@@ -288,193 +320,23 @@ const HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li><a href="/">Volver a LICUADO</a></li>
         </ul>
       </div>
     </div>
     <div class="lq-footer-bottom">
       <span class="lq-footer-copy">&copy; 2026 LICUADO Scriptorium.</span>
-      <button type="button" class="lq-footer-made lq-dios-link">Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
+      <button type="button" class="lq-footer-made lq-dios-link" data-lq-open-pipeline>Aburrimiento ➜ Idea ➜ Papel ➜ Motor ➜ Videojuego</button>
     </div>
   </footer>
 
   <section class="lq-news" id="lq-news">
-    <button class="lq-btn lq-scriptorium-back" type="button" data-lq-screen="home">&#8592; Volver</button>
+    <a class="lq-btn lq-scriptorium-back" href="/">&#8592; Volver</a>
     <div class="lq-glow"></div>
     <div class="lq-scan"></div>
     <h2 class="lq-proy-title" style="position:relative;z-index:2">Notícias</h2>
     <div class="lq-divider"><div class="lq-line"></div><div class="lq-dot"></div><div class="lq-line r"></div></div>
-    
-    <!-- Sección: Más recientes (Top 5) -->
-    <div class="lq-news-category">
-      <h3 class="lq-category-title">Más recientes</h3>
-      <div class="lq-news-grid">
-        <!-- Notícia 5: Actualización LICUADO 1.02 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">18 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
-          <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
-          -Una notícia revelando que Teia ya está publicado y funcionando.<br>
-          -Dos accesos directos a Teia.<br>
-          -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
-        </div>
-
-        <!-- Notícia 4: Teia -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">18 Ago 2026</div>
-          <h3 class="lq-news-title">Teia</h3>
-          <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
-          <a href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener noreferrer" class="lq-teia-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            <span>Ir a Teia</span>
-          </a>
-        </div>
-
-        <!-- Notícia 3: Actualización LICUADO 1.01 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">10 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
-          <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
-        </div>
-
-        <!-- Notícia 2: Actualización Kronos 1.00 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">10 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
-          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
-          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <span>Ir a Kronos</span>
-          </a>
-        </div>
-
-        <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">7 ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
-          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
-          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección: Actualizaciones de LICUADO -->
-    <div class="lq-news-category">
-      <h3 class="lq-category-title">Actualizaciones de LICUADO</h3>
-      <div class="lq-news-grid">
-        <!-- Notícia 5: Actualización LICUADO 1.02 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">18 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
-          <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
-          -Una notícia revelando que Teia ya está publicado y funcionando.<br>
-          -Dos accesos directos a Teia.<br>
-          -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
-        </div>
-
-        <!-- Notícia 3: Actualización LICUADO 1.01 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">10 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
-          <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
-        </div>
-
-        <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">7 ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
-          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
-          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección: Actualizaciones de Kronos -->
-    <div class="lq-news-category">
-      <h3 class="lq-category-title">Actualizaciones de Kronos</h3>
-      <div class="lq-news-grid">
-        <!-- Notícia 2: Actualización Kronos 1.00 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">10 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
-          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
-          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <span>Ir a Kronos</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección: Actualizaciones de Teia -->
-    <div class="lq-news-category">
-      <h3 class="lq-category-title">Actualizaciones de Teia</h3>
-      <div class="lq-news-grid">
-        <!-- Notícia 4: Teia -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">18 Ago 2026</div>
-          <h3 class="lq-news-title">Teia</h3>
-          <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
-          <a href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener noreferrer" class="lq-teia-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            <span>Ir a Teia</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección: Todas las notícias -->
-    <div class="lq-news-category">
-      <h3 class="lq-category-title">Todas las notícias</h3>
-      <div class="lq-news-grid">
-        <!-- Notícia 5: Actualización LICUADO 1.02 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">18 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.02: Religio dominans</h3>
-          <p class="lq-news-text">¡En esta actualización añadí varias cosas! Tales como:<br><br>
-          -Una notícia revelando que Teia ya está publicado y funcionando.<br>
-          -Dos accesos directos a Teia.<br>
-          -Y como no puede faltar, más textos conspiranóicos ocultos jajaja.</p>
-        </div>
-
-        <!-- Notícia 4: Teia -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">18 Ago 2026</div>
-          <h3 class="lq-news-title">Teia</h3>
-          <p class="lq-news-text">¡Ya publicada y funcionando! Ya publiqué Teia, una herramienta donde podrás subir los archivos de tu proyecto y ver una vista previa. En mi caso, es bastante útil para no tener que publicar cada vez que hago cambios en mis webs sin saber si va a ser la versión definitiva. Y, sobra decir que es totalmente gratis, al igual que Kronos, y mis próximas herramientas.</p>
-          <a href="https://teia-licuado.netlify.app/" target="_blank" rel="noopener noreferrer" class="lq-teia-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            <span>Ir a Teia</span>
-          </a>
-        </div>
-
-        <!-- Notícia 3: Actualización LICUADO 1.01 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">10 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.01: Magnetrón</h3>
-          <p class="lq-news-text">En esta actualización añadí una nova notícia de Kronos y más textos conspiranóicos sin ningún tipo de fundamento (Lo digo así por mi propia seguridad)</p>
-        </div>
-
-        <!-- Notícia 2: Actualización Kronos 1.00 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">10 Ago 2026</div>
-          <h3 class="lq-news-title">Actualización Kronos 1.00: Εικόνισμα</h3>
-          <p class="lq-news-text">Bueno, esta no es la primera actualización de Kronos, pero como no le llevo registro voy a decir que es la primera. Básicamente ahora la página tiene ícono en la pestaña del navegador.</p>
-          <a href="https://kronostl.netlify.app" target="_blank" rel="noopener noreferrer" class="lq-kronos-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <span>Ir a Kronos</span>
-          </a>
-        </div>
-
-        <!-- Notícia 1: Actualización LICUADO 1.00 -->
-        <div class="lq-news-card">
-          <div class="lq-news-date">7 ago 2026</div>
-          <h3 class="lq-news-title">Actualización LICUADO 1.00: Deceptio?</h3>
-          <p class="lq-news-text">En esta actualización hice varios cambios, como añadir el nuevo apartado de notícias, añadir más frases filosóficas ocultas, añadir más líneas distintas de código que sale en el fondo, y eliminar ese orbe verde que salía en la tarjeta de Lúmen. Me gustaría decir que no tengo claro cuantas versiones y actualizaciones hice de la página hasta ahora, por lo que le pondré a esta 1.00, pero no es la primera. Sin embargo, a partir de ahora, todas las actualizaciones quedarán registradas aquí.<br><br>
-          También hice una pequeña corrección de color, poniendo el pie de página de LICUADO Scriptorium de color dorado, y, añadí una tarjeta en el inicio, con la notícia más reciente, de momento esta, pero puede que cuando tú la leas ya no sea la más reciente.</p>
-        </div>
-      </div>
-    </div>
+    <div id="lq-news-dynamic" style="width:100%;display:flex;flex-direction:column;align-items:center;"></div>
   </section>
 
   <footer class="lq-footer lq-news-footer">
@@ -488,7 +350,7 @@ const HTML = `
       <div>
         <p class="lq-footer-nav-title">Navegar</p>
         <ul class="lq-footer-nav">
-          <li><a href="#" data-lq-screen="home">Volver a LICUADO</a></li>
+          <li><a href="/">Volver a LICUADO</a></li>
         </ul>
       </div>
     </div>
@@ -533,6 +395,8 @@ const HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-dios-pages">
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">3 Clases que siguen la misma rutina</h3>
+            <p class="lq-dios-date">3 Ago 2026 3:23 pm</p>
             <p>Anteriormente dije que todos somos dioses con una explicación lógica.</p>
             <p>Pero, ¿es acaso cierto?</p>
             <p>Bueno, mencioné que todos los seres pensantes somos dioses.</p>
@@ -575,6 +439,8 @@ const HTML = `
             <p>No.</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Dioses porque imaginamos</h3>
+            <p class="lq-dios-date">1 Ago 2026 11:40 am</p>
             <p>Los videojuegos no son un tipo de arte, son todas las artes.</p>
         <p>Piénsalo, dime un arte que no exista en ningún videojuego.</p>
         <p>Y bueno, si los videojuegos son arte, los devs somos artistas.</p>
@@ -627,6 +493,8 @@ const HTML = `
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-alma-pages">
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Alminando eternamente tras la verdad, porque a veces ganar es lo peor</h3>
+            <p class="lq-dios-date">7 Ago 2026 1:20 pm</p>
             <p>Lo del alma... Lo que dije antes, lo creo, a medias.
 Creo que somos un alma atrapada en un cuerpo.
 Creo en los viajes astrales.
@@ -669,6 +537,8 @@ Y me alegra poder decir...
 ¿Verdad?</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Alminar puede ser peligroso</h3>
+            <p class="lq-dios-date">4 Ago 2026 4:13 pm</p>
             <p>Ok, cómo lo prometí, voy a hablar de mi percepción del alma.
 Pues, voy a empezar por lo primero. Tu no eres tu cuerpo, eres tu alma. A menos claro, que seas un NPC y no tengas.
 Es decir, tu eres el alma, y tu estás atrapado/a en tu cuerpo.
@@ -736,6 +606,8 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
       <div class="lq-dios-viewport">
         <div class="lq-dios-pages" id="lq-verdad-pages">
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Cultos manipuladores de masas</h3>
+            <p class="lq-dios-date">18 Ago 2026 8:07 pm</p>
             <p>Sé que puede que haya fanáticos religiosos leyendo esto, así que lo redactaré de forma objetiva.</p>
             <p>Bueno, pues me parece curioso como tanta gente cree en lo mismo.</p>
             <p>Muchísima gente comparte la misma religión, un buen porcentaje de la humanidad.</p>
@@ -781,6 +653,8 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
             <p>Al menos para mí, es totalmente normal.</p>
           </div>
           <div class="lq-dios-page lq-dios-text">
+            <h3 class="lq-dios-title">Ondas</h3>
+            <p class="lq-dios-date">10 Ago 2026 10:02 am</p>
             <p>Tal vez salga un poco del tema en comparativa con lo demás que he escrito, pero...</p>
             <p>Me gustaría hacer una advertencia.</p>
             <p>Y es que usar audífonos de bluetooth te hace más bot.</p>
@@ -811,18 +685,116 @@ Este es un tema delicado, y quien me crea, es libre de hacerlo o de no hacerlo, 
             <p>¿A qué sabe un alma cocida en microondas?</p>
           </div>
         </div>
+    </div>
+  </div>
+
+  <div class="lq-modal-overlay" id="lq-pipeline-panel">
+    <div class="lq-modal lq-dios-modal">
+      <button class="lq-modal-close" type="button" data-lq-close-pipeline aria-label="Cerrar">&#10005;</button>
+      <div class="lq-dios-dots-fixed" id="lq-pipeline-dots-fixed"></div>
+      <button class="lq-dios-arrow lq-dios-arrow-left" type="button" data-lq-pipeline-dir="-1" aria-label="Anterior">&#8592;</button>
+      <button class="lq-dios-arrow lq-dios-arrow-right" type="button" data-lq-pipeline-dir="1" aria-label="Siguiente">&#8594;</button>
+      <div class="lq-dios-viewport">
+        <div class="lq-dios-pages" id="lq-pipeline-pages">
+          <div class="lq-dios-page lq-dios-text">
+            <p>Ya ha pasado bastante tiempo sin que escriba nada por aquí.</p>
+            <p>Es probable que muchos me hayan declarado loco o mal de la cabeza tras leer mis textos...</p>
+            <p>Pero aquí vengo de nuevo para seguir alimentando eso.</p>
+            <p>Porque me enorgullece que me vean como alguien que está loco.</p>
+            <p>Porque eso implica no pensar como el resto.</p>
+            <p>No ser parte del resto.</p>
+            <p>Porque donde muchos ven a un raro yo veo a un enorme dios.</p>
+            <p>Y es que al percibir su mundo de forma diferente, es un dios que está creando una nueva dimensión.</p>
+            <p>¿¿O no??</p>
+            <p>Porque, ¿cómo sabes que no eres tú quien percibe su mundo de forma distinta?</p>
+            <p>Nadie sabe la verdad sobre la realidad de las cosas, eso ya lo he mencionado alguna vez.</p>
+            <p>Sabemos la verdad sobre nuestra propia percepción y nuestra creación siempre que sea inerte.</p>
+            <p>No sabemos si lo que percibimos es real, o si estamos cuerdos.</p>
+            <p>Yo pienso que la gente que nosotros percibimos como "loca", es esperanzadora.</p>
+            <p>A mi, me devuelve la fe en la humanidad.</p>
+            <p>Y es que, es preocupante ver que la mayoría de personas no estan ahí.</p>
+            <p>Que solo le estás hablando a una cáscara vacía, a una bolsa de carne sin voluntad ni deseos.</p>
+            <p>Y los locos, parece que si tienen alma.</p>
+            <p>Por eso me dan esperanza.</p>
+            <p>Me gusta pensar que soy un loco que no piensa como los demás.</p>
+            <p>También me he dado cuenta de que la forma en la que funciona el mundo,</p>
+            <p>siempre siguiendo una rutina,</p>
+            <p>hace que casi nadie pueda pensar como un loco, y que casi nadie pueda pararse a escribir estas cosas.</p>
+            <p>Porque, casi siempre, por no decir siempre que ves a alguien que no está cuerdo, también es alguien que no consigue sustento ni almento.</p>
+            <p>Y esas personas acaban enfermando.</p>
+            <p>Y muriendo.</p>
+            <p>Y desapareciendo.</p>
+            <p>Pero no es que esté mal ser un loco, de hecho, está perfecto.</p>
+            <p>El problema es que el sistema hace que no convenga pensar de forma diferente...</p>
+            <p>Que no convenga no seguir la rutina.</p>
+            <p>Y, debo decir que me encanta escribir.</p>
+            <p>Lo disfruto mucho.</p>
+            <p>Y a veces temo que se acaben las vacaciones y ya no tenga tiempo para reflexionar en estas cosas, o hacer teorías conspiranóicas o dedicarme a mis proyectos.</p>
+            <p>Y cuando sea adulto y tenga que trabajar, seguramente tendré todavía menos tiempo.</p>
+            <p>Bueno, supongo que es el objetivo de quien nos tiene como marionetas, pero yo no quiero dejar de pensar.</p>
+            <p>Y entre más se acerca el fin de las vacaciones, siento como poco a poco mis neuronas se apagan y mi alma empieza a materializar la idea de tener que volver a reprimirse ante los gritos de un profesor frustrado que disfruta de tener total control sobre sus alumnos y decirles todo lo que deben hacer, para que los padres de los alumnos se puedan ir tranquilos a trabajar y ser productivos, y mantenerse estresados por el trabajo y por todo lo que su vida conlleva, pero aliviados porque creen que sus hijos están aprendiendo muchas cosas útiles y aprovechando su tiempo.</p>
+            <p>Mientras el profesor nos dicta como un dictador o un carcelero todo lo que debemos hacer y no podemos negarnos porque eso nos arriesgaría a decepcionar a nuestros padres.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 `;
 
-export default function Home() {
+export default function Home({ screen = 'home' }) {
   const wrapRef = useRef(null);
 
   useEffect(() => {
     if (!wrapRef.current) return;
+    let disposed = false;
+
+    // Cada pantalla es una URL propia: marcamos el <body> con lq-page-* para
+    // que las reglas CSS y los efectos (partículas/footer) sepan qué sección
+    // es la visible en esta página.
+    const pageClass = 'lq-page-' + screen;
+    document.body.classList.add(pageClass);
+
     const cleanup = initLicuado(wrapRef.current);
-    return cleanup;
+
+    const renderDynamic = (html) => {
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      const first = html.indexOf('<div class="lq-news-card');
+      const newsStart = html.indexOf('<div class="lq-news-category');
+      const homeSlot = wrap.querySelector('#lq-home-news-container');
+      if (homeSlot) {
+        const previewHtml = first >= 0 ? html.slice(first, newsStart > first ? newsStart : undefined) : '';
+        homeSlot.innerHTML = previewHtml.trim();
+      }
+      const newsSlot = wrap.querySelector('#lq-news-dynamic');
+      if (newsSlot) {
+        const cats = html.slice(newsStart >= 0 ? newsStart : html.length);
+        newsSlot.innerHTML = cats.trim() || html;
+      }
+    };
+
+    fetchNews().then((news) => {
+      if (disposed) return;
+      renderDynamic(buildNewsHtml(news));
+    }).catch(() => {});
+
+    const reload = () => {
+      fetchNews().then((news) => { if (!disposed) renderDynamic(buildNewsHtml(news)); }).catch(() => {});
+    };
+    window.addEventListener('storage', reload);
+    // Al volver al inicio desde el editor, refrescar desde la nube
+    const onVisible = () => { if (!document.hidden) reload(); };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', reload);
+
+    return () => {
+      disposed = true;
+      document.body.classList.remove(pageClass);
+      window.removeEventListener('storage', reload);
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', reload);
+      cleanup();
+    };
   }, []);
 
   return (
