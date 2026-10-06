@@ -6,7 +6,7 @@ aquí la fuente de verdad vive en la nube, así que **todos** los visitantes
 (modo incógnito, móvil, otros dispositivos) ven as mesmas notícias.
 
 Es 100 % compatible con publicar la web desde **Cloudflare Pages**: la web es
-solo estática y llama a este Worker por HTTP. No necesita LICUADO API externo ni sesiones.
+solo estática y llama a este Worker por HTTP. No requiere sesión de usuario ni configuración adicional.
 
 ## Despliegue manual (recomendado, ~5 minutos)
 
