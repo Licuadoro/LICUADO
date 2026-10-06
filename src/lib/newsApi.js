@@ -6,7 +6,7 @@
 //
 // Este almacén remoto es la fuente de verdad para que TODOS los visitantes
 // (incógnito, otros dispositivos, otros navegadores) vean las mesmas notícias.
-// No requiere sesión ni LICUADO externo: es un fetch simple, compatible con
+// No requiere sesión ni configuración adicional: es un fetch simple, compatible con
 // Cloudflare Pages (hosting 100 % estático).
 
 const ENDPOINT = import.meta.env.VITE_NEWS_API_URL || 'https://licuado-news.licuado.workers.dev';
