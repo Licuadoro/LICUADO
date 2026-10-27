@@ -1,0 +1,12 @@
+name = "licuado-news"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+# Crea el namespace con:  npx wrangler kv namespace create LQ_NEWS
+# y pega aquí el id que te devuelva.
+[[kv_namespaces]]
+binding = "LQ_NEWS"
+id = "PEGA_AQUI_EL_ID_DEL_NAMESPACE"
+
+# Variables (no secrets): dominios ya cubiertos en ALLOWED_ORIGINS del worker.
+# Para el token usa un secret:  npx wrangler secret put NEWS_TOKEN
