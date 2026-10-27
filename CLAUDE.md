@@ -1,3 +1,3 @@
-# See AGENTS.md
+# Project Instructions
 
-Follow the instructions in `AGENTS.md`.
+See `AGENTS.md` for setup and development information.
